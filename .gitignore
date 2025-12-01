@@ -30,6 +30,9 @@ env/*.env
 *.iml
 *.ipr
 
+# GitHub Copilot Instructions
+.github/instructions/
+
 # ===========================================
 # Java / Maven / Gradle
 # ===========================================
