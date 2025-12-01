@@ -51,3 +51,13 @@ springdoc:
     operationsSorter: alpha
     tagsSorter: alpha
   show-actuator: true
+
+# Actuator endpoints for health checks
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always

@@ -17,7 +17,7 @@
 #   - AI Analysis Service (port 8000)
 # ===========================================
 
-name: isu-backend-all
+name: isu-backend-production
 
 services:
   # ===========================================
@@ -33,7 +33,7 @@ services:
       - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-admin}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-secret_password}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-secret}
       RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_DEFAULT_VHOST:-/}
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
@@ -59,7 +59,7 @@ services:
     environment:
       POSTGRES_DB: ${CORE_POSTGRESQL_DB:-fortunetelling}
       POSTGRES_USER: ${CORE_POSTGRESQL_USER:-postgres}
-      POSTGRES_PASSWORD: ${CORE_POSTGRESQL_PASSWORD:-postgres}
+      POSTGRES_PASSWORD: ${CORE_POSTGRESQL_PASSWORD:-secret}
     ports:
       - "${CORE_POSTGRESQL_PORT:-5432}:5432"
     volumes:
@@ -78,7 +78,7 @@ services:
     image: redis:7.0.12-alpine
     container_name: isu-redis
     restart: always
-    command: redis-server --save 20 1 --loglevel warning --requirepass "${REDIS_PASSWORD:-redis123}"
+    command: redis-server --save 20 1 --loglevel warning --requirepass secret
     volumes:
       - redis_data:/data
     ports:
@@ -86,7 +86,7 @@ services:
     networks:
       - isu-internal-network
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ["CMD", "redis-cli", "-a", "secret", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -99,7 +99,7 @@ services:
     container_name: isu-core-backend
     ports:
       - "${CORE_SERVER_PORT:-8081}:8081"
-      - "${SOCKET_IO_PORT:-9092}:9092"
+      - "${SOCKET_IO_PORT:-8082}:8082"
     depends_on:
       postgres-core:
         condition: service_healthy
@@ -157,7 +157,7 @@ services:
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${PUSHNOTI_MONGODB_USER:-admin}
-      MONGO_INITDB_ROOT_PASSWORD: ${PUSHNOTI_MONGODB_PASSWORD:-password123}
+      MONGO_INITDB_ROOT_PASSWORD: ${PUSHNOTI_MONGODB_PASSWORD:-secret}
       MONGO_INITDB_DATABASE: ${PUSHNOTI_MONGODB_DB:-pushnoti}
     ports:
       - "${PUSHNOTI_MONGODB_PORT:-27018}:27017"
@@ -174,7 +174,7 @@ services:
           "-u",
           "admin",
           "-p",
-          "password123",
+          "secret",
           "--authenticationDatabase",
           "admin",
           "--eval",
@@ -192,7 +192,7 @@ services:
       dockerfile: docker/Dockerfile
     container_name: isu-pushnoti
     ports:
-      - "${PUSHNOTI_PORT:-8082}:8082"
+      - "${PUSHNOTI_PORT:-8085}:8085"
     depends_on:
       mongodb-pushnoti:
         condition: service_healthy
@@ -207,11 +207,11 @@ services:
       - isu-internal-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8082/actuator/health"]
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:8085/api-docs || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s
+      start_period: 60s
 
   # ===========================================
   # REPORT SERVICE & DEPENDENCIES
@@ -224,7 +224,7 @@ services:
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${REPORT_MONGODB_USER:-admin}
-      MONGO_INITDB_ROOT_PASSWORD: ${REPORT_MONGODB_PASSWORD:-password123}
+      MONGO_INITDB_ROOT_PASSWORD: ${REPORT_MONGODB_PASSWORD:-secret}
       MONGO_INITDB_DATABASE: ${REPORT_MONGODB_DB:-report}
     ports:
       - "${REPORT_MONGODB_PORT:-27019}:27017"
@@ -242,7 +242,7 @@ services:
           "-u",
           "admin",
           "-p",
-          "password123",
+          "secret",
           "--authenticationDatabase",
           "admin",
           "--eval",
@@ -260,7 +260,7 @@ services:
       dockerfile: docker/Dockerfile
     container_name: isu-report
     ports:
-      - "${REPORT_PORT:-8083}:8083"
+      - "${REPORT_PORT:-8086}:8086"
     depends_on:
       mongodb-report:
         condition: service_healthy
@@ -275,11 +275,11 @@ services:
       - isu-internal-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8083/actuator/health"]
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:8086/api-docs || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s
+      start_period: 60s
 
   # ===========================================
   # AI SUPPORT SERVICE & DEPENDENCIES
@@ -324,7 +324,7 @@ services:
       - "${AI_MONGODB_PORT:-27022}:27017"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=password123
+      - MONGO_INITDB_ROOT_PASSWORD=secret
     volumes:
       - mongodb_ai_data:/data/db
     networks:
@@ -338,7 +338,7 @@ services:
           "-u",
           "admin",
           "-p",
-          "password123",
+          "secret",
           "--authenticationDatabase",
           "admin",
           "--eval",

@@ -965,8 +965,7 @@ public class BookingServiceImpl implements BookingService {
 
             String txnId = payment.getTransactionId();
             // Check for invalid prefixes indicating wrong payment method
-            if (txnId.toUpperCase().startsWith("MOMO_") ||
-                    txnId.toUpperCase().startsWith("VNPAY_")) {
+            if (txnId.toUpperCase().startsWith("MOMO_")) {
                 log.debug("PayPal payment {} has invalid transaction ID with wrong prefix: {}",
                         payment.getId(), txnId);
                 return true;

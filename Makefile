@@ -17,11 +17,11 @@ ENV_DIR = ./env
 # ===========================================
 
 help: ## Show this help message
-	@echo.
+	@echo ""
 	@echo ============================================================
 	@echo        ISU Backend - Unified Makefile
 	@echo ============================================================
-	@echo.
+	@echo ""
 	@echo [ALL SERVICES]
 	@echo   make up                    - Start all services
 	@echo   make down                  - Stop all services
@@ -31,14 +31,14 @@ help: ## Show this help message
 	@echo   make status                - Show status of all services
 	@echo   make clean                 - Stop and remove containers
 	@echo   make clean-all             - Remove everything including volumes
-	@echo.
+	@echo ""
 	@echo [GATEWAY SERVICE]
 	@echo   make gateway-build         - Build gateway service
 	@echo   make gateway-up            - Start gateway service
 	@echo   make gateway-down          - Stop gateway service
 	@echo   make gateway-logs          - Show gateway logs
 	@echo   make gateway-rebuild       - Rebuild gateway service
-	@echo.
+	@echo ""
 	@echo [CORE SERVICE]
 	@echo   make core-build            - Build core service
 	@echo   make core-up               - Start core service
@@ -51,7 +51,7 @@ help: ## Show this help message
 	@echo   make core-migration-up     - Apply Flyway migrations
 	@echo   make core-migration-info   - Show Flyway migration info
 	@echo   make core-rebuild          - Rebuild core service
-	@echo.
+	@echo ""
 	@echo [PUSH NOTIFICATION SERVICE]
 	@echo   make pushnoti-build        - Build pushnoti service
 	@echo   make pushnoti-up           - Start pushnoti service
@@ -59,7 +59,7 @@ help: ## Show this help message
 	@echo   make pushnoti-logs         - Show pushnoti logs
 	@echo   make pushnoti-rebuild      - Rebuild pushnoti service
 	@echo   make pushnoti-clean        - Clean pushnoti data
-	@echo.
+	@echo ""
 	@echo [REPORT SERVICE]
 	@echo   make report-build          - Build report service
 	@echo   make report-up             - Start report service
@@ -70,7 +70,7 @@ help: ## Show this help message
 	@echo   make report-list-collections - List MongoDB collections
 	@echo   make report-rebuild        - Rebuild report service
 	@echo   make report-clean          - Clean report data
-	@echo.
+	@echo ""
 	@echo [AI SUPPORT SERVICE - LightRAG]
 	@echo   make ai-support-build      - Build AI support service
 	@echo   make ai-support-up         - Start AI support service
@@ -80,7 +80,7 @@ help: ## Show this help message
 	@echo   make ai-support-health     - Check AI support health
 	@echo   make ai-support-clean      - Clean AI support data
 	@echo   make ai-support-clean-all  - Remove all AI support data
-	@echo.
+	@echo ""
 	@echo [AI ANALYSIS SERVICE - Vanna]
 	@echo   make ai-analysis-build     - Build AI analysis service
 	@echo   make ai-analysis-up        - Start AI analysis service
@@ -88,19 +88,19 @@ help: ## Show this help message
 	@echo   make ai-analysis-logs      - Show AI analysis logs
 	@echo   make ai-analysis-rebuild   - Rebuild AI analysis service
 	@echo   make ai-analysis-clean     - Clean AI analysis data
-	@echo.
+	@echo ""
 	@echo [RABBITMQ]
 	@echo   make rabbitmq-up           - Start RabbitMQ
 	@echo   make rabbitmq-down         - Stop RabbitMQ
 	@echo   make rabbitmq-logs         - Show RabbitMQ logs
-	@echo.
+	@echo ""
 	@echo [INFRASTRUCTURE]
 	@echo   make infra-logs            - Show infrastructure logs (DB, Redis, RabbitMQ)
 	@echo   make network-create        - Create Docker network (Remember to run this first)
-	@echo.
+	@echo ""
 	@echo [QUICK COMMANDS]
 	@echo   make quick-start           - Quick start everything (network + all services)
-	@echo.
+	@echo ""
 
 # ===========================================
 # ALL SERVICES
@@ -267,8 +267,8 @@ report-rebuild: report-down report-build report-up ## Rebuild report service
 report-import-data: ## Import JSON data to MongoDB
 	@echo Importing data to MongoDB...
 	@echo Waiting for MongoDB to be ready...
-	@timeout /t 10 /nobreak > nul 2>&1 || sleep 10
-	@echo.
+	@sleep 5 2>/dev/null || ping -n 6 127.0.0.1 > nul
+	@echo ""
 	@echo Importing customer_potentials...
 	$(DOCKER_COMPOSE) exec -T mongodb-report mongoimport \
 		--authenticationDatabase admin \
@@ -280,7 +280,7 @@ report-import-data: ## Import JSON data to MongoDB
 		--file /data/customer_potential.json \
 		--jsonArray \
 		--drop
-	@echo.
+	@echo ""
 	@echo Importing seer_performances...
 	$(DOCKER_COMPOSE) exec -T mongodb-report mongoimport \
 		--authenticationDatabase admin \
@@ -292,7 +292,7 @@ report-import-data: ## Import JSON data to MongoDB
 		--file /data/seer_performance.json \
 		--jsonArray \
 		--drop
-	@echo.
+	@echo ""
 	@echo Data import complete!
 
 report-list-collections: ## List MongoDB collections
@@ -319,7 +319,7 @@ ai-support-up: _ai-support-create-volumes ## Start AI support service with depen
 	@echo Starting AI Support Service...
 	$(DOCKER_COMPOSE) up -d neo4j mongodb-ai rabbitmq lightrag-api
 	@echo Waiting for services to be ready...
-	@timeout /t 30 /nobreak > nul 2>&1 || sleep 30
+	@sleep 30 2>/dev/null || ping -n 31 127.0.0.1 > nul
 	@echo AI Support Service started!
 	@echo API: http://localhost:8001
 	@echo Docs: http://localhost:8001/docs
@@ -409,7 +409,7 @@ infra-up: ## Start all infrastructure (DB, Redis, RabbitMQ, Neo4j)
 	@echo Starting infrastructure services...
 	$(DOCKER_COMPOSE) up -d postgres-core redis rabbitmq mongodb-pushnoti mongodb-report mongodb-ai neo4j postgres-vanna
 	@echo Infrastructure started!
-	@echo.
+	@echo ""
 	@echo Services:
 	@echo   PostgreSQL Core: localhost:5432
 	@echo   PostgreSQL Vanna: localhost:5433
@@ -432,17 +432,17 @@ infra-logs: ## Show infrastructure logs
 # ===========================================
 
 dev: infra-up ## Start infrastructure for local development
-	@echo.
+	@echo ""
 	@echo Infrastructure ready for local development!
 	@echo Now you can run individual services with Maven/Python
 
 quick-start: network-create up _wait-for-services report-import-data ## Quick start everything
-	@echo.
+	@echo ""
 	@echo All services are running!
 
 _wait-for-services:
 	@echo Waiting for services to be ready...
-	@timeout /t 15 /nobreak > nul 2>&1 || sleep 15
+	@sleep 15 2>/dev/null || ping -n 16 127.0.0.1 > nul
 
 .PHONY: help up down build rebuild logs status clean clean-all network-create \
 	gateway-build gateway-up gateway-down gateway-logs gateway-rebuild \

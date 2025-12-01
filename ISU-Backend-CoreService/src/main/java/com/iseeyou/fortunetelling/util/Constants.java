@@ -46,7 +46,8 @@ public final class Constants {
             return Stream.of(StatusProfileEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid status profile name: %s", name)));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException(String.format("Invalid status profile name: %s", name)));
         }
     }
 
@@ -62,7 +63,7 @@ public final class Constants {
         try {
             return fields[2];
         } catch (final IndexOutOfBoundsException e) {
-            System.out.println("Cannot find user or channel id from the path!. Ex:"+ e.getMessage());
+            System.out.println("Cannot find user or channel id from the path!. Ex:" + e.getMessage());
         }
         return null;
     }
@@ -80,7 +81,8 @@ public final class Constants {
             return Stream.of(CertificateStatusEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid certificate status name: %s", name)));
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            String.format("Invalid certificate status name: %s", name)));
         }
     }
 
@@ -98,7 +100,8 @@ public final class Constants {
             return Stream.of(PackageStatusEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid Package status name: %s", name)));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException(String.format("Invalid Package status name: %s", name)));
         }
     }
 
@@ -114,7 +117,8 @@ public final class Constants {
             return Stream.of(PackageActionEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid package action name: %s", name)));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException(String.format("Invalid package action name: %s", name)));
         }
     }
 
@@ -124,12 +128,15 @@ public final class Constants {
         DRAFT("DRAFT"),
         PUBLISHED("PUBLISHED"),
         HIDDEN("HIDDEN");
+
         private final String value;
+
         public static KnowledgeItemStatusEnum get(final String name) {
             return Stream.of(KnowledgeItemStatusEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid certificate status name: %s", name)));
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            String.format("Invalid certificate status name: %s", name)));
         }
     }
 
@@ -153,7 +160,8 @@ public final class Constants {
             return Stream.of(ReportTypeEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid report type name: %s", name)));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException(String.format("Invalid report type name: %s", name)));
         }
     }
 
@@ -171,7 +179,8 @@ public final class Constants {
             return Stream.of(ReportStatusEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid report status name: %s", name)));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException(String.format("Invalid report status name: %s", name)));
         }
     }
 
@@ -190,7 +199,8 @@ public final class Constants {
             return Stream.of(ReportActionEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid report action name: %s", name)));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException(String.format("Invalid report action name: %s", name)));
         }
     }
 
@@ -208,7 +218,8 @@ public final class Constants {
             return Stream.of(TargetReportTypeEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid target report type name: %s", name)));
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            String.format("Invalid target report type name: %s", name)));
         }
     }
 
@@ -227,7 +238,8 @@ public final class Constants {
             return Stream.of(BookingStatusEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid booking status name: %s", name)));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException(String.format("Invalid booking status name: %s", name)));
         }
     }
 
@@ -235,7 +247,6 @@ public final class Constants {
     @AllArgsConstructor
     public enum PaymentMethodEnum {
         MOMO("MOMO"),
-        VNPAY("VNPAY"),
         PAYPAL("PAYPAL");
 
         private final String value;
@@ -244,7 +255,8 @@ public final class Constants {
             return Stream.of(PaymentMethodEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid payment method name: %s. Currently only PAYPAL is supported", name)));
+                    .orElseThrow(() -> new IllegalArgumentException(String
+                            .format("Invalid payment method name: %s. Currently only PAYPAL is supported", name)));
         }
     }
 
@@ -262,16 +274,17 @@ public final class Constants {
             return Stream.of(PaymentStatusEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid payment status name: %s", name)));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException(String.format("Invalid payment status name: %s", name)));
         }
     }
 
     @Getter
     @AllArgsConstructor
     public enum PaymentTypeEnum {
-        PAID_PACKAGE("PAID_PACKAGE"),           // Khách hàng thanh toán cho gói dịch vụ của Seer
-        RECEIVED_PACKAGE("RECEIVED_PACKAGE"),   // Hệ thống thanh toán lại tiền cho SEER
-        BONUS("BONUS");                         // Admin thưởng thêm cho SEER
+        PAID_PACKAGE("PAID_PACKAGE"), // Khách hàng thanh toán cho gói dịch vụ của Seer
+        RECEIVED_PACKAGE("RECEIVED_PACKAGE"), // Hệ thống thanh toán lại tiền cho SEER
+        BONUS("BONUS"); // Admin thưởng thêm cho SEER
 
         private final String value;
 
@@ -279,7 +292,8 @@ public final class Constants {
             return Stream.of(PaymentTypeEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid payment type name: %s", name)));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException(String.format("Invalid payment type name: %s", name)));
         }
     }
 
@@ -297,7 +311,8 @@ public final class Constants {
             return Stream.of(ServiceCategoryEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid service category name: %s", name)));
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            String.format("Invalid service category name: %s", name)));
         }
     }
 
@@ -306,7 +321,7 @@ public final class Constants {
     public enum ConversationTypeEnum {
         BOOKING_SESSION("BOOKING_SESSION"),
         SUPPORT("SUPPORT"),
-        ADMIN_CHAT("ADMIN_CHAT");  // Admin chat with customer or seer
+        ADMIN_CHAT("ADMIN_CHAT"); // Admin chat with customer or seer
 
         private final String value;
 
@@ -314,7 +329,8 @@ public final class Constants {
             return Stream.of(ConversationTypeEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid conversation type name: %s", name)));
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            String.format("Invalid conversation type name: %s", name)));
         }
     }
 
@@ -332,13 +348,14 @@ public final class Constants {
             return Stream.of(ConversationStatusEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid conversation status name: %s", name)));
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            String.format("Invalid conversation status name: %s", name)));
         }
     }
 
     @Getter
     @AllArgsConstructor
-    public enum MessageTypeEnum  {
+    public enum MessageTypeEnum {
         USER("USER"),
         SYSTEM("SYSTEM");
 
@@ -348,7 +365,8 @@ public final class Constants {
             return Stream.of(MessageTypeEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid message type name: %s", name)));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException(String.format("Invalid message type name: %s", name)));
         }
     }
 
@@ -367,7 +385,8 @@ public final class Constants {
             return Stream.of(MessageStatusEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid message type name: %s", name)));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException(String.format("Invalid message type name: %s", name)));
         }
     }
 
@@ -383,7 +402,8 @@ public final class Constants {
             return Stream.of(InteractionTypeEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid interaction type name: %s", name)));
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            String.format("Invalid interaction type name: %s", name)));
         }
     }
 
@@ -400,7 +420,8 @@ public final class Constants {
             return Stream.of(NotificationTypeEnum.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid notification type name: %s", name)));
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            String.format("Invalid notification type name: %s", name)));
         }
     }
 
@@ -418,7 +439,8 @@ public final class Constants {
             return Stream.of(TargetType.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid target type name: %s", name)));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException(String.format("Invalid target type name: %s", name)));
         }
     }
 
@@ -453,7 +475,8 @@ public final class Constants {
             return Stream.of(CustomerAction.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid customer action name: %s", name)));
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            String.format("Invalid customer action name: %s", name)));
         }
     }
 
@@ -474,7 +497,8 @@ public final class Constants {
             return Stream.of(SeerAction.values())
                     .filter(p -> p.name().equals(name.toUpperCase()) || p.getValue().equals(name.toUpperCase()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid seer action name: %s", name)));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException(String.format("Invalid seer action name: %s", name)));
         }
     }
 }

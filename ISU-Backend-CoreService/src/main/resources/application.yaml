@@ -162,3 +162,13 @@ paypal:
 socketio:
   port: ${SOCKET_IO_PORT}
   host: ${SOCKET_IO_HOST}
+
+# Actuator endpoints for health checks
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
