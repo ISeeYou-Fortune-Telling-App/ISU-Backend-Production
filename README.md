@@ -335,28 +335,6 @@ make clean-all
 make quick-start
 ```
 
-## Development
-
-### Run locally (without Docker)
-
-```bash
-# Start infrastructure
-make dev
-
-# Run Core Service with Maven
-make core-run
-
-# Or run directly
-cd ISU-Backend-CoreService
-mvn spring-boot:run
-```
-
-### Run tests
-
-```bash
-make core-test
-```
-
 ## License
 
 Private - ISeeYou Fortune Telling Platform
