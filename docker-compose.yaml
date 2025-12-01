@@ -207,11 +207,11 @@ services:
       - isu-internal-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "wget -q --spider http://localhost:8085/api-docs || exit 1"]
+      test: ["CMD", "curl", "-f", "http://localhost:8085/actuator/health"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 60s
+      start_period: 40s
 
   # ===========================================
   # REPORT SERVICE & DEPENDENCIES
@@ -275,11 +275,11 @@ services:
       - isu-internal-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "wget -q --spider http://localhost:8086/api-docs || exit 1"]
+      test: ["CMD", "curl", "-f", "http://localhost:8086/actuator/health"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 60s
+      start_period: 40s
 
   # ===========================================
   # AI SUPPORT SERVICE & DEPENDENCIES
