@@ -28,7 +28,7 @@ This backend powers the ISeeYou web and Android app and with a robust, scalable 
 flowchart TB
     subgraph Clients
         WEB[Web App]
-        ANDROID[Android App]
+        ANDROID[Mobile App]
     end
 
     subgraph Gateway
