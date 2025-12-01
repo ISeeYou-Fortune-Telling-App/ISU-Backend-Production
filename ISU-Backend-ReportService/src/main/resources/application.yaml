@@ -1,0 +1,53 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+app:
+  secret: ${APP_SECRET:myDefaultSecretKeyForJWTTokenParsing1234567890}
+
+spring:
+  application:
+    name: ${APP_NAME}
+    description: ${APP_DESCRIPTION}
+
+  data:
+    mongodb:
+      uri: mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_HOST}:${MONGODB_PORT}/${MONGODB_DB}?authSource=admin&authMechanism=SCRAM-SHA-256
+
+  # Message broker
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    virtual-host: ${RABBITMQ_VIRTUAL_HOST:/}
+    listener:
+      simple:
+        acknowledge-mode: ${RABBITMQ_ACK_MODE:AUTO}
+        retry:
+          enabled: true
+          max-attempts: 3
+
+logging:
+  level:
+    root: ${LOGGING_LEVEL_ROOT:INFO}
+    com:
+      iseeyou:
+        fortunetelling:
+          security: DEBUG
+    org:
+      hibernate:
+        type: ${LOGGING_LEVEL_HIBERNATE}
+      springframework:
+        web: ${LOGGING_LEVEL_SPRING}
+        security: DEBUG
+
+springdoc:
+  api-docs:
+    enabled: ${API_DOCS_ENABLED:true}
+    path: /api-docs
+  swagger-ui:
+    enabled: ${SWAGGER_ENABLED:true}
+    path: /swagger-ui.html
+    operationsSorter: alpha
+    tagsSorter: alpha
+  show-actuator: true

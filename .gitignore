@@ -1,0 +1,142 @@
+# ===========================================
+# ISU Backend - Root .gitignore
+# ===========================================
+# This is the unified .gitignore for all services
+# ===========================================
+
+# ===========================================
+# Environment & Secrets
+# ===========================================
+.env
+.env.local
+.env.production
+.env.*.local
+env/*.env
+!env/*.env.example
+
+# Firebase credentials
+*firebase*.json
+!*firebase*.example.json
+
+# ===========================================
+# IDE & Editor
+# ===========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.iws
+*.iml
+*.ipr
+
+# ===========================================
+# Java / Maven / Gradle
+# ===========================================
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+.mvn/wrapper/maven-wrapper.jar
+*.jar
+*.war
+*.ear
+
+# STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ===========================================
+# Python
+# ===========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+
+# ===========================================
+# Docker
+# ===========================================
+# Docker volumes and runtime data (local dev)
+**/volumes/
+**/docker/volumes/
+**/docker/logs/
+var/
+
+# ===========================================
+# Logs
+# ===========================================
+*.log
+logs/
+
+# ===========================================
+# OS Generated Files
+# ===========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ===========================================
+# Backup & Temporary Files
+# ===========================================
+*.bak
+*.backup
+*.tmp
+*.temp
+tmp/
+temp/
+backups/
+
+# ===========================================
+# Test & Coverage
+# ===========================================
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# ===========================================
+# Misc
+# ===========================================
+# Query results (AI Analysis)
+258d8dc916db8cea/
+
+# Help files (auto-generated)
+HELP.md

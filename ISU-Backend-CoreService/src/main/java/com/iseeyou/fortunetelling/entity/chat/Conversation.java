@@ -1,0 +1,74 @@
+package com.iseeyou.fortunetelling.entity.chat;
+
+import com.iseeyou.fortunetelling.entity.AbstractBaseEntity;
+import com.iseeyou.fortunetelling.entity.booking.Booking;
+import com.iseeyou.fortunetelling.entity.user.User;
+import com.iseeyou.fortunetelling.util.Constants;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.Set;
+
+@Entity
+@Table(name = "conversation")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@AttributeOverrides({
+        @AttributeOverride(name = "id", column = @Column(name = "conversation_id", nullable = false)),
+})
+public class Conversation extends AbstractBaseEntity {
+    // Booking - optional (null for admin chats)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "booking_id")
+    private Booking booking;
+
+    @Column(name = "type", nullable = false)
+    private Constants.ConversationTypeEnum type;
+
+    // For admin chat: admin user
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "admin_id")
+    private User admin;
+
+    // For admin chat: customer or seer
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "target_user_id")
+    private User targetUser;
+
+    @Column(name = "session_start_time")
+    private LocalDateTime sessionStartTime;
+
+    @Column(name = "session_end_time")
+    private LocalDateTime sessionEndTime;
+
+    @Column(name = "session_duration_minutes")
+    private Integer sessionDurationMinutes;
+
+    @Column(name = "status", nullable = false)
+    @Builder.Default
+    private Constants.ConversationStatusEnum status = Constants.ConversationStatusEnum.ACTIVE;
+
+    @OneToMany(mappedBy = "conversation", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Message> messages;
+
+    @Column(name = "customer_joined_at")
+    private LocalDateTime customerJoinedAt;  // Track khi customer join
+
+    @Column(name = "seer_joined_at")
+    private LocalDateTime seerJoinedAt;  // Track khi seer join
+
+    @Column(name = "canceled_by", length = 500)
+    private String canceledBy;  // CUSTOMER/SEER
+
+    @Column(name = "warning_notification_sent")
+    @Builder.Default
+    private Boolean warningNotificationSent = false;  // Đã gửi warning chưa
+
+    @Column(name = "extended_minutes")
+    @Builder.Default
+    private Integer extendedMinutes = 0;
+}

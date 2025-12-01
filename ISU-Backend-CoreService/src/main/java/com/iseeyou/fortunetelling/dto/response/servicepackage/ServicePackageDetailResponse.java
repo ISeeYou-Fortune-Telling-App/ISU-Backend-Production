@@ -1,0 +1,92 @@
+package com.iseeyou.fortunetelling.dto.response.servicepackage;
+
+import com.iseeyou.fortunetelling.dto.response.servicepackage.ServicePackageResponse.CategoryInfo;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class ServicePackageDetailResponse {
+    // Thông tin Service Package
+    private String packageId;
+    private String packageTitle;
+    private String packageContent;
+    private String imageUrl;
+    private Integer durationMinutes;
+    private Double price;
+    private Boolean isLike;
+    private Boolean isDislike;
+    private String status;
+    private String rejectionReason;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    // Review statistics
+    private Double avgRating;
+    private Long totalReviews;
+    private List<ReviewInfo> reviews;
+    private List<AvailableTimeSlotInfo> availableTimeSlots; // Thêm trường availableTimeSlots
+    private List<CategoryInfo> categories; // Danh sách category giống cấu trúc ServicePackageResponse
+
+    // Thông tin Seer
+    private SeerInfo seer;
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class SeerInfo {
+        private String seerId;
+        private String fullName;
+        private String email;
+        private String phone;
+        private String avatarUrl;
+        private String coverUrl;
+        private String profileDescription;
+        private Double avgRating;
+        private Integer totalRates;
+        private String paymentInfo;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ReviewInfo {
+        private UUID bookingId;
+        private BigDecimal rating;
+        private String comment;
+        private LocalDateTime reviewedAt;
+        private CustomerInfo customer;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CustomerInfo {
+        private UUID customerId;
+        private String customerName;
+        private String customerAvatar;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AvailableTimeSlotInfo {
+        private Integer weekDate; // 2 = Thứ 2, 3 = Thứ 3, ..., 8 = Chủ nhật
+        private String weekDayName; // Tên thứ bằng tiếng Việt
+        private java.time.LocalTime availableFrom;
+        private java.time.LocalTime availableTo;
+    }
+}

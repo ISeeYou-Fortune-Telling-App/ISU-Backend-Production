@@ -1,0 +1,45 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+HELP.md
+*.md
+
+# Build output
+target/
+build/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea
+.vscode
+.settings
+.project
+.classpath
+.factorypath
+*.iml
+*.iws
+*.ipr
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment files (pass via docker run --env-file or docker-compose)
+.env
+.env.*
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Make
+Makefile
+

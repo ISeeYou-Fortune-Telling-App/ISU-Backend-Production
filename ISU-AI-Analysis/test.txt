@@ -1,0 +1,8 @@
+
+docker exec -it postgres-vanna psql -U postgres -d vanna -c "SELECT version();"
+docker exec -it postgres-vanna psql -U postgres -d vanna -c "SELECT * FROM knowledge_categories LIMIT 10;"
+docker exec -it postgres-vanna psql -U postgres -d vanna -c "SELECT user_id, role, email, full_name FROM users LIMIT 10;"
+docker exec -it postgres-vanna psql -U postgres -d vanna -c "SELECT * FROM seer_specialities LIMIT 10;"
+docker exec -it postgres-vanna psql -U postgres -d vanna -c "SELECT id, customer_id, month, year, potential_point FROM customer_potentials LIMIT 10;"
+docker exec -it postgres-vanna psql -U postgres -d vanna -c "SELECT id, seer_id, month, year, performance_point FROM seer_performances LIMIT 10;"
+docker exec -it postgres-vanna psql -U postgres -d vanna -c "SELECT 'knowledge_categories' as table_name, COUNT(*) as total FROM knowledge_categories UNION ALL SELECT 'users', COUNT(*) FROM users UNION ALL SELECT 'seer_specialities', COUNT(*) FROM seer_specialities UNION ALL SELECT 'customer_potentials', COUNT(*) FROM customer_potentials UNION ALL SELECT 'seer_performances', COUNT(*) FROM seer_performances;"

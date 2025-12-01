@@ -1,0 +1,87 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: ISU-Backend-GatewayService
+
+  webflux:
+    static-path-pattern: /static/**
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            # Core Backend Service Routes
+            - id: core-backend-service
+              uri: ${CORE_BACKEND_URI:http://localhost:8081}
+              order: 1
+              predicates:
+                - Path=/core/**
+              filters:
+                - StripPrefix=1
+                - name: PreserveHostHeader
+                - RemoveResponseHeader=Access-Control-Allow-Origin
+                - RemoveResponseHeader=Access-Control-Allow-Methods
+                - RemoveResponseHeader=Access-Control-Allow-Headers
+                - RemoveResponseHeader=Access-Control-Allow-Credentials
+                - RemoveResponseHeader=Access-Control-Max-Age
+
+            # Push Notification Service Routes
+            - id: push-notification-service
+              uri: ${PUSH_NOTIFICATION_URI:http://localhost:8085}
+              order: 1
+              predicates:
+                - Path=/notification/**
+              filters:
+                - StripPrefix=1
+                - name: PreserveHostHeader
+
+            # Report Analytic and Log Service Routes
+            - id: report-service
+              uri: ${REPORT_URI:http://localhost:8086}
+              order: 1
+              predicates:
+                - Path=/report/**
+              filters:
+                - StripPrefix=1
+                - name: PreserveHostHeader
+
+            # AI Support Service Route
+            - id: ai-support-service
+              uri: ${AI_SUPPORT_URI:http://127.0.0.1:8001}
+              order: 1
+              predicates:
+                - Path=/ai-support/**
+              filters:
+                - StripPrefix=1
+                - name: PreserveHostHeader
+
+            # AI Analysis Service Route
+            - id: ai-analysis-service
+              uri: ${AI_ANALYSIS_URI:http://localhost:8000}
+              order: 1
+              predicates:
+                - Path=/ai-analysis/**
+              filters:
+                - StripPrefix=1
+                - name: PreserveHostHeader
+
+# Actuator endpoints for monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+
+# Logging
+logging:
+  level:
+    org.springframework.cloud.gateway: ${LOGGING_LEVEL:DEBUG}
+    org.springframework.web.server: ${LOGGING_LEVEL:DEBUG}
+    reactor.netty: ${LOGGING_LEVEL:DEBUG}

@@ -1,0 +1,38 @@
+package com.iseeyou.fortunetelling.repository.chat;
+
+import com.iseeyou.fortunetelling.entity.chat.Message;
+import com.iseeyou.fortunetelling.entity.user.User;
+import com.iseeyou.fortunetelling.util.Constants;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
+public interface MessageRepository extends JpaRepository<Message, UUID> {
+    Page<Message> findByConversation_IdOrderByCreatedAtDesc(UUID conversationId, Pageable pageable);
+    List<Message> findByConversationIdAndStatus(UUID conversationId, Constants.MessageStatusEnum status);
+
+    // Get messages excluding those deleted by specific role
+    @Query("SELECT m FROM Message m WHERE m.conversation.id = :conversationId " +
+           "AND ( :excludeRole IS NULL OR m.deletedBy IS NULL OR m.deletedBy != :excludeRole ) ")
+    Page<Message> findVisibleMessages(@Param("conversationId") UUID conversationId,
+                                       @Param("excludeRole") Constants.RoleEnum excludeRole,
+                                       Pageable pageable);
+
+    long countAllBySender(User sender);
+
+    long countAllBySenderAndStatus(User sender, Constants.MessageStatusEnum status);
+
+    // Return the latest createdAt timestamp for messages in a conversation
+    @Query("SELECT MAX(m.createdAt) FROM Message m WHERE m.conversation.id = :conversationId")
+    LocalDateTime findLatestMessageCreatedAtByConversationId(@Param("conversationId") UUID conversationId);
+
+    // Batch query: return pairs (conversationId, latestCreatedAt) for given conversation ids
+    @Query("SELECT m.conversation.id, MAX(m.createdAt) FROM Message m WHERE m.conversation.id IN :conversationIds GROUP BY m.conversation.id")
+    List<Object[]> findLatestMessageCreatedAtByConversationIds(@Param("conversationIds") List<UUID> conversationIds);
+}

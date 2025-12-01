@@ -1,0 +1,9 @@
+# Dockerfile for PostgreSQL with data import
+FROM postgres:13.11-bullseye
+
+# Copy SQL file vào thư mục init của PostgreSQL
+# PostgreSQL sẽ tự động chạy các file .sql trong /docker-entrypoint-initdb.d/
+COPY data_import.sql /docker-entrypoint-initdb.d/
+
+# Set permissions
+USER postgres

@@ -1,0 +1,164 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /
+    encoding:
+      enabled: true
+      charset: UTF-8
+  forward-headers-strategy: framework
+  address: 0.0.0.0
+
+app:
+  secret: ${APP_SECRET}
+  jwt:
+    token:
+      expires-in: ${APP_JWT_TOKEN_EXPIRES_IN}
+    refresh-token:
+      expires-in: ${APP_JWT_REFRESH_TOKEN_EXPIRES_IN}
+  default-locale: ${APP_DEFAULT_LOCALE}
+  default-timezone: ${APP_DEFAULT_TIMEZONE}
+  url: ${APP_URL}
+  rabbitmq:
+    exchange: notification.exchange
+    routing-key: notification.send
+
+# Report Service Configuration
+report:
+  service:
+    uri: ${REPORT_SERVICE_URI:http://localhost:8086}
+
+# Notification Service Configuration
+notification:
+  service:
+    uri: ${NOTIFICATION_SERVICE_URI:http://host.docker.internal:8085}
+
+spring:
+  application:
+    name: ${APP_NAME}
+    description: ${APP_DESCRIPTION}
+  # Servlet
+  servlet:
+    multipart:
+      max-request-size: 110MB
+      max-file-size: 100MB
+  # Email Configuration
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+  # JPA Configuration - Chuyển sang validate để chỉ kiểm tra schema, không tự tạo/xóa
+  jpa:
+    hibernate:
+      ddl-auto: ${DB_DDL_AUTO:validate}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+        format_sql: true
+        globally_quoted_identifiers: true
+        check_nullability: true
+        validator:
+          apply_to_ddl: true
+        use_sql_comments: true
+        jdbc:
+          time_zone: ${APP_DEFAULT_TIMEZONE:Asia/Ho_Chi_Minh}
+    open-in-view: false
+
+  # Flyway Configuration - Quản lý migration database
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    validate-on-migrate: false # Tắt validate để cho phép sửa migration trong development
+    clean-disabled: true
+    schemas: public
+    default-schema: public
+
+  datasource:
+    url: jdbc:postgresql://${POSTGRESQL_HOST}:${POSTGRESQL_PORT}/${POSTGRESQL_DB}?currentSchema=public
+    username: ${POSTGRESQL_USER}
+    password: ${POSTGRESQL_PASSWORD}
+
+  data:
+    redis:
+      database: ${REDIS_DATABASE}
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+      timeout: ${REDIS_TIMEOUT}
+    web:
+      pageable:
+        default-page-size: ${PAGEABLE_DEFAULT_PAGE_SIZE}
+
+  messages:
+    basename: locales.messages
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force-encoding: true
+
+  http:
+    encoding:
+      force-encoding: true
+
+  jackson:
+    mapper:
+      accept-case-insensitive-enums: true
+
+  # Message Broker
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    virtual-host: ${RABBITMQ_VIRTUAL_HOST:/}
+    template:
+      retry:
+        enabled: true
+        initial-interval: 2s
+        max-attempts: 3
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    operationsSorter: alpha
+    tagsSorter: alpha
+    path: /swagger-ui.html
+  show-actuator: true
+
+logging:
+  level:
+    root: ${LOGGING_LEVEL_ROOT}
+    org:
+      hibernate:
+        type: ${LOGGING_LEVEL_HIBERNATE}
+      springframework:
+        web: ${LOGGING_LEVEL_SPRING}
+
+cloudinary:
+  cloud-name: ${CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}
+
+paypal:
+  client-id: ${CLIENT_ID}
+  client-secret: ${SECRET_KEY}
+  mode: ${PAYPAL_MODE}
+
+socketio:
+  port: ${SOCKET_IO_PORT}
+  host: ${SOCKET_IO_HOST}

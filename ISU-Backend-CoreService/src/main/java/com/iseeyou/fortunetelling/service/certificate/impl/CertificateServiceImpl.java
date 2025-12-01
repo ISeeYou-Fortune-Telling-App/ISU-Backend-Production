@@ -1,0 +1,381 @@
+package com.iseeyou.fortunetelling.service.certificate.impl;
+
+import com.iseeyou.fortunetelling.dto.request.certificate.CertificateApprovalRequest;
+import com.iseeyou.fortunetelling.dto.request.certificate.CertificateCreateRequest;
+import com.iseeyou.fortunetelling.dto.request.certificate.CertificateUpdateRequest;
+import com.iseeyou.fortunetelling.dto.response.certificate.CertificateStatsResponse;
+import com.iseeyou.fortunetelling.entity.certificate.Certificate;
+import com.iseeyou.fortunetelling.entity.certificate.CertificateCategory;
+import com.iseeyou.fortunetelling.entity.knowledge.KnowledgeCategory;
+import com.iseeyou.fortunetelling.entity.user.User;
+import com.iseeyou.fortunetelling.exception.NotFoundException;
+import com.iseeyou.fortunetelling.mapper.CertificateMapper;
+import com.iseeyou.fortunetelling.repository.certificate.CertificateCategoryRepository;
+import com.iseeyou.fortunetelling.repository.certificate.CertificateRepository;
+import com.iseeyou.fortunetelling.service.certificate.CertificateService;
+import com.iseeyou.fortunetelling.service.fileupload.CloudinaryService;
+import com.iseeyou.fortunetelling.service.knowledgecategory.KnowledgeCategoryService;
+import com.iseeyou.fortunetelling.service.user.UserService;
+import com.iseeyou.fortunetelling.util.Constants;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+@Service
+@Slf4j
+public class CertificateServiceImpl implements CertificateService {
+
+    private final CertificateRepository certificateRepository;
+    private final CertificateCategoryRepository certificateCategoryRepository;
+    private final KnowledgeCategoryService knowledgeCategoryService;
+    private final CloudinaryService cloudinaryService;
+    private final UserService userService;
+    private final CertificateMapper certificateMapper;
+    private final com.iseeyou.fortunetelling.service.notification.NotificationMicroservice notificationMicroservice;
+
+    public CertificateServiceImpl(
+            CertificateRepository certificateRepository,
+            CertificateCategoryRepository certificateCategoryRepository,
+            KnowledgeCategoryService knowledgeCategoryService,
+            CloudinaryService cloudinaryService,
+            @Lazy UserService userService,
+            CertificateMapper certificateMapper,
+            com.iseeyou.fortunetelling.service.notification.NotificationMicroservice notificationMicroservice) {
+        this.certificateRepository = certificateRepository;
+        this.certificateCategoryRepository = certificateCategoryRepository;
+        this.knowledgeCategoryService = knowledgeCategoryService;
+        this.cloudinaryService = cloudinaryService;
+        this.userService = userService;
+        this.certificateMapper = certificateMapper;
+        this.notificationMicroservice = notificationMicroservice;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Certificate> findAll(Pageable pageable) {
+        return certificateRepository.findAll(pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Certificate> findAll(Pageable pageable, Constants.CertificateStatusEnum status) {
+        if (status == null) {
+            return certificateRepository.findAll(pageable);
+        }
+        return certificateRepository.findAllByStatus(status, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Certificate findById(UUID id) {
+        return certificateRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Certificate not found with id: " + id));
+    }
+
+    @Override
+    @Transactional
+    public Certificate create(CertificateCreateRequest request) throws IOException {
+        // Map DTO to Entity
+        Certificate certificate = certificateMapper.mapTo(request, Certificate.class);
+
+        // Defensive validation in service layer to avoid Hibernate
+        // PropertyValueException
+        if (certificate.getIssuedBy() == null || certificate.getIssuedBy().trim().isEmpty()) {
+            throw new IllegalArgumentException("issuedBy must not be null or empty");
+        }
+        if (certificate.getIssuedAt() == null) {
+            throw new IllegalArgumentException("issuedAt must not be null");
+        }
+
+        // Upload certificate file to Cloudinary
+        if (request.getCertificateFile() != null && !request.getCertificateFile().isEmpty()) {
+            String imageUrl = cloudinaryService.uploadFile(request.getCertificateFile(), "certificates");
+            certificate.setCertificateUrl(imageUrl);
+        }
+
+        // Set business logic fields
+        certificate.setSeer(userService.getUser());
+        certificate.setStatus(Constants.CertificateStatusEnum.PENDING);
+        Certificate newCertificate = certificateRepository.save(certificate);
+
+        // Handle categories if provided
+        if (request.getCategoryIds() != null && !request.getCategoryIds().isEmpty()) {
+            List<KnowledgeCategory> categories = knowledgeCategoryService.findAllByIds(request.getCategoryIds());
+
+            Set<CertificateCategory> certificateCategories = new HashSet<>();
+            for (KnowledgeCategory category : categories) {
+                CertificateCategory certificateCategory = CertificateCategory.builder()
+                        .certificate(newCertificate)
+                        .knowledgeCategory(category)
+                        .build();
+
+                certificateCategories.add(certificateCategory);
+            }
+
+            certificateCategoryRepository.saveAll(certificateCategories);
+            newCertificate.setCertificateCategories(certificateCategories);
+        }
+
+        return newCertificate;
+    }
+
+    @Override
+    @Transactional
+    public Certificate createForUser(CertificateCreateRequest request, User user) throws IOException {
+        // Map DTO to Entity
+        Certificate certificate = certificateMapper.mapTo(request, Certificate.class);
+
+        // Defensive validation in service layer to avoid Hibernate
+        // PropertyValueException
+        if (certificate.getIssuedBy() == null || certificate.getIssuedBy().trim().isEmpty()) {
+            throw new IllegalArgumentException("issuedBy must not be null or empty");
+        }
+        if (certificate.getIssuedAt() == null) {
+            throw new IllegalArgumentException("issuedAt must not be null");
+        }
+
+        // Upload certificate file to Cloudinary
+        if (request.getCertificateFile() != null && !request.getCertificateFile().isEmpty()) {
+            String imageUrl = cloudinaryService.uploadFile(request.getCertificateFile(), "certificates");
+            certificate.setCertificateUrl(imageUrl);
+        }
+
+        // Set business logic fields - sử dụng User được truyền vào thay vì lấy từ
+        // security context
+        certificate.setSeer(user);
+        certificate.setStatus(Constants.CertificateStatusEnum.PENDING);
+        Certificate newCertificate = certificateRepository.save(certificate);
+
+        // Handle categories if provided
+        if (request.getCategoryIds() != null && !request.getCategoryIds().isEmpty()) {
+            List<KnowledgeCategory> categories = knowledgeCategoryService.findAllByIds(request.getCategoryIds());
+
+            Set<CertificateCategory> certificateCategories = new HashSet<>();
+            for (KnowledgeCategory category : categories) {
+                CertificateCategory certificateCategory = CertificateCategory.builder()
+                        .certificate(newCertificate)
+                        .knowledgeCategory(category)
+                        .build();
+
+                certificateCategories.add(certificateCategory);
+            }
+
+            certificateCategoryRepository.saveAll(certificateCategories);
+            newCertificate.setCertificateCategories(certificateCategories);
+        }
+
+        return newCertificate;
+    }
+
+    @Override
+    @Transactional
+    public Certificate update(UUID id, CertificateUpdateRequest request) throws IOException {
+        Certificate existingCertificate = certificateRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Certificate not found with id: " + id));
+
+        // Handle file upload if new file provided
+        if (request.getCertificateFile() != null && !request.getCertificateFile().isEmpty()) {
+            // Delete old file from Cloudinary if exists
+            if (existingCertificate.getCertificateUrl() != null) {
+                cloudinaryService.deleteFile(existingCertificate.getCertificateUrl());
+            }
+            // Upload new file
+            String imageUrl = cloudinaryService.uploadFile(request.getCertificateFile(), "certificates");
+            existingCertificate.setCertificateUrl(imageUrl);
+        }
+
+        // Update allowed fields from request ONLY when value is present (non-blank for
+        // strings)
+        if (StringUtils.hasText(request.getCertificateName())) {
+            existingCertificate.setCertificateName(request.getCertificateName());
+        }
+        if (StringUtils.hasText(request.getCertificateDescription())) {
+            existingCertificate.setCertificateDescription(request.getCertificateDescription());
+        }
+        if (StringUtils.hasText(request.getIssuedBy())) {
+            existingCertificate.setIssuedBy(request.getIssuedBy());
+        }
+        if (request.getIssuedAt() != null) {
+            existingCertificate.setIssuedAt(request.getIssuedAt());
+        }
+        if (request.getExpirationDate() != null) {
+            existingCertificate.setExpirationDate(request.getExpirationDate());
+        }
+
+        // Update categories only if provided and non-empty (avoid wiping when form
+        // sends empty value)
+        if (request.getCategoryIds() != null && !request.getCategoryIds().isEmpty()) {
+            updateCertificateCategories(existingCertificate, request.getCategoryIds());
+        }
+
+        Certificate saved = certificateRepository.save(existingCertificate);
+
+        // Reload the saved certificate with categories and seer eagerly fetched to
+        // avoid LazyInitializationException during mapping
+        return certificateRepository.findByIdWithCategories(saved.getId()).orElse(saved);
+    }
+
+    private void updateCertificateCategories(Certificate certificate, Set<UUID> newCategoryIds) {
+        // Delete all existing category relationships for this certificate in one query
+        certificateCategoryRepository.deleteByCertificate_Id(certificate.getId());
+        // Ensure deletions are flushed to DB before inserts
+        certificateCategoryRepository.flush();
+        // Clear the in-memory collection to avoid stale state
+        certificate.getCertificateCategories().clear();
+
+        // Add new category relationships if any
+        if (newCategoryIds != null && !newCategoryIds.isEmpty()) {
+            List<KnowledgeCategory> categories = knowledgeCategoryService.findAllByIds(newCategoryIds);
+
+            Set<CertificateCategory> newRelationships = new HashSet<>();
+            for (KnowledgeCategory category : categories) {
+                CertificateCategory relationship = CertificateCategory.builder()
+                        .certificate(certificate)
+                        .knowledgeCategory(category)
+                        .build();
+                newRelationships.add(relationship);
+            }
+
+            // Save all new relationships
+            certificateCategoryRepository.saveAll(newRelationships);
+            // Update the collection in entity
+            certificate.getCertificateCategories().addAll(newRelationships);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void delete(UUID id) throws IOException {
+        Certificate certificate = certificateRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Certificate not found with id: " + id));
+        if (certificate.getCertificateUrl() != null) {
+            cloudinaryService.deleteFile(certificate.getCertificateUrl());
+        }
+        certificateRepository.delete(certificate);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Certificate> findByUserId(UUID userId, Pageable pageable) {
+        return certificateRepository.findAllBySeer_Id(userId, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Certificate> findByUserIdAndCategoryId(UUID seerId, UUID categoryId, Pageable pageable) {
+        return certificateRepository.findBySeerIdAndCategoryId(seerId, categoryId, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Certificate> findByCategoryId(UUID categoryId, Pageable pageable) {
+        return certificateRepository.findByCategoryId(categoryId, pageable);
+    }
+
+    @Override
+    @Transactional
+    public Certificate approveCertificate(UUID certificateId, CertificateApprovalRequest request) {
+        Certificate certificate = certificateRepository.findById(certificateId)
+                .orElseThrow(() -> new NotFoundException("Certificate not found with id: " + certificateId));
+
+        // Kiểm tra action phải là APPROVED hoặc REJECTED
+        if (request.getAction() != Constants.CertificateStatusEnum.APPROVED
+                && request.getAction() != Constants.CertificateStatusEnum.REJECTED) {
+            throw new IllegalArgumentException("Action must be APPROVED or REJECTED");
+        }
+
+        // Nếu action là REJECTED, phải có decision reason
+        if (request.getAction() == Constants.CertificateStatusEnum.REJECTED) {
+            if (request.getDecisionReason() == null || request.getDecisionReason().trim().isEmpty()) {
+                throw new IllegalArgumentException("Decision reason is required when rejecting a certificate");
+            }
+        }
+
+        // Nếu status thay đổi, cập nhật status và decision date
+        boolean statusChanged = certificate.getStatus() != request.getAction();
+        if (statusChanged) {
+            certificate.setStatus(request.getAction());
+            certificate.setDecisionDate(LocalDateTime.now());
+        }
+
+        // Nếu có decision reason (bất kể action), cập nhật reason và cập nhật
+        // decisionDate
+        if (request.getDecisionReason() != null) {
+            certificate.setDecisionReason(request.getDecisionReason());
+            // Nếu decisionDate chưa được cập nhật ở trên (status không đổi), cập nhật
+            // decisionDate để phản ánh thay đổi lý do
+            if (!statusChanged) {
+                certificate.setDecisionDate(LocalDateTime.now());
+            }
+        }
+
+        Certificate saved = certificateRepository.save(certificate);
+
+        // Send notification to seer about certificate approval/rejection
+        try {
+            com.iseeyou.fortunetelling.entity.user.User seer = saved.getSeer();
+            if (request.getAction() == com.iseeyou.fortunetelling.util.Constants.CertificateStatusEnum.APPROVED) {
+                notificationMicroservice.sendNotification(
+                        seer.getId().toString(),
+                        "Chứng chỉ được phê duyệt",
+                        "Chứng chỉ " + saved.getCertificateName() + " đã được phê duyệt",
+                        com.iseeyou.fortunetelling.util.Constants.TargetType.ACCOUNT,
+                        seer.getId().toString(),
+                        null,
+                        java.util.Map.of(
+                                "certificateId", saved.getId().toString(),
+                                "certificateName", saved.getCertificateName()));
+            } else {
+                notificationMicroservice.sendNotification(
+                        seer.getId().toString(),
+                        "Chứng chỉ bị từ chối",
+                        "Chứng chỉ " + saved.getCertificateName() + " bị từ chối. Lý do: " +
+                                (request.getDecisionReason() != null ? request.getDecisionReason() : "Không có lý do"),
+                        com.iseeyou.fortunetelling.util.Constants.TargetType.ACCOUNT,
+                        seer.getId().toString(),
+                        null,
+                        java.util.Map.of(
+                                "certificateId", saved.getId().toString(),
+                                "certificateName", saved.getCertificateName(),
+                                "reason",
+                                request.getDecisionReason() != null ? request.getDecisionReason() : "Không có lý do"));
+            }
+        } catch (Exception e) {
+            log.error("Error sending notification about certificate approval: {}", e.getMessage());
+        }
+
+        // Reload the saved certificate with categories and seer eagerly fetched to
+        // avoid LazyInitializationException
+        return certificateRepository.findByIdWithCategories(saved.getId())
+                .orElse(saved);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CertificateStatsResponse getStatistics() {
+        log.info("Getting certificate statistics");
+
+        long total = certificateRepository.count();
+        long approved = certificateRepository.countByStatus(Constants.CertificateStatusEnum.APPROVED);
+        long pending = certificateRepository.countByStatus(Constants.CertificateStatusEnum.PENDING);
+        long rejected = certificateRepository.countByStatus(Constants.CertificateStatusEnum.REJECTED);
+
+        return CertificateStatsResponse.builder()
+                .totalCertificates(total)
+                .approvedCertificates(approved)
+                .pendingCertificates(pending)
+                .rejectedCertificates(rejected)
+                .build();
+    }
+}
