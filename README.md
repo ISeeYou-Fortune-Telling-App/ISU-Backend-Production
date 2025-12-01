@@ -24,39 +24,95 @@ This backend powers the ISeeYou web and Android app and with a robust, scalable 
 
 ## Architecture Overview
 
-```
-                                    +------------------+
-                                    |   API Gateway    |
-                                    |   (Port 8080)    |
-                                    +--------+---------+
-                                             |
-              +------------------------------+------------------------------+
-              |                              |                              |
-    +---------v---------+         +----------v----------+        +----------v----------+
-    |   Core Service    |         | PushNoti Service    |        |  Report Service     |
-    |   (Port 8081)     |         |   (Port 8082)       |        |   (Port 8083)       |
-    | + Socket.IO 9092  |         +----------+----------+        +----------+----------+
-    +---------+---------+                    |                              |
-              |                              |                              |
-    +---------v---------+         +----------v----------+        +----------v----------+
-    | PostgreSQL + Redis|         |      MongoDB        |        |      MongoDB        |
-    +-------------------+         +---------------------+        +---------------------+
+```mermaid
+flowchart TB
+    subgraph Clients
+        WEB[Web App]
+        ANDROID[Android App]
+    end
 
-              +------------------------------+------------------------------+
-              |                                                             |
-    +---------v---------+                                        +----------v----------+
-    | AI Support (RAG)  |                                        | AI Analysis (Vanna) |
-    |   (Port 8001)     |                                        |   (Port 8000)       |
-    +---------+---------+                                        +----------+----------+
-              |                                                             |
-    +---------v---------+                                        +----------v----------+
-    | Neo4j + MongoDB   |                                        |     PostgreSQL      |
-    +-------------------+                                        +---------------------+
+    subgraph Gateway
+        GW[API Gateway<br/>Port 8080]
+    end
 
-                                    +------------------+
-                                    |    RabbitMQ      |
-                                    | (Port 5672/15672)|
-                                    +------------------+
+    subgraph Services
+        CORE[Core Service<br/>Port 8081<br/>+ Socket.IO 9092]
+        PUSHNOTI[PushNoti Service<br/>Port 8082]
+        REPORT[Report Service<br/>Port 8083]
+        AI_SUPPORT[AI Support - LightRAG<br/>Port 8001]
+        AI_ANALYSIS[AI Analysis - Vanna<br/>Port 8000]
+    end
+
+    subgraph "Core Databases"
+        POSTGRES_CORE[(PostgreSQL<br/>Port 5432)]
+        REDIS[(Redis<br/>Port 6379)]
+    end
+
+    subgraph "PushNoti Database"
+        MONGO_PUSHNOTI[(MongoDB<br/>Port 27018)]
+    end
+
+    subgraph "Report Database"
+        MONGO_REPORT[(MongoDB<br/>Port 27019)]
+    end
+
+    subgraph "AI Support Databases"
+        FAISS[(FAISS<br/>Vector Store)]
+        NEO4J[(Neo4j<br/>Port 7687)]
+        MONGO_AI[(MongoDB<br/>Port 27022)]
+    end
+
+    subgraph "AI Analysis Database"
+        POSTGRES_VANNA[(PostgreSQL<br/>Port 5433)]
+    end
+
+    subgraph "Message Broker"
+        RABBITMQ[RabbitMQ<br/>Port 5672/15672]
+    end
+
+    subgraph "External Services"
+        PAYPAL[PayPal API]
+        COMETCHAT[CometChat API]
+        FIREBASE[Firebase Cloud Messaging]
+    end
+
+    %% Client connections
+    WEB --> GW
+    ANDROID --> GW
+
+    %% Gateway routing
+    GW --> CORE
+    GW --> PUSHNOTI
+    GW --> REPORT
+    GW --> AI_SUPPORT
+    GW --> AI_ANALYSIS
+
+    %% Core Service connections
+    CORE --> POSTGRES_CORE
+    CORE --> REDIS
+    CORE --> PAYPAL
+    CORE --> COMETCHAT
+
+    %% PushNoti connections
+    PUSHNOTI --> MONGO_PUSHNOTI
+    PUSHNOTI --> FIREBASE
+
+    %% Report connections
+    REPORT --> MONGO_REPORT
+
+    %% AI Support connections
+    AI_SUPPORT --> FAISS
+    AI_SUPPORT --> NEO4J
+    AI_SUPPORT --> MONGO_AI
+
+    %% AI Analysis connections
+    AI_ANALYSIS --> POSTGRES_VANNA
+
+    %% RabbitMQ connections
+    CORE -.-> RABBITMQ
+    PUSHNOTI -.-> RABBITMQ
+    REPORT -.-> RABBITMQ
+    AI_SUPPORT -.-> RABBITMQ
 ```
 
 ## Services
