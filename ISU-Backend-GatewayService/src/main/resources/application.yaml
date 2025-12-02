@@ -10,6 +10,17 @@ spring:
 
   cloud:
     gateway:
+      httpclient:
+        connect-timeout: 3600
+        response-timeout: 3600
+      # Default filters applied to all routes - Remove CORS headers from backend services
+      default-filters:
+        - RemoveResponseHeader=Access-Control-Allow-Origin
+        - RemoveResponseHeader=Access-Control-Allow-Methods
+        - RemoveResponseHeader=Access-Control-Allow-Headers
+        - RemoveResponseHeader=Access-Control-Allow-Credentials
+        - RemoveResponseHeader=Access-Control-Max-Age
+        - RemoveResponseHeader=Access-Control-Expose-Headers
       server:
         webflux:
           routes:
@@ -22,11 +33,6 @@ spring:
               filters:
                 - StripPrefix=1
                 - name: PreserveHostHeader
-                - RemoveResponseHeader=Access-Control-Allow-Origin
-                - RemoveResponseHeader=Access-Control-Allow-Methods
-                - RemoveResponseHeader=Access-Control-Allow-Headers
-                - RemoveResponseHeader=Access-Control-Allow-Credentials
-                - RemoveResponseHeader=Access-Control-Max-Age
 
             # Core Socket.IO Service Routes (WebSocket)
             - id: core-socket-service
