@@ -165,7 +165,7 @@ cd ISU-Backend-Production
 
 ### 2. Configure environment
 
-Review and edit files in the `env/` directory:
+Review and edit files in the `env/` directory, or you can contact us for the example env:
 
 ```
 env/
@@ -178,22 +178,38 @@ env/
   └── common.env            # Shared variables
 ```
 
+The example structure should look like this:
+![Example Structure](images/example_structure.png)
+
 ### 3. Start services
 
 ```bash
-# Start all services
+# Start all services (Most recommend)
 make quick-start
 
-# Or start step by step
+# Or you can build and start each service at once, this is example
 make network-create
-make up
+
+# Start core service 
+make core-build
+make core-dev
+
+# Start report service 
+make report-build
+make report-up
+make report-import-data
 ```
+
+When all containers start completed, the Docker desktop at containers tab should look like this:
+![Example Container](images/example_container.png)
+
 
 ## Common Commands
 
 ### Manage all services
 
 ```bash
+make help            # Show all the make command you need
 make up              # Start all services
 make down            # Stop all services
 make build           # Build all services
@@ -236,30 +252,6 @@ make ai-analysis-up / ai-analysis-down / ai-analysis-logs
 make infra-up        # Start databases, Redis, RabbitMQ
 make infra-down      # Stop infrastructure
 make dev             # Start infra for local development
-```
-
-## Project Structure
-
-```
-ISU-Backend-All/
-├── docker-compose.yaml          # Main Docker Compose file
-├── Makefile                     # Management commands
-├── env/                         # Environment files
-│   ├── core-service.env
-│   ├── gateway-service.env
-│   ├── pushnoti-service.env
-│   ├── report-service.env
-│   ├── ai-support.env
-│   ├── ai-analysis.env
-│   └── common.env
-├── ISU-Backend-CoreService/     # Core Service source
-├── ISU-Backend-GatewayService/  # Gateway Service source
-├── ISU-Backend-PushNoti/        # Push Notification source
-├── ISU-Backend-ReportService/   # Report Service source
-├── ISU-AI-Support/              # AI Support (LightRAG) source
-├── ISU-AI-Analysis/             # AI Analysis (Vanna) source
-└── var/                         # Logs (gitignored)
-    └── logs/
 ```
 
 ## API Endpoints
