@@ -28,6 +28,16 @@ spring:
                 - RemoveResponseHeader=Access-Control-Allow-Credentials
                 - RemoveResponseHeader=Access-Control-Max-Age
 
+            # Core Socket.IO Service Routes (WebSocket)
+            - id: core-socket-service
+              uri: ${CORE_SOCKET_URI:http://localhost:8082}
+              order: 0
+              predicates:
+                - Path=/socket/**
+              filters:
+                - StripPrefix=1
+                - name: PreserveHostHeader
+
             # Push Notification Service Routes
             - id: push-notification-service
               uri: ${PUSH_NOTIFICATION_URI:http://localhost:8085}

@@ -31,10 +31,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-    environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-admin}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-secret}
-      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_DEFAULT_VHOST:-/}
+    env_file:
+      - ./env/common.env
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
@@ -200,9 +198,6 @@ services:
         condition: service_healthy
     env_file:
       - ./env/pushnoti-service.env
-    environment:
-      MONGODB_HOST: mongodb-pushnoti
-      MONGODB_PORT: 27017
     networks:
       - isu-internal-network
     restart: unless-stopped
@@ -268,9 +263,6 @@ services:
         condition: service_healthy
     env_file:
       - ./env/report-service.env
-    environment:
-      MONGODB_HOST: mongodb-report
-      MONGODB_PORT: 27017
     networks:
       - isu-internal-network
     restart: unless-stopped
@@ -359,9 +351,6 @@ services:
       - "${AI_SUPPORT_PORT:-8001}:8001"
     env_file:
       - ./env/ai-support.env
-    environment:
-      - PYTHONPATH=/app/src
-      - PYTHONUNBUFFERED=1
     volumes:
       - ./ISU-AI-Support/data:/app/data
       - lightrag_storage:/app/rag_storage
@@ -423,9 +412,6 @@ services:
       - "${VANNA_PORT:-8000}:8000"
     env_file:
       - ./env/ai-analysis.env
-    environment:
-      POSTGRES_HOST: postgres-vanna
-      TZ: ${TZ:-Asia/Ho_Chi_Minh}
     depends_on:
       postgres-vanna:
         condition: service_healthy
