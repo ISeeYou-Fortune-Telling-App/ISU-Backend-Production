@@ -303,7 +303,9 @@ Try make report-import-data, sometimes this report service does not import the d
 ### Full reset
 
 ```bash
+# Clean all the container, delete all the data and cache
 make clean-all
+# Start everything again
 make quick-start
 ```
 
