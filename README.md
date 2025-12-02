@@ -268,65 +268,45 @@ ISU-Backend-All/
 
 All requests go through the Gateway and are routed to services:
 
-- `/api/v1/**` -> Core Service
-- `/api/pushnoti/**` -> Push Notification Service
-- `/api/report/**` -> Report Service
-- `/api/ai/**` -> AI Support Service
-- `/api/analysis/**` -> AI Analysis Service
+- `/core/**` -> Core Service
+- `/notification/**` -> Push Notification Service
+- `/report/**` -> Report Service
+- `/ai-support/**` -> AI Support Service
+- `/ai-analysis/**` -> AI Analysis Service
+
+Example request for login: POST `http://localhost:8080/core/auth/login` with correct credential.
+Note: you can try these accounts
+```text
+Admin account: admin@iseeyou.com
+Seer account: thayboivananh@gmail.com
+Customer account: phandinhminh@gmail.com
+
+All the password are: P@sswd123.
+The fcm token is optional, pass it if you want to try the real time push notification from the app.
+```
 
 ### Core Service (Port 8081)
+View example endpoints at http://localhost:8080/core/swagger-ui.html or http://localhost:8081/swagger-ui.html
 
-- `POST /api/v1/auth/login` - Login
-- `POST /api/v1/auth/register` - Register
-- `GET /api/v1/users/**` - User management
-- `GET /api/v1/seers/**` - Seer management
-- `GET /api/v1/bookings/**` - Booking management
-- Socket.IO: `ws://localhost:9092` - Real-time chat
+### Push Notification Service (Port 8082)
+View example endpoints at http://localhost:8080/notification/swagger-ui.html or http://localhost:8082/swagger-ui.html
 
-### AI Support (Port 8001)
+### Report Service (Port 8083)
+View example endpoints at http://localhost:8080/report/swagger-ui.html or http://localhost:8083/swagger-ui.html
 
-- `GET /health` - Health check
-- `POST /api/query` - AI query
-- API Docs: http://localhost:8001/docs
+### AI Support Service (Port 8001)
+View example endpoints at http://localhost:8080/ai-support/docs or http://127.0.0.1:8001/docs
 
-### AI Analysis (Port 8000)
-
-- `GET /health` - Health check
-- `POST /api/ask` - Data analysis
-- API Docs: http://localhost:8000/docs
+### AI Analysis Service (Port 8000)
+View example endpoints at http://localhost:8080/ai-analysis/docs or http://127.0.0.1:8000/docs
 
 ## Troubleshooting
 
-### MongoDB fails to start
+### Cannot see endpoints in Swagger UI
+Check carefully each services logs in Docker in case of the services failed to start
 
-```bash
-# Remove volumes and restart
-make clean-all
-make quick-start
-```
-
-### Service cannot connect to database
-
-```bash
-# Check if infrastructure is ready
-make infra-up
-make status
-
-# Wait 30s for databases to be ready
-# Then start services
-make up
-```
-
-### View logs for debugging
-
-```bash
-# View logs of a specific service
-make core-logs
-make gateway-logs
-
-# View infrastructure logs
-make infra-logs
-```
+### Cannot see the data in Report Service 
+Try make report-import-data, sometimes this report service does not import the data correctly
 
 ### Full reset
 
