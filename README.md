@@ -36,9 +36,9 @@ flowchart TB
     end
 
     subgraph Services
-        CORE[Core Service<br/>Port 8081<br/>+ Socket.IO 9092]
-        PUSHNOTI[PushNoti Service<br/>Port 8082]
-        REPORT[Report Service<br/>Port 8083]
+        CORE[Core Service<br/>Port 8081<br/>+ Socket.IO 8082]
+        PUSHNOTI[PushNoti Service<br/>Port 8085]
+        REPORT[Report Service<br/>Port 8086]
         AI_SUPPORT[AI Support - LightRAG<br/>Port 8001]
         AI_ANALYSIS[AI Analysis - Vanna<br/>Port 8000]
     end
@@ -117,14 +117,14 @@ flowchart TB
 
 ## Services
 
-| Service | Port | Description | Technology |
-|---------|------|-------------|------------|
-| Gateway Service | 8080 | API Gateway, routing, load balancing | Spring Cloud Gateway |
-| Core Service | 8081, 9092 | Main business logic, authentication, chat | Spring Boot, Socket.IO |
-| PushNoti Service | 8082 | Push notification management | Spring Boot, Firebase |
-| Report Service | 8083 | Reports and analytics | Spring Boot, MongoDB |
-| AI Support | 8001 | AI-powered consulting (LightRAG) | FastAPI, Neo4j |
-| AI Analysis | 8000 | AI data analysis (Vanna) | FastAPI, PostgreSQL |
+| Service | Port | Description |
+|---------|------|-------------|
+| Gateway Service | 8080 | API Gateway, routing, load balancing |
+| Core Service | 8081, 8082 | Main business logic, authentication, chat real time |
+| PushNoti Service | 8085 | Push notification management |
+| Report Service | 8086 | Reports and analytics |
+| AI Support | 8001 | AI-powered consulting (LightRAG) |
+| AI Analysis | 8000 | AI data analysis (Vanna) |
 
 ## Infrastructure
 
@@ -132,7 +132,7 @@ flowchart TB
 |---------|------|-------------|
 | PostgreSQL (Core) | 5432 | Main database for Core Service |
 | PostgreSQL (Vanna) | 5433 | Database for AI Analysis |
-| Redis | 6379 | Cache and session store |
+| Redis | 6379 | Cache and JWT refresh token store |
 | MongoDB (PushNoti) | 27018 | Database for Push Notification |
 | MongoDB (Report) | 27019 | Database for Report Service |
 | MongoDB (AI) | 27022 | Database for AI Support |
@@ -288,11 +288,11 @@ The fcm token is optional, pass it if you want to try the real time push notific
 ### Core Service (Port 8081)
 View example endpoints at http://localhost:8080/core/swagger-ui.html or http://localhost:8081/swagger-ui.html
 
-### Push Notification Service (Port 8082)
-View example endpoints at http://localhost:8080/notification/swagger-ui.html or http://localhost:8082/swagger-ui.html
+### Push Notification Service (Port 8085)
+View example endpoints at http://localhost:8080/notification/swagger-ui.html or http://localhost:8085/swagger-ui.html
 
-### Report Service (Port 8083)
-View example endpoints at http://localhost:8080/report/swagger-ui.html or http://localhost:8083/swagger-ui.html
+### Report Service (Port 8086)
+View example endpoints at http://localhost:8080/report/swagger-ui.html or http://localhost:8086/swagger-ui.html
 
 ### AI Support Service (Port 8001)
 View example endpoints at http://localhost:8080/ai-support/docs or http://127.0.0.1:8001/docs
