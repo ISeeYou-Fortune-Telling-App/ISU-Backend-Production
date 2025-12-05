@@ -189,7 +189,9 @@ make ENV=prod
 
 # Start all services (Most recommend)
 make quick-start
+# AND THAT'S DONE, ENJOY YOUR PLAYGROUND
 
+=====================================================================
 # Or you can build and start each service at once, this is example
 make network-create
 
