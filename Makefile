@@ -13,7 +13,7 @@
 .DEFAULT_GOAL := help
 
 # Environment selection (default: dev)
-ENV ?= dev
+ENV ?= prod
 
 # Docker compose settings based on environment
 ifeq ($(ENV),prod)
