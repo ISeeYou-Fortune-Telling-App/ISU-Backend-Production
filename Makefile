@@ -3,14 +3,26 @@
 # ===========================================
 # All microservices management in one place
 # Usage: make <service>-<command>
+#
+# Environment Selection:
+#   make ENV=dev <command>   - Use dev environment (default)
+#   make ENV=prod <command>  - Use prod environment
 # ===========================================
 
 # Default target
 .DEFAULT_GOAL := help
 
-# Docker compose settings
-DOCKER_COMPOSE = docker-compose
-ENV_DIR = ./env
+# Environment selection (default: dev)
+ENV ?= dev
+
+# Docker compose settings based on environment
+ifeq ($(ENV),prod)
+    DOCKER_COMPOSE = docker-compose -f docker/prod/docker-compose.yaml
+    ENV_DIR = ./env/prod
+else
+    DOCKER_COMPOSE = docker-compose -f docker/dev/docker-compose.yaml
+    ENV_DIR = ./env/dev
+endif
 
 # ===========================================
 # HELP
@@ -22,6 +34,10 @@ help: ## Show this help message
 	@echo        ISU Backend - Unified Makefile
 	@echo ============================================================
 	@echo ""
+	@echo Current Environment: $(ENV)
+	@echo   - Use ENV=dev for development (databases + AI services in Docker, Spring Boot local)
+	@echo   - Use ENV=prod for production (all services in Docker)
+	@echo ""
 	@echo [ALL SERVICES]
 	@echo   make up                    - Start all services
 	@echo   make down                  - Stop all services
@@ -32,14 +48,14 @@ help: ## Show this help message
 	@echo   make clean                 - Stop and remove containers
 	@echo   make clean-all             - Remove everything including volumes
 	@echo ""
-	@echo [GATEWAY SERVICE]
+	@echo [GATEWAY SERVICE] (prod only)
 	@echo   make gateway-build         - Build gateway service
 	@echo   make gateway-up            - Start gateway service
 	@echo   make gateway-down          - Stop gateway service
 	@echo   make gateway-logs          - Show gateway logs
 	@echo   make gateway-rebuild       - Rebuild gateway service
 	@echo ""
-	@echo [CORE SERVICE]
+	@echo [CORE SERVICE] (prod only for Docker, local for dev)
 	@echo   make core-build            - Build core service
 	@echo   make core-up               - Start core service
 	@echo   make core-down             - Stop core service
@@ -52,7 +68,7 @@ help: ## Show this help message
 	@echo   make core-migration-info   - Show Flyway migration info
 	@echo   make core-rebuild          - Rebuild core service
 	@echo ""
-	@echo [PUSH NOTIFICATION SERVICE]
+	@echo [PUSH NOTIFICATION SERVICE] (prod only for Docker, local for dev)
 	@echo   make pushnoti-build        - Build pushnoti service
 	@echo   make pushnoti-up           - Start pushnoti service
 	@echo   make pushnoti-down         - Stop pushnoti service
@@ -60,7 +76,7 @@ help: ## Show this help message
 	@echo   make pushnoti-rebuild      - Rebuild pushnoti service
 	@echo   make pushnoti-clean        - Clean pushnoti data
 	@echo ""
-	@echo [REPORT SERVICE]
+	@echo [REPORT SERVICE] (prod only for Docker, local for dev)
 	@echo   make report-build          - Build report service
 	@echo   make report-up             - Start report service
 	@echo   make report-down           - Stop report service
@@ -95,10 +111,14 @@ help: ## Show this help message
 	@echo   make rabbitmq-logs         - Show RabbitMQ logs
 	@echo ""
 	@echo [INFRASTRUCTURE]
+	@echo   make infra-up              - Start all infrastructure
+	@echo   make infra-down            - Stop all infrastructure
 	@echo   make infra-logs            - Show infrastructure logs (DB, Redis, RabbitMQ)
 	@echo   make network-create        - Create Docker network (Remember to run this first)
 	@echo ""
 	@echo [QUICK COMMANDS]
+	@echo   make dev                   - Start dev infrastructure + AI services
+	@echo   make prod                  - Start prod (all services in Docker)
 	@echo   make quick-start           - Quick start everything (network + all services)
 	@echo ""
 
@@ -107,18 +127,18 @@ help: ## Show this help message
 # ===========================================
 
 up: ## Start all services
-	@echo Starting all services...
+	@echo Starting all services in $(ENV) environment...
 	$(DOCKER_COMPOSE) up -d
 	@echo All services started!
 	@make status
 
 down: ## Stop all services
-	@echo Stopping all services...
+	@echo Stopping all services in $(ENV) environment...
 	$(DOCKER_COMPOSE) down
 	@echo All services stopped!
 
 build: ## Build all services
-	@echo Building all services...
+	@echo Building all services in $(ENV) environment...
 	$(DOCKER_COMPOSE) build
 	@echo Build complete!
 
@@ -128,11 +148,11 @@ logs: ## Show all logs
 	$(DOCKER_COMPOSE) logs -f
 
 status: ## Show status of all services
-	@echo Service Status:
+	@echo Service Status ($(ENV) environment):
 	$(DOCKER_COMPOSE) ps
 
 clean: ## Stop and remove containers
-	@echo Cleaning up containers...
+	@echo Cleaning up containers in $(ENV) environment...
 	$(DOCKER_COMPOSE) down --remove-orphans
 	docker system prune -f
 	@echo Cleanup complete!
@@ -238,7 +258,7 @@ pushnoti-rebuild: pushnoti-down pushnoti-build pushnoti-up ## Rebuild pushnoti
 pushnoti-clean: ## Stop and remove pushnoti volumes
 	$(DOCKER_COMPOSE) stop pushnoti-service mongodb-pushnoti
 	$(DOCKER_COMPOSE) rm -f pushnoti-service mongodb-pushnoti
-	docker volume rm -f isu-backend-all_mongodb_pushnoti_data 2>nul || true
+	docker volume rm -f isu-backend-$(ENV)_mongodb_pushnoti_data 2>nul || true
 
 # ===========================================
 # REPORT SERVICE
@@ -305,7 +325,7 @@ report-list-collections: ## List MongoDB collections
 report-clean: ## Stop and remove report volumes
 	$(DOCKER_COMPOSE) stop report-service mongodb-report
 	$(DOCKER_COMPOSE) rm -f report-service mongodb-report
-	docker volume rm -f isu-backend-all_mongodb_report_data 2>nul || true
+	docker volume rm -f isu-backend-$(ENV)_mongodb_report_data 2>nul || true
 
 # ===========================================
 # AI SUPPORT SERVICE (LightRAG)
@@ -345,9 +365,9 @@ ai-support-clean-all: ## Remove all AI support data including volumes
 	@echo WARNING: This will remove ALL AI Support data!
 	$(DOCKER_COMPOSE) stop lightrag-api neo4j mongodb-ai
 	$(DOCKER_COMPOSE) rm -f lightrag-api neo4j mongodb-ai
-	docker volume rm -f isu-backend-all_neo4j_data isu-backend-all_neo4j_logs \
-		isu-backend-all_neo4j_import isu-backend-all_neo4j_plugins \
-		isu-backend-all_mongodb_ai_data isu-backend-all_lightrag_storage 2>nul || true
+	docker volume rm -f isu-backend-$(ENV)_neo4j_data isu-backend-$(ENV)_neo4j_logs \
+		isu-backend-$(ENV)_neo4j_import isu-backend-$(ENV)_neo4j_plugins \
+		isu-backend-$(ENV)_mongodb_ai_data isu-backend-$(ENV)_lightrag_storage 2>nul || true
 
 _ai-support-create-volumes:
 	@echo Creating AI Support directories...
@@ -377,13 +397,13 @@ ai-analysis-logs: ## Show AI analysis logs
 ai-analysis-rebuild: ## Rebuild AI analysis service
 	$(DOCKER_COMPOSE) stop vanna-server postgres-vanna
 	$(DOCKER_COMPOSE) rm -f vanna-server postgres-vanna
-	docker volume rm -f isu-backend-all_postgres_vanna_data 2>nul || true
+	docker volume rm -f isu-backend-$(ENV)_postgres_vanna_data 2>nul || true
 	$(DOCKER_COMPOSE) up -d --build postgres-vanna vanna-server
 
 ai-analysis-clean: ## Clean AI analysis data
 	$(DOCKER_COMPOSE) stop vanna-server postgres-vanna
 	$(DOCKER_COMPOSE) rm -f vanna-server postgres-vanna
-	docker volume rm -f isu-backend-all_postgres_vanna_data 2>nul || true
+	docker volume rm -f isu-backend-$(ENV)_postgres_vanna_data 2>nul || true
 
 # ===========================================
 # RABBITMQ
@@ -406,7 +426,7 @@ rabbitmq-logs: ## Show RabbitMQ logs
 # ===========================================
 
 infra-up: ## Start all infrastructure (DB, Redis, RabbitMQ, Neo4j)
-	@echo Starting infrastructure services...
+	@echo Starting infrastructure services in $(ENV) environment...
 	$(DOCKER_COMPOSE) up -d postgres-core redis rabbitmq mongodb-pushnoti mongodb-report mongodb-ai neo4j postgres-vanna
 	@echo Infrastructure started!
 	@echo ""
@@ -431,10 +451,41 @@ infra-logs: ## Show infrastructure logs
 # QUICK COMMANDS
 # ===========================================
 
-dev: infra-up ## Start infrastructure for local development
+dev: network-create infra-up ai-support-up ai-analysis-up ## Start dev environment (infrastructure + AI services)
 	@echo ""
-	@echo Infrastructure ready for local development!
-	@echo Now you can run individual services with Maven/Python
+	@echo ============================================================
+	@echo DEV environment ready!
+	@echo ============================================================
+	@echo ""
+	@echo Infrastructure services running in Docker:
+	@echo   PostgreSQL Core: localhost:5432
+	@echo   PostgreSQL Vanna: localhost:5433
+	@echo   Redis: localhost:6379
+	@echo   RabbitMQ: localhost:5672 (Management: http://localhost:15672)
+	@echo   MongoDB PushNoti: localhost:27018
+	@echo   MongoDB Report: localhost:27019
+	@echo   MongoDB AI: localhost:27022
+	@echo   Neo4j: localhost:7687 (Browser: http://localhost:7474)
+	@echo ""
+	@echo AI services running in Docker:
+	@echo   AI Support (LightRAG): http://localhost:8001
+	@echo   AI Analysis (Vanna): http://localhost:8000
+	@echo ""
+	@echo Now run Spring Boot services locally:
+	@echo   cd ISU-Backend-CoreService and run: mvn spring-boot:run
+	@echo   cd ISU-Backend-GatewayService and run: mvn spring-boot:run
+	@echo   cd ISU-Backend-PushNoti and run: mvn spring-boot:run
+	@echo   cd ISU-Backend-ReportService and run: mvn spring-boot:run
+	@echo ""
+
+prod: ## Start prod environment (all services in Docker)
+	@make ENV=prod network-create up
+	@echo ""
+	@echo ============================================================
+	@echo PROD environment ready!
+	@echo ============================================================
+	@echo ""
+	@echo All services running in Docker.
 
 quick-start: network-create up _wait-for-services report-import-data ## Quick start everything
 	@echo ""
@@ -452,4 +503,4 @@ _wait-for-services:
 	ai-support-build ai-support-up ai-support-down ai-support-logs ai-support-rebuild ai-support-health ai-support-clean ai-support-clean-all \
 	ai-analysis-build ai-analysis-up ai-analysis-down ai-analysis-logs ai-analysis-rebuild ai-analysis-clean \
 	rabbitmq-up rabbitmq-down rabbitmq-logs \
-	infra-up infra-down infra-logs dev quick-start
+	infra-up infra-down infra-logs dev prod quick-start
