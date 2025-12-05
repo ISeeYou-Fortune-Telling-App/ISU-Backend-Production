@@ -492,29 +492,41 @@ class RAGController:
             LogUtil.log_error("Error deleting session", "CONTROLLER", e)
             raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
-    def get_all_sessions_by_user_id(self, user_id: str) -> dict:
+    def get_all_sessions_by_user_id(self, user_id: str, request: Request = None) -> dict:
         """
         Lấy tất cả sessions của một user
         
         Args:
-            user_id: ID của user
+            user_id: ID của user (fallback nếu không có JWT)
+            request: FastAPI Request để extract JWT token
             
         Returns:
             dict: Danh sách các sessions
             
         Raises:
             HTTPException: Nếu có lỗi trong quá trình truy vấn
+            
+        Note:
+            JWT token user_id được ưu tiên cao hơn parameter user_id
         """
         try:
+            # Ưu tiên user_id từ JWT token
+            effective_user_id = user_id
+            if request:
+                jwt_user_id = jwt_service.get_user_id_from_header(request)
+                if jwt_user_id:
+                    LogUtil.log_info(f"Using user_id from JWT: {jwt_user_id} (param was: {user_id})", "CONTROLLER")
+                    effective_user_id = jwt_user_id
+            
             # Validate user_id
-            if not user_id or len(user_id.strip()) == 0:
-                LogUtil.log_warning("Empty user_id provided", "CONTROLLER")
-                raise HTTPException(status_code=400, detail="user_id cannot be empty")
+            if not effective_user_id or len(effective_user_id.strip()) == 0:
+                LogUtil.log_warning("Empty user_id provided (no JWT and no parameter)", "CONTROLLER")
+                raise HTTPException(status_code=400, detail="user_id cannot be empty - provide via JWT token or query parameter")
             
             # Lấy danh sách sessions
-            sessions = CoreService.get_all_sessions_by_user_id(user_id)
+            sessions = CoreService.get_all_sessions_by_user_id(effective_user_id)
             
-            LogUtil.log_info(f"Retrieved {len(sessions)} sessions for user {user_id}", "CONTROLLER")
+            LogUtil.log_info(f"Retrieved {len(sessions)} sessions for user {effective_user_id}", "CONTROLLER")
             return {"sessions": sessions, "count": len(sessions)}
             
         except HTTPException:
