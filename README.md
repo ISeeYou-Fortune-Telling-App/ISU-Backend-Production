@@ -168,7 +168,7 @@ cd ISU-Backend-Production
 Review and edit files in the `env/` directory, or you can contact us for the example env:
 
 ```
-env/
+env/prod
   ├── core-service.env      # Core Service config
   ├── gateway-service.env   # Gateway config
   ├── pushnoti-service.env  # Push Notification config
@@ -184,6 +184,9 @@ The example structure should look like this:
 ### 3. Start services
 
 ```bash
+# Select the product environment
+make ENV=prod
+
 # Start all services (Most recommend)
 make quick-start
 
