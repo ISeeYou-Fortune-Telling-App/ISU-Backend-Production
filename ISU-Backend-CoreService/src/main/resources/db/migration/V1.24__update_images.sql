@@ -259,7 +259,7 @@ SET certificate_url = CASE
         THEN 'https://res.cloudinary.com/dzpv3mfjt/image/upload/v1764996322/Screenshot_2025-12-06_111834_qtxnnv.png'
     WHEN MOD(ABS(('x' || substring(certificate_id::text, 1, 8))::bit(32)::int), 9) = 5
         THEN 'https://res.cloudinary.com/dzpv3mfjt/image/upload/v1764996322/Screenshot_2025-12-06_111913_euzolb.png'
-    WHEN MOD(ABS(('x' || substring(sp.package_id::text, 1, 8))::bit(32)::int), 9) = 6
+    WHEN MOD(ABS(('x' || substring(certificate_id::text, 1, 8))::bit(32)::int), 9) = 6
         THEN 'https://res.cloudinary.com/dzpv3mfjt/image/upload/v1764996322/Screenshot_2025-12-06_111937_dwdq0t.png'
     WHEN MOD(ABS(('x' || substring(certificate_id::text, 1, 8))::bit(32)::int), 9) = 7
         THEN 'https://res.cloudinary.com/dzpv3mfjt/image/upload/v1764996322/Screenshot_2025-12-06_111956_sgejst.png'
