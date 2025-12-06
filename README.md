@@ -36,9 +36,9 @@ flowchart TB
     end
 
     subgraph Services
-        CORE[Core Service<br/>Port 8081<br/>+ Socket.IO 9092]
-        PUSHNOTI[PushNoti Service<br/>Port 8082]
-        REPORT[Report Service<br/>Port 8083]
+        CORE[Core Service<br/>Port 8081<br/>+ Socket.IO 8082]
+        PUSHNOTI[PushNoti Service<br/>Port 8085]
+        REPORT[Report Service<br/>Port 8086]
         AI_SUPPORT[AI Support - LightRAG<br/>Port 8001]
         AI_ANALYSIS[AI Analysis - Vanna<br/>Port 8000]
     end
@@ -117,14 +117,14 @@ flowchart TB
 
 ## Services
 
-| Service | Port | Description | Technology |
-|---------|------|-------------|------------|
-| Gateway Service | 8080 | API Gateway, routing, load balancing | Spring Cloud Gateway |
-| Core Service | 8081, 9092 | Main business logic, authentication, chat | Spring Boot, Socket.IO |
-| PushNoti Service | 8082 | Push notification management | Spring Boot, Firebase |
-| Report Service | 8083 | Reports and analytics | Spring Boot, MongoDB |
-| AI Support | 8001 | AI-powered consulting (LightRAG) | FastAPI, Neo4j |
-| AI Analysis | 8000 | AI data analysis (Vanna) | FastAPI, PostgreSQL |
+| Service | Port | Description |
+|---------|------|-------------|
+| Gateway Service | 8080 | API Gateway, routing, load balancing |
+| Core Service | 8081, 8082 | Main business logic, authentication, chat real time |
+| PushNoti Service | 8085 | Push notification management |
+| Report Service | 8086 | Reports and analytics |
+| AI Support | 8001 | AI-powered consulting (LightRAG) |
+| AI Analysis | 8000 | AI data analysis (Vanna) |
 
 ## Infrastructure
 
@@ -132,7 +132,7 @@ flowchart TB
 |---------|------|-------------|
 | PostgreSQL (Core) | 5432 | Main database for Core Service |
 | PostgreSQL (Vanna) | 5433 | Database for AI Analysis |
-| Redis | 6379 | Cache and session store |
+| Redis | 6379 | Cache and JWT refresh token store |
 | MongoDB (PushNoti) | 27018 | Database for Push Notification |
 | MongoDB (Report) | 27019 | Database for Report Service |
 | MongoDB (AI) | 27022 | Database for AI Support |
@@ -165,10 +165,10 @@ cd ISU-Backend-Production
 
 ### 2. Configure environment
 
-Review and edit files in the `env/` directory:
+Review and edit files in the `env/` directory, or you can contact us for the example env:
 
 ```
-env/
+env/prod
   ├── core-service.env      # Core Service config
   ├── gateway-service.env   # Gateway config
   ├── pushnoti-service.env  # Push Notification config
@@ -178,22 +178,43 @@ env/
   └── common.env            # Shared variables
 ```
 
+The example structure should look like this:
+![Example Structure](images/example_structure.png)
+
 ### 3. Start services
 
 ```bash
-# Start all services
-make quick-start
+# Select the product environment
+make ENV=prod
 
-# Or start step by step
+# Start all services (Most recommend)
+make quick-start
+# AND THAT'S DONE, ENJOY YOUR PLAYGROUND
+
+=====================================================================
+# Or you can build and start each service at once, this is example
 make network-create
-make up
+
+# Start core service 
+make core-build
+make core-dev
+
+# Start report service 
+make report-build
+make report-up
+make report-import-data
 ```
+
+When all containers start completed, the Docker desktop at containers tab should look like this:
+![Example Container](images/example_container.png)
+
 
 ## Common Commands
 
 ### Manage all services
 
 ```bash
+make help            # Show all the make command you need
 make up              # Start all services
 make down            # Stop all services
 make build           # Build all services
@@ -238,100 +259,58 @@ make infra-down      # Stop infrastructure
 make dev             # Start infra for local development
 ```
 
-## Project Structure
-
-```
-ISU-Backend-All/
-├── docker-compose.yaml          # Main Docker Compose file
-├── Makefile                     # Management commands
-├── env/                         # Environment files
-│   ├── core-service.env
-│   ├── gateway-service.env
-│   ├── pushnoti-service.env
-│   ├── report-service.env
-│   ├── ai-support.env
-│   ├── ai-analysis.env
-│   └── common.env
-├── ISU-Backend-CoreService/     # Core Service source
-├── ISU-Backend-GatewayService/  # Gateway Service source
-├── ISU-Backend-PushNoti/        # Push Notification source
-├── ISU-Backend-ReportService/   # Report Service source
-├── ISU-AI-Support/              # AI Support (LightRAG) source
-├── ISU-AI-Analysis/             # AI Analysis (Vanna) source
-└── var/                         # Logs (gitignored)
-    └── logs/
-```
-
 ## API Endpoints
 
 ### Gateway (Port 8080)
 
 All requests go through the Gateway and are routed to services:
 
-- `/api/v1/**` -> Core Service
-- `/api/pushnoti/**` -> Push Notification Service
-- `/api/report/**` -> Report Service
-- `/api/ai/**` -> AI Support Service
-- `/api/analysis/**` -> AI Analysis Service
+- `/core/**` -> Core Service
+- `/notification/**` -> Push Notification Service
+- `/report/**` -> Report Service
+- `/ai-support/**` -> AI Support Service
+- `/ai-analysis/**` -> AI Analysis Service
+
+Example request for login: POST `http://localhost:8080/core/auth/login` with correct credential.
+Note: you can try these accounts
+```text
+Admin account: admin@iseeyou.com
+Seer account: thayboivananh@gmail.com
+Customer account: phandinhminh@gmail.com
+
+All the password are: P@sswd123.
+The fcm token is optional, pass it if you want to try the real time push notification from the app.
+```
 
 ### Core Service (Port 8081)
+View example endpoints at http://localhost:8080/core/swagger-ui.html or http://localhost:8081/swagger-ui.html
 
-- `POST /api/v1/auth/login` - Login
-- `POST /api/v1/auth/register` - Register
-- `GET /api/v1/users/**` - User management
-- `GET /api/v1/seers/**` - Seer management
-- `GET /api/v1/bookings/**` - Booking management
-- Socket.IO: `ws://localhost:9092` - Real-time chat
+### Push Notification Service (Port 8085)
+View example endpoints at http://localhost:8080/notification/swagger-ui.html or http://localhost:8085/swagger-ui.html
 
-### AI Support (Port 8001)
+### Report Service (Port 8086)
+View example endpoints at http://localhost:8080/report/swagger-ui.html or http://localhost:8086/swagger-ui.html
 
-- `GET /health` - Health check
-- `POST /api/query` - AI query
-- API Docs: http://localhost:8001/docs
+### AI Support Service (Port 8001)
+View example endpoints at http://localhost:8080/ai-support/docs or http://127.0.0.1:8001/docs
 
-### AI Analysis (Port 8000)
-
-- `GET /health` - Health check
-- `POST /api/ask` - Data analysis
-- API Docs: http://localhost:8000/docs
+### AI Analysis Service (Port 8000)
+View example endpoints at http://localhost:8080/ai-analysis/docs or http://127.0.0.1:8000/docs
 
 ## Troubleshooting
 
-### MongoDB fails to start
+### Cannot see endpoints in Swagger UI
+Check carefully each services logs in Docker in case of the services failed to start
 
-```bash
-# Remove volumes and restart
-make clean-all
-make quick-start
-```
-
-### Service cannot connect to database
-
-```bash
-# Check if infrastructure is ready
-make infra-up
-make status
-
-# Wait 30s for databases to be ready
-# Then start services
-make up
-```
-
-### View logs for debugging
-
-```bash
-# View logs of a specific service
-make core-logs
-make gateway-logs
-
-# View infrastructure logs
-make infra-logs
-```
+### Cannot see the data in Report Service 
+Try make report-import-data, sometimes this report service does not import the data correctly
 
 ### Full reset
 
 ```bash
+# Clean all the container, delete all the data and cache
 make clean-all
+# Start everything again
 make quick-start
 ```
 

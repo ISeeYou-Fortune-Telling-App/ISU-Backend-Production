@@ -10,63 +10,80 @@ spring:
 
   cloud:
     gateway:
-      server:
-        webflux:
-          routes:
-            # Core Backend Service Routes
-            - id: core-backend-service
-              uri: ${CORE_BACKEND_URI:http://localhost:8081}
-              order: 1
-              predicates:
-                - Path=/core/**
-              filters:
-                - StripPrefix=1
-                - name: PreserveHostHeader
-                - RemoveResponseHeader=Access-Control-Allow-Origin
-                - RemoveResponseHeader=Access-Control-Allow-Methods
-                - RemoveResponseHeader=Access-Control-Allow-Headers
-                - RemoveResponseHeader=Access-Control-Allow-Credentials
-                - RemoveResponseHeader=Access-Control-Max-Age
+      # HTTP client settings
+      httpclient:
+        connect-timeout: 360000
+        response-timeout: 360000
 
-            # Push Notification Service Routes
-            - id: push-notification-service
-              uri: ${PUSH_NOTIFICATION_URI:http://localhost:8085}
-              order: 1
-              predicates:
-                - Path=/notification/**
-              filters:
-                - StripPrefix=1
-                - name: PreserveHostHeader
+      # Default filters applied to all routes - Remove CORS headers from backend services
+      default-filters:
+        - RemoveResponseHeader=Access-Control-Allow-Origin
+        - RemoveResponseHeader=Access-Control-Allow-Methods
+        - RemoveResponseHeader=Access-Control-Allow-Headers
+        - RemoveResponseHeader=Access-Control-Allow-Credentials
+        - RemoveResponseHeader=Access-Control-Max-Age
+        - RemoveResponseHeader=Access-Control-Expose-Headers
 
-            # Report Analytic and Log Service Routes
-            - id: report-service
-              uri: ${REPORT_URI:http://localhost:8086}
-              order: 1
-              predicates:
-                - Path=/report/**
-              filters:
-                - StripPrefix=1
-                - name: PreserveHostHeader
+      routes:
+        # Core Backend Service Routes
+        - id: core-backend-service
+          uri: ${CORE_BACKEND_URI:http://localhost:8081}
+          order: 1
+          predicates:
+            - Path=/core/**
+          filters:
+            - StripPrefix=1
+            - name: PreserveHostHeader
 
-            # AI Support Service Route
-            - id: ai-support-service
-              uri: ${AI_SUPPORT_URI:http://127.0.0.1:8001}
-              order: 1
-              predicates:
-                - Path=/ai-support/**
-              filters:
-                - StripPrefix=1
-                - name: PreserveHostHeader
+        # Core Socket.IO Service Routes (WebSocket)
+        - id: core-socket-service
+          uri: ${CORE_SOCKET_URI:http://localhost:8082}
+          order: 0
+          predicates:
+            - Path=/socket/**
+          filters:
+            - StripPrefix=1
+            - name: PreserveHostHeader
 
-            # AI Analysis Service Route
-            - id: ai-analysis-service
-              uri: ${AI_ANALYSIS_URI:http://localhost:8000}
-              order: 1
-              predicates:
-                - Path=/ai-analysis/**
-              filters:
-                - StripPrefix=1
-                - name: PreserveHostHeader
+        # Push Notification Service Routes
+        - id: push-notification-service
+          uri: ${PUSH_NOTIFICATION_URI:http://localhost:8085}
+          order: 1
+          predicates:
+            - Path=/notification/**
+          filters:
+            - StripPrefix=1
+            - name: PreserveHostHeader
+
+        # Report Analytic and Log Service Routes
+        - id: report-service
+          uri: ${REPORT_URI:http://localhost:8086}
+          order: 1
+          predicates:
+            - Path=/report/**
+          filters:
+            - StripPrefix=1
+            - name: PreserveHostHeader
+
+        # AI Support Service Route
+        - id: ai-support-service
+          uri: ${AI_SUPPORT_URI:http://127.0.0.1:8001}
+          order: 1
+          predicates:
+            - Path=/ai-support/**
+          filters:
+            - StripPrefix=1
+            - name: PreserveHostHeader
+
+        # AI Analysis Service Route
+        - id: ai-analysis-service
+          uri: ${AI_ANALYSIS_URI:http://localhost:8000}
+          order: 1
+          predicates:
+            - Path=/ai-analysis/**
+          filters:
+            - StripPrefix=1
+            - name: PreserveHostHeader
 
 # Actuator endpoints for monitoring
 management:

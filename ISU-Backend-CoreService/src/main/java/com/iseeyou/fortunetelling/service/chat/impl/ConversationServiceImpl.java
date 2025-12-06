@@ -519,21 +519,51 @@ public class ConversationServiceImpl implements ConversationService {
         Conversation conversation = conversationRepository.findById(conversationId)
                 .orElseThrow(() -> new NotFoundException("Conversation not found"));
 
-        // End conversation
-        conversation.setStatus(Constants.ConversationStatusEnum.ENDED);
-        conversation.setSessionEndTime(LocalDateTime.now());
-        conversationRepository.save(conversation);
+        // Check if both parties joined
+        boolean customerJoined = conversation.getCustomerJoinedAt() != null;
+        boolean seerJoined = conversation.getSeerJoinedAt() != null;
+        boolean bothJoined = customerJoined && seerJoined;
 
-        // Complete booking if exists
+        // Determine conversation status and booking status based on participation
         Booking booking = conversation.getBooking();
-        if (booking != null) {
-            booking.setStatus(Constants.BookingStatusEnum.COMPLETED);
-            bookingRepository.save(booking);
-            log.info("Session auto-ended: conversation={}, booking={}",
-                    conversationId, booking.getId());
+
+        if (bothJoined) {
+            // Both parties joined -> session completed successfully
+            conversation.setStatus(Constants.ConversationStatusEnum.ENDED);
+            conversation.setSessionEndTime(LocalDateTime.now());
+            conversationRepository.save(conversation);
+
+            if (booking != null) {
+                booking.setStatus(Constants.BookingStatusEnum.COMPLETED);
+                bookingRepository.save(booking);
+                log.info("Session auto-ended (completed): conversation={}, booking={}",
+                        conversationId, booking.getId());
+            }
         } else {
-            log.warn("Session auto-ended but no booking found: conversation={}",
-                    conversationId);
+            // One or both parties did not join -> session canceled
+            String canceledBy;
+            if (!customerJoined && !seerJoined) {
+                canceledBy = "BOTH";
+            } else if (!customerJoined) {
+                canceledBy = "CUSTOMER";
+            } else {
+                canceledBy = "SEER";
+            }
+
+            conversation.setStatus(Constants.ConversationStatusEnum.CANCELLED);
+            conversation.setSessionEndTime(LocalDateTime.now());
+            conversation.setCanceledBy(canceledBy);
+            conversationRepository.save(conversation);
+
+            if (booking != null) {
+                booking.setStatus(Constants.BookingStatusEnum.CANCELED);
+                bookingRepository.save(booking);
+                log.info("Session auto-ended (canceled): conversation={}, booking={}, canceledBy={}",
+                        conversationId, booking.getId(), canceledBy);
+            } else {
+                log.warn("Session auto-ended (canceled) but no booking found: conversation={}, canceledBy={}",
+                        conversationId, canceledBy);
+            }
         }
     }
 

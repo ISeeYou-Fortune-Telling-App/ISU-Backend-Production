@@ -126,17 +126,21 @@ async def delete_session(session_id: str):
     return rag_controller.delete_session_by_id(session_id)
 
 @app.get("/sessions")
-async def get_sessions_by_user(user_id: str):
+async def get_sessions_by_user(request: Request, user_id: str = None):
     """
     Lấy tất cả sessions của một user
     
     Args:
-        user_id: ID của user (query parameter)
+        request: FastAPI Request để extract JWT token
+        user_id: ID của user (query parameter, optional if JWT provided)
         
     Returns:
         dict: Danh sách các sessions
+        
+    Note:
+        JWT token user_id được ưu tiên cao hơn query parameter user_id
     """
-    return rag_controller.get_all_sessions_by_user_id(user_id)
+    return rag_controller.get_all_sessions_by_user_id(user_id, request)
 
 @app.get("/sessions/{session_id}/messages")
 async def get_messages_by_session(session_id: str):

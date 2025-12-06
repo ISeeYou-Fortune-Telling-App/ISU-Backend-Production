@@ -143,3 +143,6 @@ htmlcov/
 
 # Help files (auto-generated)
 HELP.md
+
+# Github instruction 
+.github/

@@ -1,23 +1,32 @@
 # ===========================================
-# ISU Backend - All Services Docker Compose
+# ISU Backend - Development Docker Compose
 # ===========================================
-# This file contains all microservices for the ISeeYou Fortune Telling Platform
+# This file contains infrastructure services for local development.
+# Spring Boot services (Core, Gateway, PushNoti, Report) run locally with Maven.
+# AI services (LightRAG, Vanna) run in Docker containers.
 #
 # Usage:
-#   1. Copy env/*.env.example files to env/*.env and fill in your values
-#   2. Create the external network: docker network create isu-microservice-external-network
+#   1. Ensure env/dev/*.env files are configured
+#   2. Create the external network: docker network create isu-internal-network
 #   3. Run: docker-compose up -d
+#   4. Run Spring Boot services locally with Maven
 #
-# Services:
-#   - Gateway Service (port 8080)
-#   - Core Service (port 8081, Socket.IO: 9092)
-#   - Push Notification Service (port 8082)
-#   - Report Service (port 8083)
-#   - AI Support Service (port 8001)
-#   - AI Analysis Service (port 8000)
+# Infrastructure Services:
+#   - PostgreSQL Core (port 5432)
+#   - PostgreSQL Vanna (port 5433)
+#   - Redis (port 6379)
+#   - RabbitMQ (port 5672, Management: 15672)
+#   - MongoDB PushNoti (port 27018)
+#   - MongoDB Report (port 27019)
+#   - MongoDB AI (port 27022)
+#   - Neo4j (port 7474, 7687)
+#
+# AI Services (run in Docker):
+#   - AI Support Service - LightRAG (port 8001)
+#   - AI Analysis Service - Vanna (port 8000)
 # ===========================================
 
-name: isu-backend-production
+name: isu-backend-dev
 
 services:
   # ===========================================
@@ -27,12 +36,12 @@ services:
   # RabbitMQ - Message Broker
   rabbitmq:
     image: rabbitmq:3.12-management
-    container_name: isu-rabbitmq
+    container_name: isu-dev-rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
     env_file:
-      - env/prod/common.env
+      - ../../env/dev/common.env
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
@@ -46,23 +55,23 @@ services:
       start_period: 30s
 
   # ===========================================
-  # CORE SERVICE & DEPENDENCIES
+  # CORE SERVICE DEPENDENCIES
   # ===========================================
 
   # PostgreSQL - Core Service Database
   postgres-core:
     image: postgres:13.11-bullseye
-    container_name: isu-postgres-core
+    container_name: isu-dev-postgres-core
     restart: always
     environment:
       POSTGRES_DB: ${CORE_POSTGRESQL_DB:-fortunetelling}
       POSTGRES_USER: ${CORE_POSTGRESQL_USER:-postgres}
       POSTGRES_PASSWORD: ${CORE_POSTGRESQL_PASSWORD:-secret}
     ports:
-      - "${CORE_POSTGRESQL_PORT:-5432}:5432"
+      - "5432:5432"
     volumes:
       - postgres_core_data:/var/lib/postgresql/data
-      - ./var/logs/postgresql-core:/var/log/postgresql
+      - ../../var/logs/postgresql-core:/var/log/postgresql
     networks:
       - isu-internal-network
     healthcheck:
@@ -74,13 +83,13 @@ services:
   # Redis - Core Service Cache
   redis:
     image: redis:7.0.12-alpine
-    container_name: isu-redis
+    container_name: isu-dev-redis
     restart: always
     command: redis-server --save 20 1 --loglevel warning --requirepass secret
     volumes:
       - redis_data:/data
     ports:
-      - "${REDIS_PORT:-6379}:6379"
+      - "6379:6379"
     networks:
       - isu-internal-network
     healthcheck:
@@ -89,79 +98,24 @@ services:
       timeout: 5s
       retries: 5
 
-  # Core Backend Service
-  core-backend-service:
-    build:
-      context: ./ISU-Backend-CoreService
-      dockerfile: docker/Dockerfile
-    container_name: isu-core-backend
-    ports:
-      - "${CORE_SERVER_PORT:-8081}:8081"
-      - "${SOCKET_IO_PORT:-8082}:8082"
-    depends_on:
-      postgres-core:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
-    env_file:
-      - env/prod/core-service.env
-    networks:
-      - isu-internal-network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
-
   # ===========================================
-  # GATEWAY SERVICE
-  # ===========================================
-
-  gateway-service:
-    build:
-      context: ./ISU-Backend-GatewayService
-      dockerfile: Dockerfile
-    container_name: isu-gateway
-    ports:
-      - "${GATEWAY_PORT:-8080}:8080"
-    depends_on:
-      - core-backend-service
-    env_file:
-      - env/prod/gateway-service.env
-    networks:
-      - isu-internal-network
-    restart: unless-stopped
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-
-  # ===========================================
-  # PUSH NOTIFICATION SERVICE & DEPENDENCIES
+  # PUSH NOTIFICATION SERVICE DEPENDENCIES
   # ===========================================
 
   # MongoDB - Push Notification Database
   mongodb-pushnoti:
     image: mongo:7.0
-    container_name: isu-mongodb-pushnoti
+    container_name: isu-dev-mongodb-pushnoti
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${PUSHNOTI_MONGODB_USER:-admin}
       MONGO_INITDB_ROOT_PASSWORD: ${PUSHNOTI_MONGODB_PASSWORD:-secret}
       MONGO_INITDB_DATABASE: ${PUSHNOTI_MONGODB_DB:-pushnoti}
     ports:
-      - "${PUSHNOTI_MONGODB_PORT:-27018}:27017"
+      - "27018:27017"
     volumes:
       - mongodb_pushnoti_data:/data/db
-      - ./var/logs/mongodb-pushnoti:/var/log/mongodb
+      - ../../var/logs/mongodb-pushnoti:/var/log/mongodb
     networks:
       - isu-internal-network
     healthcheck:
@@ -183,50 +137,25 @@ services:
       retries: 5
       start_period: 40s
 
-  # Push Notification Service
-  pushnoti-service:
-    build:
-      context: ./ISU-Backend-PushNoti
-      dockerfile: docker/Dockerfile
-    container_name: isu-pushnoti
-    ports:
-      - "${PUSHNOTI_PORT:-8085}:8085"
-    depends_on:
-      mongodb-pushnoti:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
-    env_file:
-      - env/prod/pushnoti-service.env
-    networks:
-      - isu-internal-network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8085/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-
   # ===========================================
-  # REPORT SERVICE & DEPENDENCIES
+  # REPORT SERVICE DEPENDENCIES
   # ===========================================
 
   # MongoDB - Report Service Database
   mongodb-report:
     image: mongo:7.0
-    container_name: isu-mongodb-report
+    container_name: isu-dev-mongodb-report
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${REPORT_MONGODB_USER:-admin}
       MONGO_INITDB_ROOT_PASSWORD: ${REPORT_MONGODB_PASSWORD:-secret}
       MONGO_INITDB_DATABASE: ${REPORT_MONGODB_DB:-report}
     ports:
-      - "${REPORT_MONGODB_PORT:-27019}:27017"
+      - "27019:27017"
     volumes:
       - mongodb_report_data:/data/db
-      - ./var/logs/mongodb-report:/var/log/mongodb
-      - ./ISU-Backend-ReportService/data:/data
+      - ../../var/logs/mongodb-report:/var/log/mongodb
+      - ../../ISU-Backend-ReportService/data:/data
     networks:
       - isu-internal-network
     healthcheck:
@@ -246,31 +175,6 @@ services:
       interval: 10s
       timeout: 10s
       retries: 5
-      start_period: 40s
-
-  # Report Service
-  report-service:
-    build:
-      context: ./ISU-Backend-ReportService
-      dockerfile: docker/Dockerfile
-    container_name: isu-report
-    ports:
-      - "${REPORT_PORT:-8086}:8086"
-    depends_on:
-      mongodb-report:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
-    env_file:
-      - env/prod/report-service.env
-    networks:
-      - isu-internal-network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8086/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
       start_period: 40s
 
   # ===========================================
@@ -280,7 +184,7 @@ services:
   # Neo4j - Graph Database for LightRAG
   neo4j:
     image: neo4j:5.15
-    container_name: isu-neo4j
+    container_name: isu-dev-neo4j
     ports:
       - "7474:7474"
       - "7687:7687"
@@ -311,9 +215,9 @@ services:
   # MongoDB - AI Support Database
   mongodb-ai:
     image: mongo:7.0
-    container_name: isu-mongodb-ai
+    container_name: isu-dev-mongodb-ai
     ports:
-      - "${AI_MONGODB_PORT:-27022}:27017"
+      - "27022:27017"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=secret
@@ -341,20 +245,20 @@ services:
       retries: 5
       start_period: 40s
 
-  # AI Support Service (LightRAG)
+  # AI Support Service (LightRAG) - Runs in Docker
   lightrag-api:
     build:
-      context: ./ISU-AI-Support
+      context: ../../ISU-AI-Support
       dockerfile: docker/Dockerfile
-    container_name: isu-lightrag-api
+    container_name: isu-dev-lightrag-api
     ports:
-      - "${AI_SUPPORT_PORT:-8001}:8001"
+      - "8001:8001"
     env_file:
-      - env/prod/ai-support.env
+      - ../../env/dev/ai-support.env
     volumes:
-      - ./ISU-AI-Support/data:/app/data
+      - ../../ISU-AI-Support/data:/app/data
       - lightrag_storage:/app/rag_storage
-      - ./var/logs/lightrag:/app/logs
+      - ../../var/logs/lightrag:/app/logs
     depends_on:
       neo4j:
         condition: service_healthy
@@ -379,9 +283,9 @@ services:
   # PostgreSQL - Vanna Database
   postgres-vanna:
     build:
-      context: ./ISU-AI-Analysis
+      context: ../../ISU-AI-Analysis
       dockerfile: Dockerfile.postgres
-    container_name: isu-postgres-vanna
+    container_name: isu-dev-postgres-vanna
     restart: always
     environment:
       POSTGRES_DB: ${VANNA_POSTGRES_DB:-vanna}
@@ -390,7 +294,7 @@ services:
       TZ: ${TZ:-Asia/Ho_Chi_Minh}
       PGTZ: ${PGTZ:-Asia/Ho_Chi_Minh}
     ports:
-      - "${VANNA_POSTGRES_PORT:-5433}:5432"
+      - "5433:5432"
     volumes:
       - postgres_vanna_data:/var/lib/postgresql/data
     networks:
@@ -401,19 +305,21 @@ services:
       timeout: 5s
       retries: 5
 
-  # AI Analysis Service (Vanna)
+  # AI Analysis Service (Vanna) - Runs in Docker
   vanna-server:
     build:
-      context: ./ISU-AI-Analysis
+      context: ../../ISU-AI-Analysis
       dockerfile: Dockerfile
-    container_name: isu-vanna-server
+    container_name: isu-dev-vanna-server
     restart: always
     ports:
-      - "${VANNA_PORT:-8000}:8000"
+      - "8000:8000"
     env_file:
-      - env/prod/ai-analysis.env
+      - ../../env/dev/ai-analysis.env
     depends_on:
       postgres-vanna:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
     networks:
       - isu-internal-network

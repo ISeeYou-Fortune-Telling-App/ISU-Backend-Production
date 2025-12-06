@@ -294,6 +294,44 @@ INSERT INTO package_category (package_category_id, package_id, category_id, crea
                                                                                                         (gen_random_uuid(), '880e8400-e29b-41d4-a716-446655441003', '5e5d3003-cad8-4805-8e04-2170d12e5bcf', '2025-02-25 10:00:00.000', '2025-02-25 10:00:00.000');
 
 
+-- =============================================
+-- UNVERIFIED SEER 1: Thầy Lê Quốc Bảo (user_id: ...0082)
+-- Status: UNVERIFIED (3)
+-- =============================================
+
+-- UNVERIFIED SEER 1.1. USER
+INSERT INTO "user" (user_id, role, email, phone, gender, password_hash, full_name, avatar_url, cover_url, profile_description, birth_date, status, fcm_token, is_active, created_at, updated_at) VALUES
+    ('550e8400-e29b-41d4-a716-446655440082', '1', 'thayquocbao@gmail.com', '+84990123456', 'Nam', '$2a$10$su2P6OQUjL6n5uW/QHpUtuNSnW64AEd48Iw5eTqAieJbSsDP3oFKu', 'Thầy Lê Quốc Bảo', 'https://res.cloudinary.com/dzpv3mfjt/image/upload/v1762322268/avatar-012.png', 'https://res.cloudinary.com/dzpv3mfjt/image/upload/v1762282708/cover-012.png', 'Mới bắt đầu hành nghề xem bói với kiến thức về Tarot và Cung Hoàng Đạo. Tốt nghiệp khóa học Tarot căn bản và đang chờ xác nhận từ hệ thống.', '1996-06-20 10:30:00.000', '3', NULL, true, '2025-11-28 09:15:00.000', '2025-12-01 14:30:00.000');
+
+-- UNVERIFIED SEER 1.2. SEER PROFILE
+INSERT INTO seer_profile (seer_id, created_at, updated_at, payment_info, paypal_email, total_rates, avg_rating, performance_tier) VALUES ('550e8400-e29b-41d4-a716-446655440082', '2025-11-28 09:15:00.000', '2025-12-01 14:30:00.000', NULL, 'quocbao@seer.example.com', 0, 0, 0);
+
+
+-- =============================================
+-- UNVERIFIED SEER 2: Cô Trần Thanh Thảo (user_id: ...0083)
+-- Status: UNVERIFIED (3)
+-- =============================================
+
+-- UNVERIFIED SEER 2.1. USER
+INSERT INTO "user" (user_id, role, email, phone, gender, password_hash, full_name, avatar_url, cover_url, profile_description, birth_date, status, fcm_token, is_active, created_at, updated_at) VALUES
+    ('550e8400-e29b-41d4-a716-446655440083', '1', 'cothanhthao@gmail.com', '+84991234567', 'Nữ', '$2a$10$su2P6OQUjL6n5uW/QHpUtuNSnW64AEd48Iw5eTqAieJbSsDP3oFKu', 'Cô Trần Thanh Thảo', 'https://res.cloudinary.com/dzpv3mfjt/image/upload/v1762322268/avatar-013.png', 'https://res.cloudinary.com/dzpv3mfjt/image/upload/v1762282708/cover-013.png', 'Đam mê Nhân Tướng Học và Xem Chỉ Tay từ nhỏ. Đã tự học và nghiên cứu nhiều năm, mong muốn được chia sẻ kiến thức với mọi người. Đang chờ xác minh từ hệ thống.', '1993-02-14 08:45:00.000', '3', NULL, true, '2025-11-25 11:20:00.000', '2025-12-02 10:15:00.000');
+
+-- UNVERIFIED SEER 2.2. SEER PROFILE
+INSERT INTO seer_profile (seer_id, created_at, updated_at, payment_info, paypal_email, total_rates, avg_rating, performance_tier) VALUES ('550e8400-e29b-41d4-a716-446655440083', '2025-11-25 11:20:00.000', '2025-12-02 10:15:00.000', NULL, 'thanhthao@seer.example.com', 0, 0, 0);
+
+
+-- =============================================
+-- UNVERIFIED SEER 3: Thầy Nguyễn Minh Tuấn (user_id: ...0084)
+-- Status: UNVERIFIED (3)
+-- =============================================
+
+-- UNVERIFIED SEER 3.1. USER
+INSERT INTO "user" (user_id, role, email, phone, gender, password_hash, full_name, avatar_url, cover_url, profile_description, birth_date, status, fcm_token, is_active, created_at, updated_at) VALUES
+    ('550e8400-e29b-41d4-a716-446655440084', '1', 'thayminhtuan@gmail.com', '+84992345678', 'Nam', '$2a$10$su2P6OQUjL6n5uW/QHpUtuNSnW64AEd48Iw5eTqAieJbSsDP3oFKu', 'Thầy Nguyễn Minh Tuấn', 'https://res.cloudinary.com/dzpv3mfjt/image/upload/v1762322268/avatar-014.png', 'https://res.cloudinary.com/dzpv3mfjt/image/upload/v1762282708/cover-014.png', 'Có 3 năm kinh nghiệm tự học về Phong Thủy và Ngũ Hành. Mong muốn trở thành chuyên gia tư vấn phong thủy chính thức trên nền tảng. Đang trong quá trình xác minh.', '1989-08-08 15:00:00.000', '3', NULL, true, '2025-11-20 14:45:00.000', '2025-12-03 09:30:00.000');
+
+-- UNVERIFIED SEER 3.2. SEER PROFILE
+INSERT INTO seer_profile (seer_id, created_at, updated_at, payment_info, paypal_email, total_rates, avg_rating, performance_tier) VALUES ('550e8400-e29b-41d4-a716-446655440084', '2025-11-20 14:45:00.000', '2025-12-03 09:30:00.000', NULL, 'minhtuan@seer.example.com', 0, 0, 0);
+
 
 -- =============================================
 -- END OF MIGRATION

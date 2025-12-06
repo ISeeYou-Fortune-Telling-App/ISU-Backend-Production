@@ -246,6 +246,7 @@ public final class Constants {
     @Getter
     @AllArgsConstructor
     public enum PaymentMethodEnum {
+        BANK("BANK"),
         MOMO("MOMO"),
         PAYPAL("PAYPAL");
 

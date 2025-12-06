@@ -1,18 +1,18 @@
 # ===========================================
-# ISU Backend - All Services Docker Compose
+# ISU Backend - Production Docker Compose
 # ===========================================
 # This file contains all microservices for the ISeeYou Fortune Telling Platform
 #
 # Usage:
-#   1. Copy env/*.env.example files to env/*.env and fill in your values
-#   2. Create the external network: docker network create isu-microservice-external-network
+#   1. Ensure env/prod/*.env files are configured
+#   2. Create the external network: docker network create isu-internal-network
 #   3. Run: docker-compose up -d
 #
 # Services:
 #   - Gateway Service (port 8080)
-#   - Core Service (port 8081, Socket.IO: 9092)
-#   - Push Notification Service (port 8082)
-#   - Report Service (port 8083)
+#   - Core Service (port 8081, Socket.IO: 8082)
+#   - Push Notification Service (port 8085)
+#   - Report Service (port 8086)
 #   - AI Support Service (port 8001)
 #   - AI Analysis Service (port 8000)
 # ===========================================
@@ -32,7 +32,7 @@ services:
       - "5672:5672"
       - "15672:15672"
     env_file:
-      - env/prod/common.env
+      - ../../env/prod/common.env
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
@@ -62,7 +62,7 @@ services:
       - "${CORE_POSTGRESQL_PORT:-5432}:5432"
     volumes:
       - postgres_core_data:/var/lib/postgresql/data
-      - ./var/logs/postgresql-core:/var/log/postgresql
+      - ../../var/logs/postgresql-core:/var/log/postgresql
     networks:
       - isu-internal-network
     healthcheck:
@@ -92,7 +92,7 @@ services:
   # Core Backend Service
   core-backend-service:
     build:
-      context: ./ISU-Backend-CoreService
+      context: ../../ISU-Backend-CoreService
       dockerfile: docker/Dockerfile
     container_name: isu-core-backend
     ports:
@@ -106,7 +106,7 @@ services:
       rabbitmq:
         condition: service_healthy
     env_file:
-      - env/prod/core-service.env
+      - ../../env/prod/core-service.env
     networks:
       - isu-internal-network
     restart: unless-stopped
@@ -123,7 +123,7 @@ services:
 
   gateway-service:
     build:
-      context: ./ISU-Backend-GatewayService
+      context: ../../ISU-Backend-GatewayService
       dockerfile: Dockerfile
     container_name: isu-gateway
     ports:
@@ -131,7 +131,7 @@ services:
     depends_on:
       - core-backend-service
     env_file:
-      - env/prod/gateway-service.env
+      - ../../env/prod/gateway-service.env
     networks:
       - isu-internal-network
     restart: unless-stopped
@@ -161,7 +161,7 @@ services:
       - "${PUSHNOTI_MONGODB_PORT:-27018}:27017"
     volumes:
       - mongodb_pushnoti_data:/data/db
-      - ./var/logs/mongodb-pushnoti:/var/log/mongodb
+      - ../../var/logs/mongodb-pushnoti:/var/log/mongodb
     networks:
       - isu-internal-network
     healthcheck:
@@ -186,7 +186,7 @@ services:
   # Push Notification Service
   pushnoti-service:
     build:
-      context: ./ISU-Backend-PushNoti
+      context: ../../ISU-Backend-PushNoti
       dockerfile: docker/Dockerfile
     container_name: isu-pushnoti
     ports:
@@ -197,7 +197,7 @@ services:
       rabbitmq:
         condition: service_healthy
     env_file:
-      - env/prod/pushnoti-service.env
+      - ../../env/prod/pushnoti-service.env
     networks:
       - isu-internal-network
     restart: unless-stopped
@@ -225,8 +225,8 @@ services:
       - "${REPORT_MONGODB_PORT:-27019}:27017"
     volumes:
       - mongodb_report_data:/data/db
-      - ./var/logs/mongodb-report:/var/log/mongodb
-      - ./ISU-Backend-ReportService/data:/data
+      - ../../var/logs/mongodb-report:/var/log/mongodb
+      - ../../ISU-Backend-ReportService/data:/data
     networks:
       - isu-internal-network
     healthcheck:
@@ -251,7 +251,7 @@ services:
   # Report Service
   report-service:
     build:
-      context: ./ISU-Backend-ReportService
+      context: ../../ISU-Backend-ReportService
       dockerfile: docker/Dockerfile
     container_name: isu-report
     ports:
@@ -262,7 +262,7 @@ services:
       rabbitmq:
         condition: service_healthy
     env_file:
-      - env/prod/report-service.env
+      - ../../env/prod/report-service.env
     networks:
       - isu-internal-network
     restart: unless-stopped
@@ -344,17 +344,17 @@ services:
   # AI Support Service (LightRAG)
   lightrag-api:
     build:
-      context: ./ISU-AI-Support
+      context: ../../ISU-AI-Support
       dockerfile: docker/Dockerfile
     container_name: isu-lightrag-api
     ports:
       - "${AI_SUPPORT_PORT:-8001}:8001"
     env_file:
-      - env/prod/ai-support.env
+      - ../../env/prod/ai-support.env
     volumes:
-      - ./ISU-AI-Support/data:/app/data
+      - ../../ISU-AI-Support/data:/app/data
       - lightrag_storage:/app/rag_storage
-      - ./var/logs/lightrag:/app/logs
+      - ../../var/logs/lightrag:/app/logs
     depends_on:
       neo4j:
         condition: service_healthy
@@ -379,7 +379,7 @@ services:
   # PostgreSQL - Vanna Database
   postgres-vanna:
     build:
-      context: ./ISU-AI-Analysis
+      context: ../../ISU-AI-Analysis
       dockerfile: Dockerfile.postgres
     container_name: isu-postgres-vanna
     restart: always
@@ -404,14 +404,14 @@ services:
   # AI Analysis Service (Vanna)
   vanna-server:
     build:
-      context: ./ISU-AI-Analysis
+      context: ../../ISU-AI-Analysis
       dockerfile: Dockerfile
     container_name: isu-vanna-server
     restart: always
     ports:
       - "${VANNA_PORT:-8000}:8000"
     env_file:
-      - env/prod/ai-analysis.env
+      - ../../env/prod/ai-analysis.env
     depends_on:
       postgres-vanna:
         condition: service_healthy

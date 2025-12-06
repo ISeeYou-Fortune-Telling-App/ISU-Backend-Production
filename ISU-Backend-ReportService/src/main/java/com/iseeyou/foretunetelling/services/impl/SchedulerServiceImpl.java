@@ -30,7 +30,7 @@ public class SchedulerServiceImpl implements SchedulerService {
     @Override
     @Transactional
 //     Run every day at 00:00 AM (midnight)
-     @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
 //     Run every minute for debugging
 //    @Scheduled(cron = "0 * * * * ?")
     public boolean autoCalculateSeer() {
@@ -51,7 +51,7 @@ public class SchedulerServiceImpl implements SchedulerService {
     @Override
     @Transactional
     // Run every day at 00:00 AM (midnight)
-     @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     // Run every minute for debugging
 //    @Scheduled(cron = "0 * * * * ?")
     public boolean autoCalculateCustomer() {
@@ -71,9 +71,9 @@ public class SchedulerServiceImpl implements SchedulerService {
     }
 
     private boolean calculateSeerPoint(SeerPerformance seerPerformance) {
-        // Always reset for new calculation
+        // Get tier bonus based on last month's tier
         Constants.SeerTier lastSeerTier = getSeerLastTier(seerPerformance);
-        int currentSeerPoint = lastSeerTier.getMinPoint();
+        int tierBonus = getTierBonus(lastSeerTier.getMinPoint());
 
         // Engagement Score: Each package approved got 20 points
         int engagementScore = seerPerformance.getTotalPackages() * 20;
@@ -93,15 +93,19 @@ public class SchedulerServiceImpl implements SchedulerService {
 
         // Earnings Score
         int earningScore = seerPerformance.getTotalRevenue().multiply(BigDecimal.valueOf(10))
-                        .divide(BigDecimal.valueOf(500000), 2, RoundingMode.HALF_UP).intValue();
+                .divide(BigDecimal.valueOf(500000), 2, RoundingMode.HALF_UP).intValue();
 
-        currentSeerPoint += (int) (
+        // Calculate base point from current month's metrics
+        int calculatedPoint = (int) (
                 0.3 * engagementScore +
-                0.25 * finalRatingScore +
-                0.2 * completionScore +
-                0.15 * reliabilityScore +
-                0.1 * earningScore
+                        0.25 * finalRatingScore +
+                        0.2 * completionScore +
+                        0.15 * reliabilityScore +
+                        0.1 * earningScore
         );
+
+        // Add tier bonus and cap at 100
+        int currentSeerPoint = Math.min(calculatedPoint + tierBonus, 100);
 
         seerPerformance.setPerformancePoint(currentSeerPoint);
         updateSeerTier(seerPerformance);
@@ -123,9 +127,9 @@ public class SchedulerServiceImpl implements SchedulerService {
     }
 
     private boolean calculateCustomerPoint(CustomerPotential customerPotential) {
-        // Always reset for new calculation
+        // Get tier bonus based on last month's tier
         Constants.CustomerTier lastCustomerTier = getCustomerLastTier(customerPotential);
-        int currentCustomerPoint = lastCustomerTier.getMinPoint();
+        int tierBonus = getTierBonus(lastCustomerTier.getMinPoint());
 
         // Loyalty Score: Each booking request got 10 points
         int loyaltyScore = customerPotential.getTotalBookingRequests() * 10;
@@ -144,11 +148,12 @@ public class SchedulerServiceImpl implements SchedulerService {
         // Calculate customer potential with weighted formula
         int calculatedPotential = (int) (
                 0.4 * loyaltyScore +
-                0.35 * valueScore +
-                0.25 * customerReliabilityScore
+                        0.35 * valueScore +
+                        0.25 * customerReliabilityScore
         );
 
-        currentCustomerPoint += calculatedPotential;
+        // Add tier bonus and cap at 100
+        int currentCustomerPoint = Math.min(calculatedPotential + tierBonus, 100);
         customerPotential.setPotentialPoint(currentCustomerPoint);
 
         updateCustomerTier(customerPotential);
@@ -189,6 +194,17 @@ public class SchedulerServiceImpl implements SchedulerService {
             return Constants.CustomerTier.CASUAL;
         else
             return lastMonthPotential.getPotentialTier();
+    }
+
+    private int getTierBonus(int tier) {
+        // Tier bonus system: CASUAL/APPRENTICE=0, STANDARD/PROFESSIONAL=10, PREMIUM/EXPERT=20, VIP/MASTER=30
+        return switch (tier) {
+            case 0 -> 0;  // CASUAL or APPRENTICE
+            case 50 -> 10; // STANDARD or PROFESSIONAL
+            case 70 -> 20; // PREMIUM or EXPERT
+            case 85 -> 30; // VIP or MASTER
+            default -> 0;
+        };
     }
 
     private void updateCustomerTier(CustomerPotential customerPotential) {
