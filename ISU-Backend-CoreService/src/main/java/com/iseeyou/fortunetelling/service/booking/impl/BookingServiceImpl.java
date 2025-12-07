@@ -74,16 +74,11 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findAllByUserAsCustomerOrSeerAndStatus(currentUser, status, pageable);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Page<Booking> getAllBookings(Pageable pageable) {
-        return bookingRepository.findAll(pageable);
-    }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Booking> getAllBookingsByStatus(Constants.BookingStatusEnum status, Pageable pageable) {
-        return bookingRepository.findAllByStatus(status, pageable);
+    public Page<Booking> getAllBookingsByStatus(Constants.BookingStatusEnum status, String name, Constants.PaymentStatusEnum paymentStatus, Pageable pageable) {
+        return bookingRepository.findAllByStatusAndParticipantName(status, name, paymentStatus, pageable);
     }
 
     @Transactional(readOnly = true)

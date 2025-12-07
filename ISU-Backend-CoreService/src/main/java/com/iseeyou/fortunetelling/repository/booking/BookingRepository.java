@@ -12,7 +12,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,20 +21,6 @@ public interface BookingRepository extends JpaRepository<Booking, UUID>, JpaSpec
     @EntityGraph(attributePaths = {"servicePackage", "customer", "servicePackage.seer", "servicePackage.seer.seerProfile", "bookingPayments", "servicePackage.packageCategories.knowledgeCategory"})
     Optional<Booking> findWithDetailById(UUID id);
 
-    @EntityGraph(attributePaths = {"servicePackage", "customer", "servicePackage.seer","servicePackage.seer.seerProfile", "bookingPayments", "servicePackage.packageCategories.knowledgeCategory"})
-    Page<Booking> findAllByCustomer(User customer, Pageable pageable);
-
-    @EntityGraph(attributePaths = {"servicePackage", "customer", "servicePackage.seer", "servicePackage.seer.seerProfile", "bookingPayments", "servicePackage.packageCategories.knowledgeCategory"})
-    @Query("SELECT b FROM Booking b WHERE b.servicePackage.seer = :seer")
-    Page<Booking> findAllBySeer(User seer, Pageable pageable);
-
-    @EntityGraph(attributePaths = {"servicePackage", "customer", "servicePackage.seer", "servicePackage.seer.seerProfile", "bookingPayments", "servicePackage.packageCategories.knowledgeCategory"})
-    Page<Booking> findAllByCustomerAndStatus(User customer, Constants.BookingStatusEnum status, Pageable pageable);
-
-    @EntityGraph(attributePaths = {"servicePackage", "customer", "servicePackage.seer", "servicePackage.seer.seerProfile", "bookingPayments", "servicePackage.packageCategories.knowledgeCategory"})
-    @Query("SELECT b FROM Booking b WHERE b.servicePackage.seer = :seer AND b.status = :status")
-    Page<Booking> findAllBySeerAndStatus(User seer, Constants.BookingStatusEnum status, Pageable pageable);
-
     @EntityGraph(attributePaths = {"servicePackage", "customer", "servicePackage.seer", "servicePackage.seer.seerProfile", "bookingPayments", "servicePackage.packageCategories.knowledgeCategory"})
     Page<Booking> findAllByStatus(Constants.BookingStatusEnum status, Pageable pageable);
 
@@ -43,6 +28,16 @@ public interface BookingRepository extends JpaRepository<Booking, UUID>, JpaSpec
     @EntityGraph(attributePaths = {"servicePackage", "customer", "servicePackage.seer", "servicePackage.seer.seerProfile", "bookingPayments", "servicePackage.packageCategories.knowledgeCategory"})
     @Query("SELECT b FROM Booking b WHERE b.customer = :user OR b.servicePackage.seer = :user")
     Page<Booking> findAllByUserAsCustomerOrSeer(User user, Pageable pageable);
+
+    @Query("""
+        SELECT DISTINCT b FROM Booking b
+        LEFT JOIN b.bookingPayments bp
+        WHERE (:status IS NULL OR b.status = :status)
+        AND (:name IS NULL OR :name = '' OR LOWER(b.customer.fullName) LIKE LOWER(CONCAT('%', :name, '%')) OR LOWER(b.servicePackage.seer.fullName) LIKE LOWER(CONCAT('%', :name, '%')))
+        AND (:paymentStatus IS NULL OR bp.status = :paymentStatus)
+    """)
+    @EntityGraph(attributePaths = {"servicePackage", "customer", "servicePackage.seer", "servicePackage.seer.seerProfile", "bookingPayments", "servicePackage.packageCategories.knowledgeCategory"})
+    Page<Booking> findAllByStatusAndParticipantName(@Param("status") Constants.BookingStatusEnum status, @Param("name") String name, @Param("paymentStatus") Constants.PaymentStatusEnum paymentStatus, Pageable pageable);
 
     // Find bookings where user is either customer or seer with status filter
     @EntityGraph(attributePaths = {"servicePackage", "customer", "servicePackage.seer", "servicePackage.seer.seerProfile", "bookingPayments", "servicePackage.packageCategories.knowledgeCategory"})
@@ -57,21 +52,6 @@ public interface BookingRepository extends JpaRepository<Booking, UUID>, JpaSpec
     // Check if a customer has ever booked a service package from a specific seer
     @Query("SELECT CASE WHEN COUNT(b) > 0 THEN true ELSE false END FROM Booking b WHERE b.customer = :customer AND b.servicePackage.seer = :seer")
     boolean existsByCustomerAndServicePackageSeer(@Param("customer") User customer, @Param("seer") User seer);
-
-    // Thống kê booking cho seer
-    @Query("SELECT COUNT(b) FROM Booking b WHERE b.servicePackage.seer = :seer")
-    Long countBySeer(User seer);
-
-    @Query("SELECT COUNT(b) FROM Booking b WHERE b.servicePackage.seer = :seer AND b.status = :status")
-    Long countBySeerAndStatus(User seer, Constants.BookingStatusEnum status);
-
-    @Query("SELECT COALESCE(SUM(bp.amount), 0.0) FROM Booking b JOIN b.bookingPayments bp " +
-           "WHERE b.servicePackage.seer = :seer AND bp.status = :paymentStatus")
-    Double getTotalRevenueBySeer(User seer, Constants.PaymentStatusEnum paymentStatus);
-
-    @EntityGraph(attributePaths = {"servicePackage", "customer", "bookingPayments"})
-    @Query("SELECT b FROM Booking b WHERE b.servicePackage.seer = :seer ORDER BY b.scheduledTime DESC")
-    List<Booking> findRecentBookingsBySeer(User seer, Pageable pageable);
 
     // Review related queries
     @EntityGraph(attributePaths = {"servicePackage", "customer"})
