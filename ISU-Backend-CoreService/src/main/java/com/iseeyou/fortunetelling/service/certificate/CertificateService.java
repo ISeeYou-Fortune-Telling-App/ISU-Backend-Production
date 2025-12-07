@@ -16,6 +16,7 @@ import java.util.UUID;
 public interface CertificateService {
     Page<Certificate> findAll(Pageable pageable);
     Page<Certificate> findAll(Pageable pageable, CertificateStatusEnum status);
+    Page<Certificate> findAll(Pageable pageable, CertificateStatusEnum status, String name);
     Certificate findById(UUID id);
     Certificate create(CertificateCreateRequest request) throws IOException;
     Certificate createForUser(CertificateCreateRequest request, User user) throws IOException;

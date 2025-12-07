@@ -75,11 +75,12 @@ public class CertificateController extends AbstractBaseController {
             @RequestParam(defaultValue = "desc") String sortType,
             @Parameter(description = "Sort field")
             @RequestParam(defaultValue = "createdAt") String sortBy,
+            @Parameter(description = "Certificate name or seer name") @RequestParam(required = false) String name,
             @Parameter(description = "Filter by certificate status (optional)")
             @RequestParam(required = false) Constants.CertificateStatusEnum status
     ) {
         Pageable pageable = createPageable(page, limit, sortType, sortBy);
-        Page<Certificate> certificates = certificateService.findAll(pageable, status);
+        Page<Certificate> certificates = certificateService.findAll(pageable, status, name);
         Page<CertificateResponse> response = certificateMapper.mapToPage(certificates, CertificateResponse.class);
         return responseFactory.successPage(response, "Certificates retrieved successfully");
     }
