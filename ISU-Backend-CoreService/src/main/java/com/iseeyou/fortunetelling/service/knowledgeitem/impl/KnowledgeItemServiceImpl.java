@@ -101,8 +101,14 @@ public class KnowledgeItemServiceImpl implements KnowledgeItemService {
         existingKnowledgeItem.setTitle(knowledgeItem.getTitle());
         existingKnowledgeItem.setContent(knowledgeItem.getContent());
         existingKnowledgeItem.setStatus(knowledgeItem.getStatus());
-        if (existingKnowledgeItem.getImageUrl() != null) {
-            cloudinaryService.deleteFile(existingKnowledgeItem.getImageUrl());
+
+        // Handle image URL update
+        if (knowledgeItem.getImageUrl() != null) {
+            // Delete old image if exists
+            if (existingKnowledgeItem.getImageUrl() != null) {
+                cloudinaryService.deleteFile(existingKnowledgeItem.getImageUrl());
+            }
+            // Set new image URL
             existingKnowledgeItem.setImageUrl(knowledgeItem.getImageUrl());
         }
 
