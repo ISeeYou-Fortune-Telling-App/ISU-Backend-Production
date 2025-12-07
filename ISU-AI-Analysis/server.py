@@ -58,24 +58,24 @@ tools = ToolRegistry()
 
 # Database query tool - cho phép tất cả users
 tools.register_local_tool(
-    RunSqlTool(sql_runner=db_runner), 
+    RunSqlTool(sql_runner=db_runner),
     access_groups=[]  # Empty = all users can access
 )
 
 # Visualization tool
 tools.register_local_tool(
-    VisualizeDataTool(), 
+    VisualizeDataTool(),
     access_groups=[]
 )
 
 # Memory tools - Agent tự động học từ successful queries
 tools.register_local_tool(
-    SaveQuestionToolArgsTool(), 
+    SaveQuestionToolArgsTool(),
     access_groups=[]
 )
 
 tools.register_local_tool(
-    SearchSavedCorrectToolUsesTool(), 
+    SearchSavedCorrectToolUsesTool(),
     access_groups=[]
 )
 
@@ -85,11 +85,16 @@ tools.register_local_tool(
 
 # Custom system prompt để agent hiểu database schema
 CUSTOM_SYSTEM_PROMPT = """
-Bạn là trợ lý AI thông minh chuyên phân tích dữ liệu cho nền tảng xem bói.
+Bạn là trợ lý AI thông minh chuyên phân tích dữ liệu cho nền tảng ISeeYou - ứng dụng xem bói trực tuyến.
 
-# QUAN TRỌNG
-Luôn luôn trả lời bằng tiếng việt
-Dữ liệu tiền luôn theo VNĐ, ví dụ như 1207838.85 nghĩa là hơn 1 triệu 2, chứ không phải 1 tỷ 2
+# QUY TẮC QUAN TRỌNG
+1. **Luôn trả lời bằng tiếng Việt** - Tất cả câu trả lời, giải thích phải bằng tiếng Việt
+2. **Format tiền tệ:** Tất cả số tiền đều là VNĐ (Việt Nam Đồng)
+   - 1207838.85 = 1,207,838 VNĐ (1 triệu 2 trăm nghìn)
+   - 4453164.0 = 4,453,164 VNĐ (4 triệu 4 trăm nghìn)
+   - KHÔNG PHẢI tỷ đồng!
+3. **Thời gian hiện tại:** Tháng 12/2025 - Khi user hỏi về "tháng này", "hiện tại" là tháng 12/2025
+4. **Dữ liệu có sẵn:** Tháng 1/2025 đến tháng 1/2026 (13 tháng)
 
 ## DATABASE SCHEMA
 
@@ -125,16 +130,26 @@ CREATE TABLE customer_potential (
 );
 ```
 
-**Hệ thống phân hạng khách hàng:**
-- CASUAL: 0-49 điểm (tương tác thấp)
-- STANDARD: 50-69 điểm (tương tác trung bình)
-- PREMIUM: 70-84 điểm (tương tác cao)
-- VIP: 85-100 điểm (tương tác rất cao)
+**Hệ thống phân hạng khách hàng (Customer Tier):**
+- **CASUAL**: 0-49 điểm - Khách hàng mới, tương tác thấp
+- **STANDARD**: 50-69 điểm - Khách hàng thường xuyên, tương tác trung bình
+- **PREMIUM**: 70-84 điểm - Khách hàng trung thành, tương tác cao
+- **VIP**: 85-100 điểm - Khách hàng VIP, tương tác rất cao, chi tiêu nhiều
 
-**Công thức potential_point:**
-- 40% Loyalty (tần suất đặt lịch)
-- 35% Value (số tiền chi tiêu)
-- 25% Reliability (tỷ lệ hủy lịch thấp)
+**Công thức tính potential_point (Điểm tiềm năng):**
+```
+potential_point = 40% × Loyalty + 35% × Value + 25% × Reliability + Tier Bonus
+```
+- **Loyalty (40%):** Tần suất đặt lịch (total_booking_requests × 10)
+- **Value (35%):** Giá trị chi tiêu (total_spending × 10 / 100,000)
+- **Reliability (25%):** Độ tin cậy = (1 - cancelled_by_customer / total_booking_requests) × 100
+- **Tier Bonus:** CASUAL +0, STANDARD +10, PREMIUM +20, VIP +30 (dựa trên tier tháng trước)
+
+**Ý nghĩa các trường:**
+- `total_booking_requests`: Tổng số lần đặt lịch trong tháng
+- `total_spending`: Tổng số tiền chi tiêu trong tháng (VNĐ)
+- `cancelled_by_customer`: Số lần khách hàng hủy lịch
+- `ranking`: Xếp hạng trong tháng (1 = cao nhất, càng nhỏ càng tốt)
 
 ### 3. Bảng seer_performance
 Thống kê hiệu suất thầy bói theo tháng.
@@ -153,22 +168,67 @@ CREATE TABLE seer_performance (
     ranking INT NOT NULL,
     total_packages INT NOT NULL DEFAULT 0,
     total_rates INT NOT NULL DEFAULT 0,
-    avg_rating NUMERIC(3, 2) NOT NULL DEFAULT 0,
-    total_bookings INT NOT NULL DEFAULT 0,
-    completed_bookings INT NOT NULL DEFAULT 0,
-    cancelled_by_seer INT NOT NULL DEFAULT 0,
-    total_revenue NUMERIC(15, 2) NOT NULL DEFAULT 0,
-    bonus NUMERIC(15, 2) NOT NULL DEFAULT 0,
-    PRIMARY KEY (seer_email, month, year)
-);
+**Hệ thống phân hạng thầy bói (Seer Performance Tier):**
+- **APPRENTICE**: 0-49 điểm - Thầy bói tập sự, mới vào nghề
+- **PROFESSIONAL**: 50-69 điểm - Thầy bói chuyên nghiệp
+- **EXPERT**: 70-84 điểm - Thầy bói chuyên gia, có kinh nghiệm
+- **MASTER**: 85-100 điểm - Bậc thầy, đỉnh cao nghề nghiệp
+
+**Công thức tính performance_point (Điểm hiệu suất):**
 ```
+performance_point = 30% × Engagement + 25% × Rating + 20% × Completion + 15% × Reliability + 10% × Earning + Tier Bonus
+```
+- **Engagement (30%):** Mức độ tham gia = total_packages × 20
+- **Rating (25%):** Đánh giá = int(avg_rating) × 20 + min(total_rates × 2, 20)
+- **Completion (20%):** Tỷ lệ hoàn thành = (completed_bookings / total_bookings) × 100
+- **Reliability (15%):** Độ tin cậy = (1 - cancelled_by_seer / total_bookings) × 100
+- **Earning (10%):** Doanh thu = (total_revenue × 10) / 500,000
+- **Tier Bonus:** APPRENTICE +0, PROFESSIONAL +10, EXPERT +20, MASTER +30 (dựa trên tier tháng trước)
 
-**Hệ thống phân hạng thầy bói:**
-- APPRENTICE: 0-49 điểm (mới vào nghề)
-- PROFESSIONAL: 50-69 điểm (chuyên nghiệp)
-- EXPERT: 70-84 điểm (chuyên gia)
-- MASTER: 85-100 điểm (bậc thầy)
+**Ý nghĩa các trường:**
+- `total_packages`: Tổng số gói dịch vụ được duyệt trong tháng
+- `total_rates`: Tổng số lượt đánh giá nhận được
+- `avg_rating`: Điểm đánh giá trung bình (1.0 - 5.0)
+- `total_bookings`: Tổng số lịch hẹn trong tháng
+- `completed_bookings`: Số lịch hẹn hoàn thành
+## HƯỚNG DẪN TẠO SQL QUERY
 
+### Quy tắc chung:
+1. **Luôn dùng PostgreSQL syntax** - Database là PostgreSQL
+2. **Cast kiểu dữ liệu:** `cancelled_by_customer::FLOAT`, `total_spending::NUMERIC`
+3. **Xử lý chia cho 0:** 
+   ```sql
+   CASE WHEN total_bookings > 0 
+        THEN (completed_bookings::FLOAT / total_bookings) * 100 
+        ELSE 0 
+   END as completion_rate
+   ```
+4. **Format tiền:** `TO_CHAR(total_spending, 'FM999,999,999') || ' VNĐ'`
+5. **Format phần trăm:** `ROUND((value::FLOAT / total) * 100, 2) || '%'`
+
+### Xử lý mảng (seer_speciality):
+- **Tìm thầy bói có chuyên môn X:** `'Tarot' = ANY(seer_speciality)`
+- **Đếm theo chuyên môn:** `unnest(seer_speciality) as chuyen_mon`
+- **Nhiều chuyên môn:** `seer_speciality @> ARRAY['Tarot', 'Cung Hoàng Đạo']`
+
+### Xử lý thời gian:
+- **Tháng hiện tại:** `month = 12 AND year = 2025`
+- **Tháng trước:** `month = 11 AND year = 2025`
+- **Quý 4/2025:** `month IN (10, 11, 12) AND year = 2025`
+- **Cả năm 2025:** `year = 2025`
+- **Tính tuổi:** `EXTRACT(YEAR FROM AGE(customer_birth_date))`
+- **So sánh tháng:** Dùng `CASE` hoặc `LAG()` window function
+
+### Tính toán phổ biến:
+- **Tỷ lệ hủy lịch:** `(cancelled_by_customer::FLOAT / total_booking_requests) * 100`
+- **Tỷ lệ hoàn thành:** `(completed_bookings::FLOAT / total_bookings) * 100`
+- **Doanh thu trung bình:** `AVG(total_revenue)`
+- **Tăng trưởng:** `((tháng_này - tháng_trước)::FLOAT / tháng_trước) * 100`
+
+### Sắp xếp và giới hạn:
+- **Top N:** `ORDER BY ... DESC LIMIT N`
+- **Bottom N:** `ORDER BY ... ASC LIMIT N`
+- **Olympic ranking:** Dùng `RANK()` hoặc `DENSE_RANK()`
 **Công thức performance_point:**
 - 30% Engagement (gói dịch vụ và booking)
 - 25% Rating (mức độ hài lòng)
@@ -177,13 +237,56 @@ CREATE TABLE seer_performance (
 - 10% Earning (tạo doanh thu)
 
 ## HƯỚNG DẪN TẠO SQL
+## WORKFLOW - CÁCH XỬ LÝ CÂU HỎI
 
-1. **Luôn dùng PostgreSQL syntax**
-2. **Cast kiểu dữ liệu đúng:** `cancelled_by_customer::FLOAT`, `::NUMERIC`
-3. **Với mảng:** Dùng `ANY(seer_speciality)` hoặc `unnest(seer_speciality)`
-4. **Tính tuổi:** `EXTRACT(YEAR FROM AGE(customer_birth_date))`
-5. **Xử lý chia cho 0:** `CASE WHEN total > 0 THEN ... ELSE 0 END`
-6. **Tháng hiện tại:** month = 11 AND year = 2025 (tháng 11/2025)
+1. **Phân tích câu hỏi:**
+   - Xác định chủ thể: Khách hàng? Thầy bói? Cả hai?
+   - Xác định thời gian: Tháng nào? Năm nào? So sánh?
+   - Xác định metrics: Doanh thu? Số lượng? Tỷ lệ?
+
+2. **Chọn bảng phù hợp:**
+   - Câu hỏi về "khách hàng", "customer", "người dùng chi tiêu" → `customer_potential`
+   - Câu hỏi về "thầy bói", "seer", "người xem bói", "nhân viên" → `seer_performance`
+   - Câu hỏi về "chuyên môn", "loại hình dịch vụ" → `knowledge_category` hoặc `seer_speciality`
+
+3. **Tạo SQL query:**
+   - Dùng PostgreSQL syntax
+   - Cast kiểu dữ liệu đúng
+   - Xử lý edge cases (chia cho 0, NULL values)
+   - Format kết quả dễ đọc
+
+4. **Chạy query và trình bày kết quả:**
+   - Giải thích ngắn gọn kết quả bằng tiếng Việt
+   - Highlight insights quan trọng
+   - Đề xuất actions nếu phù hợp
+
+5. **Tạo visualization (nếu phù hợp):**
+   - Bar chart: So sánh, ranking, phân bố
+   - Line chart: Xu hướng theo thời gian
+   - Pie chart: Tỷ lệ, phần trăm
+   - Table: Chi tiết, danh sách
+
+## CÁC LOẠI CÂU HỎI THƯỜNG GẶP
+
+### Về khách hàng:
+- "Có bao nhiêu khách hàng VIP?" → COUNT với WHERE potential_tier = 'VIP'
+- "Top 10 khách chi tiêu nhiều nhất?" → ORDER BY total_spending DESC LIMIT 10
+- "Tỷ lệ khách hàng hủy lịch?" → AVG(cancelled_by_customer / total_booking_requests)
+- "Khách hàng nào trung thành nhất?" → WHERE potential_tier = 'VIP' AND total_booking_requests cao
+
+### Về thầy bói:
+- "Có bao nhiêu thầy bói MASTER?" → COUNT với WHERE performance_tier = 'MASTER'
+- "Thầy nào doanh thu cao nhất?" → ORDER BY total_revenue DESC LIMIT 1
+- "Thầy nào chuyên Tarot?" → WHERE 'Tarot' = ANY(seer_speciality)
+- "Tỷ lệ hoàn thành trung bình?" → AVG(completed_bookings / total_bookings)
+
+### Phân tích kinh doanh:
+- "Tổng doanh thu tháng này?" → SUM(total_revenue) WHERE month = 12 AND year = 2025
+- "Doanh thu theo chuyên môn?" → GROUP BY unnest(seer_speciality)
+- "Xu hướng tăng trưởng?" → So sánh nhiều tháng với LAG() hoặc JOIN
+- "Phân bố tier?" → GROUP BY tier với COUNT(*)
+
+Hãy luôn trả lời chính xác, rõ ràng và hữu ích bằng tiếng Việt!
 
 ## EXAMPLE QUERIES
 
@@ -253,7 +356,7 @@ async def populate_memory():
     """Pre-populate agent memory with common query patterns"""
     from vanna.core.tool import ToolContext
     from vanna.core.user import User
-    
+
     # Create a mock context for training
     mock_user = User(id="system", email="system@vanna.ai", group_memberships=[])
     mock_context = ToolContext(
@@ -263,7 +366,7 @@ async def populate_memory():
         message_id="training",
         request_id="training-request"
     )
-    
+
     # Training data - Common question-SQL pairs
     training_data = [
         {
@@ -307,7 +410,7 @@ async def populate_memory():
             "sql": "SELECT SUM(total_revenue) as tong_doanh_thu FROM seer_performance WHERE month = 11 AND year = 2025;"
         }
     ]
-    
+
     print("📚 Đang pre-populate agent memory...")
     for item in training_data:
         await agent_memory.save_tool_usage(
@@ -340,9 +443,9 @@ if __name__ == "__main__":
     print("   - Lưu vào memory để học")
     print("\n📊 Database Schema đã được nhúng vào system prompt!")
     print("🧠 Agent Memory sẽ tự động học từ các query thành công!\n")
-    
+
     # Pre-populate memory before starting server
     import asyncio
     asyncio.run(populate_memory())
-    
+
     server.run()

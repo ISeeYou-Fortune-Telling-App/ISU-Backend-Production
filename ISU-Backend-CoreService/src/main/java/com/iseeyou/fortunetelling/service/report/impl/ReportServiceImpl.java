@@ -33,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -339,7 +340,7 @@ public class ReportServiceImpl implements ReportService {
         long total = reportRepository.count();
 
         // Tính số báo cáo mới trong tháng này
-        java.time.LocalDateTime startOfMonth = java.time.LocalDateTime.now()
+        LocalDateTime startOfMonth = LocalDateTime.now()
                 .withDayOfMonth(1)
                 .withHour(0)
                 .withMinute(0)
