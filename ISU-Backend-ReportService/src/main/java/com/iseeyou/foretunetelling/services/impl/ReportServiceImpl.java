@@ -216,10 +216,10 @@ public class ReportServiceImpl implements ReportService {
 
         // Total Spending filter
         if (minTotalSpending != null) {
-            criteriaList.add(Criteria.where("total_spending").gte(minTotalSpending));
+            criteriaList.add(Criteria.where("total_spending").gte(minTotalSpending.doubleValue()));
         }
         if (maxTotalSpending != null) {
-            criteriaList.add(Criteria.where("total_spending").lte(maxTotalSpending));
+            criteriaList.add(Criteria.where("total_spending").lte(maxTotalSpending.doubleValue()));
         }
 
         // Cancelled By Customer filter
@@ -353,18 +353,18 @@ public class ReportServiceImpl implements ReportService {
 
         // Total Revenue filter
         if (minTotalRevenue != null) {
-            criteriaList.add(Criteria.where("total_revenue").gte(minTotalRevenue));
+            criteriaList.add(Criteria.where("total_revenue").gte(minTotalRevenue.doubleValue()));
         }
         if (maxTotalRevenue != null) {
-            criteriaList.add(Criteria.where("total_revenue").lte(maxTotalRevenue));
+            criteriaList.add(Criteria.where("total_revenue").lte(maxTotalRevenue.doubleValue()));
         }
 
         // Bonus filter
         if (minBonus != null) {
-            criteriaList.add(Criteria.where("bonus").gte(minBonus));
+            criteriaList.add(Criteria.where("bonus").gte(minBonus.doubleValue()));
         }
         if (maxBonus != null) {
-            criteriaList.add(Criteria.where("bonus").lte(maxBonus));
+            criteriaList.add(Criteria.where("bonus").lte(maxBonus.doubleValue()));
         }
 
         if (!criteriaList.isEmpty()) {

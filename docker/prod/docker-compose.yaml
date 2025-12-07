@@ -162,6 +162,7 @@ services:
     volumes:
       - mongodb_pushnoti_data:/data/db
       - ../../var/logs/mongodb-pushnoti:/var/log/mongodb
+      - ../../ISU-Backend-PushNoti/data:/data
     networks:
       - isu-internal-network
     healthcheck:

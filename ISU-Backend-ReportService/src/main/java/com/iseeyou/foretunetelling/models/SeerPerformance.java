@@ -70,8 +70,10 @@ public class SeerPerformance {
     private BigDecimal bonus;
 
     @CreatedDate
+    @Field("created_at")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Field("updated_at")
     private LocalDateTime updatedAt;
 }

@@ -30,9 +30,11 @@ public class User {
     private List<String> fcmTokens = new ArrayList<>();
 
     @CreatedDate
+    @Field("created_at")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Field("updated_at")
     private LocalDateTime updatedAt;
 
     public void addFcmToken(String token) {

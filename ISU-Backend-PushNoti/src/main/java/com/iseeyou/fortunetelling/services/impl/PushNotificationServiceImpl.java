@@ -66,7 +66,12 @@ public class PushNotificationServiceImpl implements PushNotificationService {
     @Override
     public Page<Notification> getAllMyNotifications(Pageable pageable) {
         String currentUserId = authService.getCurrentUserId().toString();
-        return getNotificationsByRecipientId(currentUserId, pageable);
+        try {
+            return getNotificationsByRecipientId(currentUserId, pageable);
+        } catch (Exception e) {
+            log.error("Something wrong here: {}", e.getMessage());
+            return null;
+        }
     }
 
     /**

@@ -55,8 +55,10 @@ public class CustomerPotential {
     private Integer cancelledByCustomer;
 
     @CreatedDate
+    @Field("created_at")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Field("updated_at")
     private LocalDateTime updatedAt;
 }

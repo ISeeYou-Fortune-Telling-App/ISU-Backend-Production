@@ -73,6 +73,9 @@ help: ## Show this help message
 	@echo   make pushnoti-up           - Start pushnoti service
 	@echo   make pushnoti-down         - Stop pushnoti service
 	@echo   make pushnoti-logs         - Show pushnoti logs
+	@echo   make pushnoti-logs-mongo   - Show MongoDB logs
+	@echo   make pushnoti-import-data  - Import JSON data to MongoDB
+	@echo   make pushnoti-list-collections - List MongoDB collections
 	@echo   make pushnoti-rebuild      - Rebuild pushnoti service
 	@echo   make pushnoti-clean        - Clean pushnoti data
 	@echo ""
@@ -243,21 +246,81 @@ pushnoti-build: ## Build pushnoti service
 	$(DOCKER_COMPOSE) build pushnoti-service
 
 pushnoti-up: ## Start pushnoti service with dependencies
-	@echo Starting PushNoti Service...
+	@echo Starting PushNoti Service dependencies...
+ifeq ($(ENV),prod)
 	$(DOCKER_COMPOSE) up -d mongodb-pushnoti rabbitmq pushnoti-service
 	@echo PushNoti Service started at http://localhost:8085
+else
+	$(DOCKER_COMPOSE) up -d mongodb-pushnoti rabbitmq
+	@echo PushNoti dependencies started.
+	@echo To run service locally: cd ISU-Backend-PushNoti ^&^& mvn spring-boot:run
+endif
 
 pushnoti-down: ## Stop pushnoti service
-	$(DOCKER_COMPOSE) stop pushnoti-service
+ifeq ($(ENV),prod)
+	$(DOCKER_COMPOSE) stop pushnoti-service mongodb-pushnoti
+else
+	$(DOCKER_COMPOSE) stop mongodb-pushnoti
+endif
 
 pushnoti-logs: ## Show pushnoti logs
+ifeq ($(ENV),prod)
 	$(DOCKER_COMPOSE) logs -f pushnoti-service
+else
+	@echo In dev mode, run: cd ISU-Backend-PushNoti ^&^& mvn spring-boot:run
+endif
 
-pushnoti-rebuild: pushnoti-down pushnoti-build pushnoti-up ## Rebuild pushnoti
+pushnoti-logs-mongo: ## Show MongoDB logs
+	$(DOCKER_COMPOSE) logs -f mongodb-pushnoti
+
+pushnoti-rebuild: pushnoti-down pushnoti-build pushnoti-up ## Rebuild pushnoti (prod only)
+
+pushnoti-import-data: ## Import JSON data to MongoDB
+	@echo Importing data to MongoDB...
+	@echo Waiting for MongoDB to be ready...
+	@sleep 5 2>/dev/null || ping -n 6 127.0.0.1 > nul
+	@echo ""
+	@echo Importing notifications...
+	$(DOCKER_COMPOSE) exec -T mongodb-pushnoti mongoimport \
+		--authenticationDatabase admin \
+		--username admin \
+		--password secret \
+		--db isu_pushnoti_mongo \
+		--collection notifications \
+		--type json \
+		--file /data/notifications.json \
+		--jsonArray \
+		--drop
+	@echo ""
+	@echo Importing users...
+	$(DOCKER_COMPOSE) exec -T mongodb-pushnoti mongoimport \
+		--authenticationDatabase admin \
+		--username admin \
+		--password secret \
+		--db isu_pushnoti_mongo \
+		--collection users \
+		--type json \
+		--file /data/users.json \
+		--jsonArray \
+		--drop
+	@echo ""
+	@echo Data import complete!
+
+pushnoti-list-collections: ## List MongoDB collections
+	$(DOCKER_COMPOSE) exec -T mongodb-pushnoti mongosh \
+		--authenticationDatabase admin \
+		--username admin \
+		--password secret \
+		--eval "use isu_pushnoti_mongo; db.getCollectionNames()"
 
 pushnoti-clean: ## Stop and remove pushnoti volumes
+ifeq ($(ENV),prod)
 	$(DOCKER_COMPOSE) stop pushnoti-service mongodb-pushnoti
 	$(DOCKER_COMPOSE) rm -f pushnoti-service mongodb-pushnoti
+else
+	$(DOCKER_COMPOSE) stop mongodb-pushnoti
+	$(DOCKER_COMPOSE) rm -f mongodb-pushnoti
+endif
 	docker volume rm -f isu-backend-$(ENV)_mongodb_pushnoti_data 2>nul || true
 
 # ===========================================
@@ -269,20 +332,34 @@ report-build: ## Build report service
 	$(DOCKER_COMPOSE) build report-service
 
 report-up: ## Start report service with dependencies
-	@echo Starting Report Service...
+	@echo Starting Report Service dependencies...
+ifeq ($(ENV),prod)
 	$(DOCKER_COMPOSE) up -d mongodb-report rabbitmq report-service
 	@echo Report Service started at http://localhost:8086
+else
+	$(DOCKER_COMPOSE) up -d mongodb-report rabbitmq
+	@echo Report dependencies started.
+	@echo To run service locally: cd ISU-Backend-ReportService ^&^& mvn spring-boot:run
+endif
 
 report-down: ## Stop report service
-	$(DOCKER_COMPOSE) stop report-service
+ifeq ($(ENV),prod)
+	$(DOCKER_COMPOSE) stop report-service mongodb-report
+else
+	$(DOCKER_COMPOSE) stop mongodb-report
+endif
 
 report-logs: ## Show report logs
+ifeq ($(ENV),prod)
 	$(DOCKER_COMPOSE) logs -f report-service
+else
+	@echo In dev mode, run: cd ISU-Backend-ReportService ^&^& mvn spring-boot:run
+endif
 
 report-logs-mongo: ## Show MongoDB logs
 	$(DOCKER_COMPOSE) logs -f mongodb-report
 
-report-rebuild: report-down report-build report-up ## Rebuild report service
+report-rebuild: report-down report-build report-up ## Rebuild report service (prod only)
 
 report-import-data: ## Import JSON data to MongoDB
 	@echo Importing data to MongoDB...
@@ -323,8 +400,13 @@ report-list-collections: ## List MongoDB collections
 		--eval "use isu_report_mongo; db.getCollectionNames()"
 
 report-clean: ## Stop and remove report volumes
+ifeq ($(ENV),prod)
 	$(DOCKER_COMPOSE) stop report-service mongodb-report
 	$(DOCKER_COMPOSE) rm -f report-service mongodb-report
+else
+	$(DOCKER_COMPOSE) stop mongodb-report
+	$(DOCKER_COMPOSE) rm -f mongodb-report
+endif
 	docker volume rm -f isu-backend-$(ENV)_mongodb_report_data 2>nul || true
 
 # ===========================================
@@ -487,7 +569,7 @@ prod: ## Start prod environment (all services in Docker)
 	@echo ""
 	@echo All services running in Docker.
 
-quick-start: network-create up _wait-for-services report-import-data ## Quick start everything
+quick-start: network-create up _wait-for-services report-import-data pushnoti-import-data ## Quick start everything
 	@echo ""
 	@echo All services are running!
 
@@ -498,7 +580,7 @@ _wait-for-services:
 .PHONY: help up down build rebuild logs status clean clean-all network-create \
 	gateway-build gateway-up gateway-down gateway-logs gateway-rebuild \
 	core-build core-up core-down core-logs core-rebuild core-run core-test core-compile core-package core-clean core-migration-up core-migration-info \
-	pushnoti-build pushnoti-up pushnoti-down pushnoti-logs pushnoti-rebuild pushnoti-clean \
+	pushnoti-build pushnoti-up pushnoti-down pushnoti-logs pushnoti-logs-mongo pushnoti-rebuild pushnoti-import-data pushnoti-list-collections pushnoti-clean \
 	report-build report-up report-down report-logs report-logs-mongo report-rebuild report-import-data report-list-collections report-clean \
 	ai-support-build ai-support-up ai-support-down ai-support-logs ai-support-rebuild ai-support-health ai-support-clean ai-support-clean-all \
 	ai-analysis-build ai-analysis-up ai-analysis-down ai-analysis-logs ai-analysis-rebuild ai-analysis-clean \
