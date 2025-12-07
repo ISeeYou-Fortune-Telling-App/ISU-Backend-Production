@@ -58,21 +58,14 @@ public class ReportController extends AbstractBaseController {
                         @Parameter(description = "Page size") @RequestParam(defaultValue = "15") int limit,
                         @Parameter(description = "Sort direction") @RequestParam(defaultValue = "desc") String sortType,
                         @Parameter(description = "Sort field") @RequestParam(defaultValue = "createdAt") String sortBy,
-                        @Parameter(description = "Optional report status filter (PENDING, VIEWED, RESOLVED, REJECTED)") @RequestParam(required = false) String status,
-                        @Parameter(description = "Optional report type name filter (as stored in report_type.name)") @RequestParam(required = false) String reportType,
-                        @Parameter(description = "Optional target type filter (SEER, SERVICE_PACKAGE, BOOKING, CHAT)") @RequestParam(required = false) String targetType) {
+                        @Parameter(description = "Name to search (searches both reporter and reported user names)") @RequestParam(required = false) String name,
+                        @Parameter(description = "Optional report status filter (PENDING, VIEWED, RESOLVED, REJECTED)") @RequestParam(required = false) Constants.ReportStatusEnum status,
+                        @Parameter(description = "Optional report type name filter (as stored in report_type.name)") @RequestParam(required = false) Constants.ReportTypeEnum reportType,
+                        @Parameter(description = "Optional target type filter (SEER, SERVICE_PACKAGE, BOOKING, CHAT)") @RequestParam(required = false) Constants.TargetReportTypeEnum targetType) {
                 Pageable pageable = createPageable(page, limit, sortType, sortBy);
-                Constants.ReportStatusEnum statusEnum = null;
-                if (status != null && !status.isBlank()) {
-                        statusEnum = Constants.ReportStatusEnum.get(status);
-                }
 
-                Constants.TargetReportTypeEnum targetTypeEnum = null;
-                if (targetType != null && !targetType.isBlank()) {
-                        targetTypeEnum = Constants.TargetReportTypeEnum.get(targetType);
-                }
+                Page<Report> reports = reportService.findAllReports(pageable, status, reportType, targetType, name);
 
-                Page<Report> reports = reportService.findAllReports(pageable, statusEnum, reportType, targetTypeEnum);
                 Page<ReportResponse> response = reportMapper.mapToPage(reports, ReportResponse.class);
                 return responseFactory.successPage(response, "Reports retrieved successfully");
         }

@@ -55,21 +55,11 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Report> findAllReports(Pageable pageable, Constants.ReportStatusEnum status, String reportTypeName, Constants.TargetReportTypeEnum targetType) {
+    public Page<Report> findAllReports(Pageable pageable, Constants.ReportStatusEnum status, final Constants.ReportTypeEnum reportType, final Constants.TargetReportTypeEnum targetType, String name) {
         // If no filters provided, use repository's optimized findAll (with @EntityGraph)
-        if (status == null && (reportTypeName == null || reportTypeName.isBlank()) && targetType == null) {
+        if (status == null && reportType == null && targetType == null && (name == null || name.isEmpty())) {
             return reportRepository.findAll(pageable);
         }
-
-        // Convert reportTypeName to enum if present
-        Constants.ReportTypeEnum reportTypeEnum = null;
-        if (reportTypeName != null && !reportTypeName.isBlank()) {
-            reportTypeEnum = Constants.ReportTypeEnum.get(reportTypeName);
-        }
-
-        // Create final variables for lambda
-        final Constants.ReportTypeEnum finalReportTypeEnum = reportTypeEnum;
-        final Constants.TargetReportTypeEnum finalTargetType = targetType;
 
         Specification<Report> spec = (root, query, cb) -> {
             var predicates = cb.conjunction();
@@ -80,14 +70,25 @@ public class ReportServiceImpl implements ReportService {
             }
 
             // Apply report type filter
-            if (finalReportTypeEnum != null) {
+            if (reportType != null) {
                 var typeJoin = root.join("reportType", jakarta.persistence.criteria.JoinType.LEFT);
-                predicates = cb.and(predicates, cb.equal(typeJoin.get("name"), finalReportTypeEnum));
+                predicates = cb.and(predicates, cb.equal(typeJoin.get("name"), reportType));
             }
 
             // Apply target type filter
-            if (finalTargetType != null) {
-                predicates = cb.and(predicates, cb.equal(root.get("targetType"), finalTargetType));
+            if (targetType != null) {
+                predicates = cb.and(predicates, cb.equal(root.get("targetType"), targetType));
+            }
+
+            // Apply name filter (search in both reporter and reportedUser fullName)
+            if (name != null && !name.isEmpty()) {
+                var reporterJoin = root.join("reporter", jakarta.persistence.criteria.JoinType.LEFT);
+                var reportedUserJoin = root.join("reportedUser", jakarta.persistence.criteria.JoinType.LEFT);
+
+                var reporterNamePredicate = cb.like(cb.lower(reporterJoin.get("fullName")), "%" + name.toLowerCase() + "%");
+                var reportedUserNamePredicate = cb.like(cb.lower(reportedUserJoin.get("fullName")), "%" + name.toLowerCase() + "%");
+
+                predicates = cb.and(predicates, cb.or(reporterNamePredicate, reportedUserNamePredicate));
             }
 
             // Fetch related entities eagerly to avoid LazyInitializationException
