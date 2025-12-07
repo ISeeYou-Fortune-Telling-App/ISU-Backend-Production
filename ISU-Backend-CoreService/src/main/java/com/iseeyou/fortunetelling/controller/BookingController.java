@@ -160,15 +160,13 @@ public class BookingController extends AbstractBaseController {
                         @Parameter(description = "Page size") @RequestParam(defaultValue = "15") int limit,
                         @Parameter(description = "Sort direction") @RequestParam(defaultValue = "desc") String sortType,
                         @Parameter(description = "Sort field") @RequestParam(defaultValue = "createdAt") String sortBy,
+                        @Parameter(description = "Customer's or Seer's name") @RequestParam(required = false) String name,
+                        @Parameter(description = "Payment status") @RequestParam(required = false) Constants.PaymentStatusEnum paymentStatus,
                         @Parameter(description = "Filter by booking status (optional)") @RequestParam(required = false) Constants.BookingStatusEnum status) {
                 Pageable pageable = createPageable(page, limit, sortType, sortBy);
                 Page<Booking> bookings;
 
-                if (status != null) {
-                        bookings = bookingService.getAllBookingsByStatus(status, pageable);
-                } else {
-                        bookings = bookingService.getAllBookings(pageable);
-                }
+                bookings = bookingService.getAllBookingsByStatus(status, name, paymentStatus, pageable);
 
                 Page<BookingResponse> response = bookingMapper.mapToPage(bookings, BookingResponse.class);
                 return responseFactory.successPage(response, "All bookings retrieved successfully");

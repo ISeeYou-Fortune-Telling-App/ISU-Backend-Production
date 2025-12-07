@@ -21,8 +21,7 @@ public interface BookingService {
     Page<Booking> getBookingsByMeAndStatus(Constants.BookingStatusEnum status, Pageable pageable);
     
     // Admin methods to get all bookings
-    Page<Booking> getAllBookings(Pageable pageable);
-    Page<Booking> getAllBookingsByStatus(Constants.BookingStatusEnum status, Pageable pageable);
+    Page<Booking> getAllBookingsByStatus(Constants.BookingStatusEnum status, String name, Constants.PaymentStatusEnum paymentStatus, Pageable pageable);
 
     Booking findById(UUID id);
     Page<BookingPayment> findAllByPaymentMethod(Constants.PaymentMethodEnum paymentMethodEnum, Pageable pageable);
