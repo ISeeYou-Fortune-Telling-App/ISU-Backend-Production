@@ -4,6 +4,7 @@ import com.iseeyou.fortunetelling.controllers.base.AbstractBaseController;
 import com.iseeyou.fortunetelling.dtos.PageResponse;
 import com.iseeyou.fortunetelling.models.Notification;
 import com.iseeyou.fortunetelling.services.PushNotificationService;
+import com.iseeyou.fortunetelling.utils.Constants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -72,12 +73,20 @@ public class NotificationController extends AbstractBaseController {
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "15") int limit,
             @RequestParam(defaultValue = "desc") String sortType,
-            @RequestParam(defaultValue = "createdAt") String sortBy
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(required = false) String notificationTitle,
+            @RequestParam(required = false) Boolean isRead,
+            @RequestParam(required = false) Constants.TargetType targetType
     ) {
         Pageable pageable = createPageable(page, limit, sortType, sortBy);
 
         return responseFactory.successPage(
-                pushNotificationService.getAllMyNotifications(pageable),
+                pushNotificationService.getAllMyNotifications(
+                        pageable,
+                        notificationTitle,
+                        isRead,
+                        targetType
+                ),
                 "My notifications retrieved successfully");
     }
 

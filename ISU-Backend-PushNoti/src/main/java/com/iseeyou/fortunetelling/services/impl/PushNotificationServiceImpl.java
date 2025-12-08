@@ -7,13 +7,19 @@ import com.iseeyou.fortunetelling.models.Notification;
 import com.iseeyou.fortunetelling.repositories.PushNotificationRepository;
 import com.iseeyou.fortunetelling.services.PushNotificationService;
 import com.iseeyou.fortunetelling.services.UserFcmTokenService;
+import com.iseeyou.fortunetelling.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,9 +33,11 @@ public class PushNotificationServiceImpl implements PushNotificationService {
     private final FirebaseMessaging firebaseMessaging;
     private final com.iseeyou.fortunetelling.services.AuthService authService;
     private final UserFcmTokenService userFcmTokenService;
+    private final MongoTemplate mongoTemplate;
 
     @Override
-    public Notification create(NotificationEvent notificationEvent) {
+    @Async
+    public void create(NotificationEvent notificationEvent) {
         Notification newNotification = new Notification();
 
         newNotification.setNotificationTitle(notificationEvent.getNotificationTitle());
@@ -42,7 +50,7 @@ public class PushNotificationServiceImpl implements PushNotificationService {
         // Gửi notification đến FCM token(s)
         sendNotificationToUser(notificationEvent);
 
-        return pushNotificationRepository.save(newNotification);
+        pushNotificationRepository.save(newNotification);
     }
 
     @Override
@@ -64,14 +72,46 @@ public class PushNotificationServiceImpl implements PushNotificationService {
     }
 
     @Override
-    public Page<Notification> getAllMyNotifications(Pageable pageable) {
+    public Page<Notification> getAllMyNotifications(
+            Pageable pageable,
+            String notificationTitle,
+            Boolean isRead,
+            Constants.TargetType targetType
+    ) {
         String currentUserId = authService.getCurrentUserId().toString();
-        try {
-            return getNotificationsByRecipientId(currentUserId, pageable);
-        } catch (Exception e) {
-            log.error("Something wrong here: {}", e.getMessage());
-            return null;
+        
+        // Build dynamic query
+        Query query = new Query();
+        List<Criteria> criteriaList = new ArrayList<>();
+
+        // Always filter by recipientId
+        criteriaList.add(Criteria.where("recipient_id").is(currentUserId));
+
+        // Filter by notificationTitle (case-insensitive partial match)
+        if (notificationTitle != null && !notificationTitle.isEmpty()) {
+            criteriaList.add(Criteria.where("notification_title").regex(notificationTitle, "i"));
         }
+
+        // Filter by isRead
+        if (isRead != null) {
+            criteriaList.add(Criteria.where("is_read").is(isRead));
+        }
+
+        // Filter by targetType
+        if (targetType != null) {
+            criteriaList.add(Criteria.where("target_type").is(targetType.name()));
+        }
+
+        Criteria criteria = new Criteria();
+        criteria.andOperator(criteriaList.toArray(new Criteria[0]));
+        query.addCriteria(criteria);
+
+        query.with(pageable);
+        
+        long total = mongoTemplate.count(query, Notification.class);
+        List<Notification> notifications = mongoTemplate.find(query, Notification.class);
+        
+        return new org.springframework.data.domain.PageImpl<>(notifications, pageable, total);
     }
 
     /**

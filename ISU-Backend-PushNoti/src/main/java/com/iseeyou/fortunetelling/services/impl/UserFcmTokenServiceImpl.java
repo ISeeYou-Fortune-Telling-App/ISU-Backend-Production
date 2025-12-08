@@ -5,6 +5,7 @@ import com.iseeyou.fortunetelling.repositories.UserRepository;
 import com.iseeyou.fortunetelling.services.UserFcmTokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,8 @@ public class UserFcmTokenServiceImpl implements UserFcmTokenService {
     private final UserRepository userRepository;
 
     @Override
-    public User addFcmToken(String userId, String fcmToken) {
+    @Async
+    public void addFcmToken(String userId, String fcmToken) {
         log.info("Adding FCM token for user: {}", userId);
 
         User user = userRepository.findByUserId(userId)
@@ -35,14 +37,14 @@ public class UserFcmTokenServiceImpl implements UserFcmTokenService {
         log.info("FCM token added successfully. User {} now has {} token(s)",
                 userId, savedUser.getFcmTokens().size());
 
-        return savedUser;
     }
 
     @Override
-    public User removeFcmToken(String userId, String fcmToken) {
+    @Async
+    public void removeFcmToken(String userId, String fcmToken) {
         log.info("Removing FCM token for user: {}", userId);
 
-        return userRepository.findByUserId(userId)
+        userRepository.findByUserId(userId)
                 .map(user -> {
                     user.removeFcmToken(fcmToken);
                     User savedUser = userRepository.save(user);
@@ -57,6 +59,7 @@ public class UserFcmTokenServiceImpl implements UserFcmTokenService {
     }
 
     @Override
+    @Async
     public void deleteUser(String userId) {
         log.info("Deleting user and all FCM tokens: {}", userId);
 
