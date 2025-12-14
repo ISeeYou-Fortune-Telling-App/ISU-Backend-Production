@@ -150,7 +150,7 @@ flowchart TB
 ### 1. Clone repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ISeeYou-Fortune-Telling-App/ISU-Backend-Production
 cd ISU-Backend-Production
 ```
 
