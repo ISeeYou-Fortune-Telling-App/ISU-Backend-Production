@@ -112,5 +112,19 @@ public class AdminConversationController extends AbstractBaseController {
         return responseFactory.successSingle(statistics, "Message statistics retrieved successfully");
     }
 
+    @PostMapping("/admin-chats/fix")
+    @Operation(
+            summary = "Fix ADMIN_CHAT conversations status",
+            description = "Admin can fix all ADMIN_CHAT conversations to have ACTIVE status",
+            security = @SecurityRequirement(name = SECURITY_SCHEME_NAME)
+    )
+    public ResponseEntity<SingleResponse<Integer>> fixAdminChatConversations() {
+        log.info("Admin fixing ADMIN_CHAT conversations");
+
+        int fixedCount = conversationService.fixAdminChatConversations();
+
+        return responseFactory.successSingle(fixedCount, "Fixed " + fixedCount + " ADMIN_CHAT conversations");
+    }
+
 }
 

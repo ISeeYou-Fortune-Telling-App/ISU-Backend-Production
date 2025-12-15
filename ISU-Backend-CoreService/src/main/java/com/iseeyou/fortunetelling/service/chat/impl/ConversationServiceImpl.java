@@ -415,6 +415,11 @@ public class ConversationServiceImpl implements ConversationService {
         Conversation conversation = conversationRepository.findById(conversationId)
                 .orElseThrow(() -> new NotFoundException("Conversation not found with id: " + conversationId));
 
+        if (conversation.getType() == Constants.ConversationTypeEnum.ADMIN_CHAT) {
+            log.info("Skipping endChatSession for ADMIN_CHAT conversation: {}", conversationId);
+            return;
+        }
+
         conversation.setStatus(Constants.ConversationStatusEnum.ENDED);
         conversation.setSessionEndTime(LocalDateTime.now());
         conversationRepository.save(conversation);
@@ -485,6 +490,12 @@ public class ConversationServiceImpl implements ConversationService {
         Conversation conversation = conversationRepository.findById(conversationId)
                 .orElseThrow(() -> new NotFoundException("Conversation not found"));
 
+        // ADMIN_CHAT should not be in WAITING status
+        if (conversation.getType() == Constants.ConversationTypeEnum.ADMIN_CHAT) {
+            log.warn("Cannot activate ADMIN_CHAT conversation: conversationId={}", conversationId);
+            return;
+        }
+
         // Validate current status is WAITING
         if (!conversation.getStatus().equals(Constants.ConversationStatusEnum.WAITING)) {
             log.warn("Cannot activate conversation {} - current status is not WAITING: {}",
@@ -518,6 +529,12 @@ public class ConversationServiceImpl implements ConversationService {
     public void autoEndSession(UUID conversationId) {
         Conversation conversation = conversationRepository.findById(conversationId)
                 .orElseThrow(() -> new NotFoundException("Conversation not found"));
+
+        // ADMIN_CHAT should not be auto-ended - skip processing
+        if (conversation.getType() == Constants.ConversationTypeEnum.ADMIN_CHAT) {
+            log.info("Skipping autoEndSession for ADMIN_CHAT conversation: {}", conversationId);
+            return;
+        }
 
         // Check if both parties joined
         boolean customerJoined = conversation.getCustomerJoinedAt() != null;
@@ -572,6 +589,12 @@ public class ConversationServiceImpl implements ConversationService {
     public void extendSession(UUID conversationId, Integer additionalMinutes) {
         Conversation conversation = conversationRepository.findById(conversationId)
                 .orElseThrow(() -> new NotFoundException("Conversation not found"));
+
+        // ADMIN_CHAT should not be extended (no session time limit)
+        if (conversation.getType() == Constants.ConversationTypeEnum.ADMIN_CHAT) {
+            log.warn("Cannot extend ADMIN_CHAT conversation - no time limit: conversationId={}", conversationId);
+            return;
+        }
 
         // Extend session end time
         LocalDateTime newEndTime = conversation.getSessionEndTime().plusMinutes(additionalMinutes);

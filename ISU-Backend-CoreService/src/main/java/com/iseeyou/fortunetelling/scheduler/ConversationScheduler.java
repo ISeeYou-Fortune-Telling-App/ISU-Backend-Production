@@ -89,6 +89,8 @@ public class ConversationScheduler {
         log.info("Found {} late sessions to cancel", lateSessions.size());
 
         for (Conversation conversation : lateSessions) {
+            if (conversation.getType() == Constants.ConversationTypeEnum.ADMIN_CHAT)
+                continue;
             try {
                 // Determine who is late
                 boolean customerLate = conversation.getCustomerJoinedAt() == null;
@@ -142,6 +144,8 @@ public class ConversationScheduler {
         log.info("Found {} sessions needing warning notification", endingSessions.size());
 
         for (Conversation conversation : endingSessions) {
+            if (conversation.getType() == Constants.ConversationTypeEnum.ADMIN_CHAT)
+                continue;
             try {
                 // Mark warning sent
                 conversationService.sendWarningNotification(conversation.getId());
@@ -188,6 +192,8 @@ public class ConversationScheduler {
 
         for (Conversation conversation : expiredSessions) {
             try {
+                if (conversation.getType() == Constants.ConversationTypeEnum.ADMIN_CHAT)
+                    continue;
                 // End conversation & complete booking
                 conversationService.autoEndSession(conversation.getId());
 
