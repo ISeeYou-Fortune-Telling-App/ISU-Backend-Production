@@ -90,10 +90,16 @@ class RAGController:
         try:
             total_start_time = LogUtil.get_current_time()
 
-            # Bước 0: Try to extract user_id from JWT token if http_request provided
+            # Bước 0: Extract user_id from JWT token if http_request provided
+            # JWT user_id has HIGHEST priority - always overrides parameter user_id
             if http_request:
                 jwt_user_id = jwt_service.get_user_id_from_header(http_request)
                 if jwt_user_id:
+                    if query_request.user_id and query_request.user_id != jwt_user_id:
+                        LogUtil.log_warning(
+                            f"JWT user_id ({jwt_user_id}) differs from parameter user_id ({query_request.user_id}). Using JWT user_id.",
+                            "CONTROLLER"
+                        )
                     query_request.user_id = jwt_user_id
                     LogUtil.log_info(f"Using user_id from JWT token: {jwt_user_id}", "CONTROLLER")
 
@@ -296,10 +302,16 @@ class RAGController:
             HTTPException: Nếu có lỗi trong quá trình xử lý
         """
         try:
-            # Bước 0: Try to extract user_id from JWT token if http_request provided
+            # Bước 0: Extract user_id from JWT token if http_request provided
+            # JWT user_id has HIGHEST priority - always overrides parameter user_id
             if http_request:
                 jwt_user_id = jwt_service.get_user_id_from_header(http_request)
                 if jwt_user_id:
+                    if user_id and user_id != jwt_user_id:
+                        LogUtil.log_warning(
+                            f"JWT user_id ({jwt_user_id}) differs from parameter user_id ({user_id}). Using JWT user_id.",
+                            "CONTROLLER"
+                        )
                     user_id = jwt_user_id
                     LogUtil.log_info(f"Using user_id from JWT token: {jwt_user_id}", "CONTROLLER")
 
@@ -387,10 +399,16 @@ class RAGController:
             HTTPException: Nếu có lỗi trong quá trình xử lý
         """
         try:
-            # Bước 0: Try to extract user_id from JWT token if http_request provided
+            # Bước 0: Extract user_id from JWT token if http_request provided
+            # JWT user_id has HIGHEST priority - always overrides parameter user_id
             if http_request:
                 jwt_user_id = jwt_service.get_user_id_from_header(http_request)
                 if jwt_user_id:
+                    if user_id and user_id != jwt_user_id:
+                        LogUtil.log_warning(
+                            f"JWT user_id ({jwt_user_id}) differs from parameter user_id ({user_id}). Using JWT user_id.",
+                            "CONTROLLER"
+                        )
                     user_id = jwt_user_id
                     LogUtil.log_info(f"Using user_id from JWT token: {jwt_user_id}", "CONTROLLER")
 
@@ -510,14 +528,29 @@ class RAGController:
             JWT token user_id được ưu tiên cao hơn parameter user_id
         """
         try:
-            # Ưu tiên user_id từ JWT token
+            # DEBUG: Log để kiểm tra
+            LogUtil.log_info(f"get_all_sessions_by_user_id called with user_id={user_id}, request={request}", "CONTROLLER")
+
+            # Extract user_id from JWT token - HIGHEST priority
             effective_user_id = user_id
             if request:
+                LogUtil.log_info(f"Request object provided, attempting to extract JWT", "CONTROLLER")
                 jwt_user_id = jwt_service.get_user_id_from_header(request)
+                LogUtil.log_info(f"JWT extraction result: {jwt_user_id}", "CONTROLLER")
+
                 if jwt_user_id:
-                    LogUtil.log_info(f"Using user_id from JWT: {jwt_user_id} (param was: {user_id})", "CONTROLLER")
+                    if user_id and user_id != jwt_user_id:
+                        LogUtil.log_warning(
+                            f"JWT user_id ({jwt_user_id}) differs from parameter user_id ({user_id}). Using JWT user_id.",
+                            "CONTROLLER"
+                        )
                     effective_user_id = jwt_user_id
-            
+                    LogUtil.log_info(f"Using user_id from JWT: {jwt_user_id}", "CONTROLLER")
+                else:
+                    LogUtil.log_warning(f"No JWT user_id found, using parameter user_id: {user_id}", "CONTROLLER")
+            else:
+                LogUtil.log_warning("No request object provided for JWT extraction", "CONTROLLER")
+
             # Validate user_id
             if not effective_user_id or len(effective_user_id.strip()) == 0:
                 LogUtil.log_warning("Empty user_id provided (no JWT and no parameter)", "CONTROLLER")
