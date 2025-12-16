@@ -305,7 +305,7 @@ public class UserServiceImpl implements UserService {
         user.setBirthDate(request.getBirthDate());
         user.setGender(request.getGender());
         user.setPhone(request.getPhoneNumber());
-        user.setRole(Constants.RoleEnum.SEER);
+        user.setRole(Constants.RoleEnum.UNVERIFIED_SEER);
         user.setStatus(Constants.StatusProfileEnum.UNVERIFIED);
         user.setProfileDescription(request.getProfileDescription());
         user.setIsActive(false); // Tài khoản chưa được xác thực email
@@ -549,7 +549,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         log.info("User activated by email verification: {}", email);
 
-        // Gửi email chào mừng nếu là SEER
+        // Gửi email chào mừng nếu là SEER đã được verify (không gửi cho UNVERIFIED_SEER)
         if (user.getRole() == Constants.RoleEnum.SEER) {
             try {
                 emailVerificationService.sendSeerWelcomeEmail(user.getId());

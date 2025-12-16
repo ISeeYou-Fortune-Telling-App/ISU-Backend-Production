@@ -359,7 +359,51 @@ class RAGController:
             
             LogUtil.log_info("Palm analysis processed successfully", "CONTROLLER")
 
-            question = f"Phân tích lòng bàn tay sau dựa vào thông tin trong cơ sở dữ liệu: {analysis}"
+            # Tạo query với keywords song ngữ rõ ràng để RAG tìm thấy chunks liên quan
+            question = f"""Dựa vào kiến thức Xem Tướng Bàn Tay, Chỉ Tay Học (Palmistry) trong cơ sở dữ liệu, hãy phân tích chi tiết lòng bàn tay.
+
+MÔ TẢ LÒNG BÀN TAY:
+{analysis}
+
+YÊU CẦU PHÂN TÍCH CHI TIẾT:
+
+1. PHÂN TÍCH CÁC ĐƯỜNG CHỈ TAY CHÍNH:
+   - Đường Đời (Life Line): độ dài, độ sâu, độ rõ nét, điểm bắt đầu/kết thúc, độ cong
+   - Đường Trí Tuệ (Head Line): độ dài, độ rõ, hướng đi (thẳng/cong), ý nghĩa về trí tuệ và tư duy
+   - Đường Tình Cảm (Heart Line): độ dài, độ rõ, hướng đi, ý nghĩa về tình yêu và cảm xúc
+   - Đường Vận Mệnh (Fate Line): nếu có, phân tích về sự nghiệp và định mệnh
+
+2. PHÂN TÍCH HÌNH DẠNG BÀN TAY:
+   - Hình dạng tổng thể (vuông/dài/hình nón...)
+   - Độ dài các ngón tay so với lòng bàn tay
+   - Hình dạng đầu ngón tay
+   - Ý nghĩa về tính cách và năng lực
+
+3. PHÂN TÍCH CÁC GÒ TRÊN BÀN TAY (Mount/Gò):
+   - Gò Kim Tinh (Mount of Venus)
+   - Gò Mộc Tinh (Mount of Jupiter)  
+   - Gò Thổ Tinh (Mount of Saturn)
+   - Các gò khác nếu có
+   - Độ nổi bật và ý nghĩa
+
+4. PHÂN TÍCH CÁC DẤU HIỆU ĐẶC BIỆT:
+   - Đường đứt quãng, đường đôi, đường nhánh
+   - Các dấu sao, chấm, hòn đảo
+   - Màu sắc và kết cấu da
+
+5. TỔNG HỢP NHẬN ĐỊNH:
+   - Tính cách: điểm mạnh, điểm yếu
+   - Vận mệnh: xu hướng cuộc đời
+   - Tình duyên: tình cảm, hôn nhân
+   - Sự nghiệp: công việc, thành công
+   - Sức khỏe: thể chất, tinh thần
+   - Tài lộc: khả năng tích lũy tài sản
+
+6. LỜI KHUYÊN:
+   - Hướng phát triển phù hợp
+   - Điều cần chú ý và cải thiện
+
+Lưu ý: Hãy dựa vào kiến thức về Chỉ Tay Học, Xem Tướng Bàn Tay, Ba Đường Chỉ Tay Chính, Các Gò Trên Bàn Tay trong cơ sở dữ liệu để đưa ra phân tích đầy đủ và chi tiết."""
 
             return await self.process_query(QueryRequest(
                 question=question,
@@ -455,8 +499,24 @@ class RAGController:
             analysis = self.rag_service.analyze_face_details(image_bytes)
             
             LogUtil.log_info("Face analysis processed successfully", "CONTROLLER")
+
+            # Tạo query với keywords rõ ràng để RAG tìm thấy chunks liên quan
+            question = f"""Hãy phân tích nhân tướng học dựa vào kiến thức về Xem Tướng Mặt (Physiognomy) trong cơ sở dữ liệu.
+
+Thông tin chi tiết về khuôn mặt:
+{analysis}
+
+Yêu cầu phân tích:
+- Phân tích NGŨ QUAN: Mắt, Mũi, Miệng, Tai, Lông mày
+- Phân tích 12 CUNG VỊ trên khuôn mặt
+- Phân tích hình dạng khuôn mặt và tỷ lệ
+- Đưa ra nhận định về tính cách, vận mệnh, tình duyên, sự nghiệp, tài lộc, sức khỏe
+- Đưa ra lời khuyên phù hợp
+
+Hãy dựa vào kiến thức Nhân Tướng Học trong cơ sở dữ liệu để phân tích chi tiết."""
+
             return await self.process_query(QueryRequest(
-                question=f"Phân tích nhân tướng học sau dựa vào thông tin trong cơ sở dữ liệu: {analysis}",
+                question=question,
                 user_id=user_id,
                 session_id=session_id,
                 selected_option=selected_option,

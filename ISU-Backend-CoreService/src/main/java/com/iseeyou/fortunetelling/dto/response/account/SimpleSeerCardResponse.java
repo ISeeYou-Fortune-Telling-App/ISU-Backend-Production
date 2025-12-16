@@ -15,7 +15,7 @@ public class SimpleSeerCardResponse {
     private String name;
     private String avatarUrl;
     private Double rating;
-    private Double totalRates;
+    private Integer totalRates;
     private String profileDescription;
     private List<String> specialities;
 }

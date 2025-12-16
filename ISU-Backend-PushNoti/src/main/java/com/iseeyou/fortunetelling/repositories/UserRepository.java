@@ -8,6 +8,9 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
-    Optional<User> findByUserId(String userId);
+    // TODO: QUESTION: Database has duplicate userId records. Current implementation
+    // returns first match.
+    // Consider cleanup: (1) Keep earliest record, (2) Keep record with most tokens,
+    // (3) Merge all tokens
+    Optional<User> findFirstByUserId(String userId);
 }
-

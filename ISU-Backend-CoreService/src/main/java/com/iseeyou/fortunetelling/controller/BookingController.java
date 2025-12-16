@@ -37,6 +37,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.UUID;
 
@@ -99,10 +100,10 @@ public class BookingController extends AbstractBaseController {
                 java.util.List<Booking> fetched = fetchedPage.getContent();
 
                 // Determine filter mode: full date > month+year > year only
-                java.time.LocalDate targetDate = null;
+                LocalDate targetDate = null;
                 if (year != null && month != null && day != null) {
                         try {
-                                targetDate = java.time.LocalDate.of(year, month, day);
+                                targetDate = LocalDate.of(year, month, day);
                         } catch (Exception ex) {
                                 throw new IllegalArgumentException("Invalid date parameters: " + ex.getMessage());
                         }
@@ -114,7 +115,7 @@ public class BookingController extends AbstractBaseController {
                         if (sched == null)
                                 continue; // skip bookings without scheduled time when filtering
 
-                        java.time.LocalDate schedDate = sched.toLocalDate();
+                        LocalDate schedDate = sched.toLocalDate();
                         boolean match = false;
 
                         if (targetDate != null) {
@@ -452,87 +453,6 @@ public class BookingController extends AbstractBaseController {
                 Page<BookingPaymentResponse> response = bookingMapper.mapToPage(payments, BookingPaymentResponse.class);
                 return responseFactory.successPage(response, "Payments retrieved successfully");
         }
-
-        // COMMENTED OUT: This endpoint is removed from API but the service method is
-        // kept for internal/automated use
-        // The processPayment() method in BookingService can be called internally by the
-        // system
-        // For example: scheduled jobs, automated payout processing, etc.
-
-        /*
-         * @PostMapping("/pay")
-         * 
-         * @Operation(
-         * summary = "Process payment for booking (Admin only)",
-         * description = "Process payment based on booking status: " +
-         * "- If CANCELED: Refund to customer's PayPal account " +
-         * "- If COMPLETED: Payout to seer's PayPal email (after deducting commission)",
-         * security = @SecurityRequirement(name = SECURITY_SCHEME_NAME),
-         * responses = {
-         * 
-         * @ApiResponse(
-         * responseCode = "200",
-         * description = "Payment processed successfully",
-         * content = @Content(
-         * mediaType = MediaType.APPLICATION_JSON_VALUE,
-         * schema = @Schema(implementation = BookingResponse.class)
-         * )
-         * ),
-         * 
-         * @ApiResponse(
-         * responseCode = "400",
-         * description =
-         * "Bad request - Booking status invalid or payment already processed",
-         * content = @Content(
-         * mediaType = MediaType.APPLICATION_JSON_VALUE,
-         * schema = @Schema(implementation = ErrorResponse.class)
-         * )
-         * ),
-         * 
-         * @ApiResponse(
-         * responseCode = "404",
-         * description = "Booking not found",
-         * content = @Content(
-         * mediaType = MediaType.APPLICATION_JSON_VALUE,
-         * schema = @Schema(implementation = ErrorResponse.class)
-         * )
-         * ),
-         * 
-         * @ApiResponse(
-         * responseCode = "401",
-         * description = "Unauthorized",
-         * content = @Content(
-         * mediaType = MediaType.APPLICATION_JSON_VALUE,
-         * schema = @Schema(implementation = ErrorResponse.class)
-         * )
-         * ),
-         * 
-         * @ApiResponse(
-         * responseCode = "403",
-         * description = "Forbidden - Admin only",
-         * content = @Content(
-         * mediaType = MediaType.APPLICATION_JSON_VALUE,
-         * schema = @Schema(implementation = ErrorResponse.class)
-         * )
-         * )
-         * }
-         * )
-         * 
-         * @PreAuthorize("hasAuthority('ADMIN')")
-         * public ResponseEntity<SingleResponse<BookingResponse>> processPayment(
-         * 
-         * @Parameter(description = "Booking ID", required = true)
-         * 
-         * @RequestParam UUID bookingId
-         * ) {
-         * log.info("Admin processing payment for booking {}", bookingId);
-         * Booking booking = bookingService.processPayment(bookingId);
-         * BookingResponse response = bookingMapper.mapTo(booking,
-         * BookingResponse.class);
-         * return responseFactory.successSingle(response,
-         * "Payment processed successfully");
-         * }
-         */
 
         @PostMapping("/{id}/seer-confirm")
         @Operation(summary = "Seer confirm or cancel a booking (Seer only)", description = "Seer can confirm or cancel a booking. If seer cancels, refund will be processed if payment completed.", security = @SecurityRequirement(name = SECURITY_SCHEME_NAME), responses = {

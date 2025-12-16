@@ -8,7 +8,7 @@ import json
 from typing import Optional, List
 from lightrag import LightRAG, QueryParam
 from ingestion import initialize_rag, index_file
-from util.text_search_util import TextSearchUtil
+from util.text_search_util import TextSearchUtil, LogUtil
 from util.image_util import ImageUtil
 from service.core_service import CoreService
 from openai import OpenAI
@@ -423,40 +423,66 @@ class RAGService:
         return self.openai_client
     
     def analyze_palm_details(self, image_bytes: bytes) -> str:
+        LogUtil.log_info("[PALM ANALYSIS] Starting gpt-4o-2024-11-20 vision analysis for palm image", "SERVICE")
         base64_image = ImageUtil.encode_image_bytes(image_bytes)
         client = self._get_openai_client()
+        
+        LogUtil.log_info("[PALM ANALYSIS] Sending request to gpt-4o-2024-11-20 with image...", "SERVICE")
         response = client.chat.completions.create(
-            model="gpt-5",
+            model="gpt-4o-2024-11-20",
             max_completion_tokens=4000,
             messages=[{
                 "role": "user",
                 "content": [
                     {
                         "type": "text",
-                        "text": """DETAILED PALM ANALYSIS:
+                        "text": """BẠN LÀ CHUYÊN GIA PHÂN TÍCH CẤU TRÚC LÒNG BÀN TAY VÀ CÁC ĐƯỜNG NẾP (Hand Structure and Palm Lines Analysis).
 
-Please observe carefully and fully describe the following characteristics:
-1. MAJOR PALM LINES:
-- Life Line: length, depth, clarity, start/end points, curvature/straightness
-- Head Line: similar characteristics as above
-- Heart Line: similar characteristics as above
-- Other minor lines (if any)
-- Other features (e.g., fingerprints, wrinkles, scars)
+Nhiệm vụ: Mô tả chi tiết CẤU TRÚC, ĐƯỜNG NẾP và ĐẶC ĐIỂM quan sát được trên lòng bàn tay. Sử dụng THUẬT NGỮ CHUYÊN MÔN trong phân tích chỉ tay (palmistry terminology) khi mô tả:
 
-2. SHAPE AND SIZE:
-- Hand shape (square, rectangular, triangular)
-- Finger length compared to the palm
-- Fingertip shapes
+**1. CÁC ĐƯỜNG CHỈ TAY CHÍNH (Major Palm Lines):**
+- **Đường Đời / Life Line**: Đường cong bắt đầu giữa ngón cái và ngón trỏ, bao quanh gò Kim Tinh (Mount of Venus), chạy về cổ tay. Mô tả: độ dài (dài/trung bình/ngắn), độ sâu (sâu/nông), độ rõ nét, hình dạng (cong/thẳng), điểm bắt đầu và kết thúc
+- **Đường Trí Tuệ / Head Line**: Đường ngang bắt đầu gần Life Line, chạy ngang qua lòng bàn tay. Mô tả: độ dài, độ sâu, hướng (thẳng/cong xuống), điểm kết thúc
+- **Đường Tình Cảm / Heart Line**: Đường ngang trên cùng dưới các ngón tay. Mô tả: độ dài, độ sâu, hướng chạy, điểm bắt đầu (dưới ngón út) và kết thúc (ngón trỏ/giữa)
+- **Đường Vận Mệnh / Fate Line**: Đường thẳng đứng (nếu có) từ cổ tay lên giữa lòng bàn tay. Mô tả: có hay không, độ rõ, độ dài
+- **Các đường phụ**: Marriage Lines (dưới ngón út), Sun Line, Mercury Line (nếu có)
 
-3. PALM MOUNTS:
-- Mount of Venus, Jupiter, Saturn, etc.
-- Prominence of the mounts
+**2. HÌNH DẠNG VÀ TỶ LỆ BÀN TAY:**
+- Hình dạng tổng thể của bàn tay: vuông, chữ nhật, hình thang, dài, ngắn
+- Tỷ lệ chiều dài/rộng lòng bàn tay
+- Chiều dài các ngón tay so với lòng bàn tay
+- Hình dạng đầu các ngón tay: vuông, tròn, nhọn, hình spatula
 
-4. SPECIAL SIGNS:
-- Stars, dots, islands, intersections
-- Skin color and texture
+**3. CÁC GÒ TRÊN BÀN TAY (Mounts):**
+- **Gò Kim Tinh / Mount of Venus**: Gò ở gốc ngón cái (thenar). Mô tả: độ đầy (đầy/vừa/lép), độ nổi, kích thước
+- **Gò Mộc Tinh / Mount of Jupiter**: Gò dưới ngón trỏ. Mô tả: nổi rõ/vừa/phẳng
+- **Gò Thổ Tinh / Mount of Saturn**: Gò dưới ngón giữa. Mô tả: nổi rõ/vừa/phẳng
+- **Gò Thái Dương / Mount of Apollo/Sun**: Gò dưới ngón áp út. Mô tả: nổi rõ/vừa/phẳng
+- **Gò Thủy Tinh / Mount of Mercury**: Gò dưới ngón út. Mô tả: nổi rõ/vừa/phẳng
+- **Gò Thái Âm / Mount of Luna/Moon**: Gò bên cạnh lòng bàn tay (hypothenar). Mô tả: độ đầy, kích thước
+- **Gò Hỏa Tinh / Mount of Mars**: Nếu quan sát được (giữa Jupiter-Venus hoặc giữa Mercury-Moon)
 
-REQUIREMENT: Describe in as much detail as possible, only list observable features, do NOT interpret meanings. Please respond in Vietnamese."""
+**4. DẤU HIỆU ĐẶC BIỆT (Special Markings):**
+- **Đoạn đứt quãng / Breaks**: Các đường chính có đoạn gián đoạn không? Vị trí cụ thể
+- **Đường đôi / Sister Lines**: Có đường song song với đường chính không?
+- **Nhánh / Branches**: Có nhánh rẽ từ Life Line, Head Line hay Heart Line không? Hướng lên/xuống
+- **Dấu sao / Stars**: Hình sao tạo bởi giao điểm các nếp nhỏ. Vị trí
+- **Hòn đảo / Islands**: Hình oval/đảo trên đường chính. Vị trí
+- **Dấu chấm / Dots**: Các chấm đen/nâu trên đường hoặc gò
+- **Màu sắc da**: hồng hào/trắng/vàng/ngăm
+- **Kết cấu da**: mịn mượt/thô ráp/nhăn nheo
+- **Nốt ruồi / Moles, Sẹo / Scars**: Vị trí cụ thể và kích thước
+
+**5. THÔNG TIN BỔ SUNG:**
+- Bàn tay trái hay phải
+- Độ dày/mỏng của bàn tay (dựa vào quan sát)
+- Các đặc điểm nổi bật đặc biệt khác
+
+**YÊU CẦU QUAN TRỌNG:** 
+- SỬ DỤNG thuật ngữ song ngữ (Việt/English) như: "Đường Đời/Life Line", "Gò Kim Tinh/Mount of Venus"
+- CHỈ MÔ TẢ những gì QUAN SÁT ĐƯỢC - KHÔNG giải thích ý nghĩa hay suy luận
+- Mô tả CHI TIẾT, CỤ THỂ từng đặc điểm (độ dài, độ sâu, hình dạng, vị trí)
+- Trả lời HOÀN TOÀN bằng TIẾNG VIỆT"""
                     },
                     {
                         "type": "image_url",
@@ -465,7 +491,12 @@ REQUIREMENT: Describe in as much detail as possible, only list observable featur
                 ],
             }],
         )
-        return response.choices[0].message.content.strip()
+        
+        palm_analysis = response.choices[0].message.content.strip()
+        LogUtil.log_info("[PALM ANALYSIS] gpt-4o-2024-11-20 analysis completed", "SERVICE")
+        LogUtil.log_info(f"[PALM ANALYSIS] Result:\n{palm_analysis}", "SERVICE")
+        
+        return palm_analysis
 
     def analyze_face_details(self, image_bytes: bytes) -> str:
         """
@@ -477,74 +508,80 @@ REQUIREMENT: Describe in as much detail as possible, only list observable featur
         Returns:
             str: Kết quả phân tích nhân tướng học chi tiết
         """
+        LogUtil.log_info("[FACE ANALYSIS] Starting gpt-4o-2024-11-20 vision analysis for face image", "SERVICE")
         base64_image = ImageUtil.encode_image_bytes(image_bytes)
         client = self._get_openai_client()
+        
+        LogUtil.log_info("[FACE ANALYSIS] Sending request to gpt-4o-2024-11-20 with image...", "SERVICE")
         response = client.chat.completions.create(
-            model="gpt-5",
+            model="gpt-4o-2024-11-20",
             max_completion_tokens=4000,
             messages=[{
                 "role": "user",
                 "content": [
                     {
                         "type": "text",
-                        "text": """DETAILED PHYSIOGNOMY ANALYSIS:
+                        "text": """PHÂN TÍCH CHI TIẾT NHÂN TƯỚNG HỌC:
 
-Please carefully observe and fully describe the following facial characteristics according to physiognomy:
+Hãy quan sát kỹ và mô tả đầy đủ các đặc điểm khuôn mặt theo nhân tướng học:
 
-1. FACE SHAPE:
-- General shape (round, square, oval, triangular, diamond, rectangular)
-- Length/width ratio
-- Contour and symmetry
+1. HÌNH DẠNG KHUÔN MÁT:
+- Hình dạng tổng thể (tròn, vuông, ô van, tam giác, kim cương, chữ nhật)
+- Tỷ lệ dài/rộng
+- Đường viền và độ cân đối
 
-2. FOREHEAD (WEALTH AND CAREER AREA):
-- Height, width of forehead
-- Shape (round, square, sloping)
-- Wrinkles and horizontal lines on forehead
-- Hairline position and shape
+2. TRÁN (VÙNG TÀI LỘC VÀ SỰ NGHIỆP):
+- Độ cao, độ rộng của trán
+- Hình dạng (tròn, vuông, dốc)
+- Các nếp nhăn và đường ngang trên trán
+- Vị trí và hình dạng đường tóc (chữ M, tròn, vuông...)
 
-3. EYES (MARRIAGE AND RELATIONSHIP AREA):
-- Eye shape (large, small, round, long, single eyelid, double eyelid)
-- Distance between eyes
-- Eye corners (upturned, downturned, straight)
-- Eye color and expression
-- Eyebrows (thick, thin, curved, straight, long, short)
+3. MẮT (VÙNG HÔN NHÂN VÀ CÁC MỐI QUAN HỆ):
+- Hình dạng mắt (to, nhỏ, tròn, dài, mí đơn, mí đôi)
+- Khoảng cách giữa hai mắt
+- Góc mắt (hếch lên, cụp xuống, thẳng)
+- Màu mắt và ánh nhìn
+- Lông mày (dày, mỏng, cong, thẳng, dài, ngắn, hướng lên/xuống)
 
-4. NOSE (WEALTH AND FINANCE AREA):
-- Nose shape (straight, curved, upturned, flat, high)
-- Size of nose wings
-- Shape of nose tip
-- Nose position on face
+4. MŨI (VÙNG TÀI CHÍNH VÀ TÀI SẢN):
+- Hình dạng mũi (thẳng, cong, hếch, tẹt, cao)
+- Kích thước cánh mũi
+- Hình dạng đầu mũi (tròn, nhọn, vuông)
+- Vị trí mũi trên khuôn mặt
 
-5. MOUTH AND LIPS (CHILDREN AND LEGACY AREA):
-- Mouth size (large, small, medium)
-- Lip shape (thick, thin, curved, straight)
-- Mouth corners (upturned, downturned, straight)
-- Lip color
+5. MIỆNG VÀ MÔI (VÙNG CON CÁI VÀ DI SẢN):
+- Kích thước miệng (lớn, nhỏ, vừa)
+- Hình dạng môi (dày, mỏng, cong, thẳng)
+- Góc miệng (hếch lên, cụp xuống, thẳng)
+- Màu sắc môi
+- Răng (nếu nhìn thấy): chỉnh tề, thưa, khấp khểnh
 
-6. CHIN AND JAW (SERVANTS AND SUPPORT AREA):
-- Chin shape (pointed, round, square, cleft)
-- Chin prominence
-- Jawline contour
-- Lower jaw ratio compared to face
+6. CẰM VÀ HÀM (VÙNG TÁ NHÂN VÀ HẬU VẬN):
+- Hình dạng cằm (nhọn, tròn, vuông, chẻ)
+- Độ nhô ra của cằm
+- Đường viền xương hàm
+- Tỷ lệ hàm dưới so với khuôn mặt
 
-7. EARS (LONGEVITY AREA):
-- Ear size
-- Ear rim shape and thickness
-- Ear position relative to eyes
-- Ear color and brightness
+7. TAI (VÙNG TRƯỜNG THỌ):
+- Kích thước tai
+- Hình dạng và độ dày vành tai
+- Vị trí tai so với mắt (cao, thấp, ngang)
+- Màu sắc và độ sáng của tai
+- Hình dạng dái tai (dày, mỏng, to, nhỏ)
 
-8. CHEEKBONES AND TEMPLES:
-- Cheekbone prominence
-- Temple area shape
-- Fullness of cheeks
+8. GÒ MÁ VÀ THÁI DƯƠNG:
+- Độ nổi của gò má
+- Hình dạng vùng thái dương
+- Độ đầy của má
 
-9. OTHER CHARACTERISTICS:
-- Moles, scars, marks (if any)
-- Skin color
-- Overall facial lines
-- Facial expression
+9. CÁC ĐẶC ĐIỂM KHÁC:
+- Nốt ruồi, sẹo, dấu (nếu có) - vị trí cụ thể
+- Màu da (trắng, ngăm, vàng, hồng...)
+- Các đường nét tổng thể trên khuôn mặt
+- Biểu cảm khuôn mặt
+- 12 cung vị trên khuôn mặt (nếu quan sát được)
 
-REQUIREMENT: Describe in detail and objectively all observable features, do NOT interpret meanings or make personality judgments. Please respond in Vietnamese."""
+YÊU CẦU: Mô tả chi tiết và khách quan tất cả các đặc điểm quan sát được, KHÔNG giải thích ý nghĩa hay đưa ra đánh giá về tính cách. Vui lòng trả lời HOÀN TOÀN BẰNG TIẾNG VIỆT."""
                     },
                     {
                         "type": "image_url",
@@ -554,6 +591,8 @@ REQUIREMENT: Describe in detail and objectively all observable features, do NOT 
             }],
         )
 
-        result = response.choices[0].message.content.strip()
-        print("Face analysis result:", result)
-        return result
+        face_analysis = response.choices[0].message.content.strip()
+        LogUtil.log_info("[FACE ANALYSIS] gpt-4o-2024-11-20 analysis completed", "SERVICE")
+        LogUtil.log_info(f"[FACE ANALYSIS] Result:\n{face_analysis}", "SERVICE")
+        
+        return face_analysis

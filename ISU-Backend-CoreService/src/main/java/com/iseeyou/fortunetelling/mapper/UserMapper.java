@@ -4,6 +4,7 @@ import com.iseeyou.fortunetelling.dto.response.account.SimpleSeerCardResponse;
 import com.iseeyou.fortunetelling.dto.response.user.CustomerProfileResponse;
 import com.iseeyou.fortunetelling.dto.response.user.SeerProfileResponse;
 import com.iseeyou.fortunetelling.dto.response.user.UserResponse;
+import com.iseeyou.fortunetelling.entity.user.SeerProfile;
 import com.iseeyou.fortunetelling.entity.user.User;
 import com.iseeyou.fortunetelling.util.Constants;
 import org.modelmapper.ModelMapper;
@@ -56,13 +57,21 @@ public class UserMapper extends BaseMapper {
                     // Handle null values with defaults
                     mapper.using(ctx -> {
                         User user = (User) ctx.getSource();
-                        Double avgRating = user.getSeerProfile().getAvgRating();
+                        SeerProfile seerProfile = user.getSeerProfile();
+                        if (seerProfile == null) {
+                            return 0.0;
+                        }
+                        Double avgRating = seerProfile.getAvgRating();
                         return avgRating != null ? avgRating : 0.0;
                     }).map(src -> src, SimpleSeerCardResponse::setRating);
 
                     mapper.using(ctx -> {
                         User user = (User) ctx.getSource();
-                        Integer totalRates = user.getSeerProfile().getTotalRates();
+                        SeerProfile seerProfile = user.getSeerProfile();
+                        if (seerProfile == null) {
+                            return 0;
+                        }
+                        Integer totalRates = seerProfile.getTotalRates();
                         return totalRates != null ? totalRates : 0;
                     }).map(src -> src, SimpleSeerCardResponse::setTotalRates);
 

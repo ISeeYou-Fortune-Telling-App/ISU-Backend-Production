@@ -24,7 +24,7 @@ public class UserFcmTokenServiceImpl implements UserFcmTokenService {
     public void addFcmToken(String userId, String fcmToken) {
         log.info("Adding FCM token for user: {}", userId);
 
-        User user = userRepository.findByUserId(userId)
+        User user = userRepository.findFirstByUserId(userId)
                 .orElseGet(() -> {
                     User newUser = new User();
                     newUser.setUserId(userId);
@@ -44,7 +44,7 @@ public class UserFcmTokenServiceImpl implements UserFcmTokenService {
     public void removeFcmToken(String userId, String fcmToken) {
         log.info("Removing FCM token for user: {}", userId);
 
-        userRepository.findByUserId(userId)
+        userRepository.findFirstByUserId(userId)
                 .map(user -> {
                     user.removeFcmToken(fcmToken);
                     User savedUser = userRepository.save(user);
@@ -63,21 +63,19 @@ public class UserFcmTokenServiceImpl implements UserFcmTokenService {
     public void deleteUser(String userId) {
         log.info("Deleting user and all FCM tokens: {}", userId);
 
-        userRepository.findByUserId(userId)
+        userRepository.findFirstByUserId(userId)
                 .ifPresentOrElse(
-                    user -> {
-                        userRepository.delete(user);
-                        log.info("User {} and all associated FCM tokens deleted successfully", userId);
-                    },
-                    () -> log.warn("User {} not found, cannot delete", userId)
-                );
+                        user -> {
+                            userRepository.delete(user);
+                            log.info("User {} and all associated FCM tokens deleted successfully", userId);
+                        },
+                        () -> log.warn("User {} not found, cannot delete", userId));
     }
 
     @Override
     public List<String> getFcmTokensByUserId(String userId) {
-        return userRepository.findByUserId(userId)
+        return userRepository.findFirstByUserId(userId)
                 .map(User::getFcmTokens)
                 .orElse(Collections.emptyList());
     }
 }
-
