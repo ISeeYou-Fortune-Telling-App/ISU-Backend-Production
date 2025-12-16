@@ -29,7 +29,15 @@ public class UserMapper extends BaseMapper {
                             return modelMapper.map(user.getCustomerProfile(), CustomerProfileResponse.class);
                         } else if (user.getRole() == Constants.RoleEnum.SEER && user.getSeerProfile() != null) {
                             SeerProfileResponse seerProfileResponse = modelMapper.map(user.getSeerProfile(), SeerProfileResponse.class);
-                            seerProfileResponse.setSeerTier(user.getSeerProfile().getSeerTier().getValue());
+                            // Handle null values with defaults
+                            Constants.SeerTier seerTier = user.getSeerProfile().getSeerTier();
+                            seerProfileResponse.setSeerTier(seerTier != null ? seerTier.getValue() : Constants.SeerTier.APPRENTICE.getValue());
+                            if (seerProfileResponse.getTotalRates() == null) {
+                                seerProfileResponse.setTotalRates(0);
+                            }
+                            if (seerProfileResponse.getAvgRating() == null) {
+                                seerProfileResponse.setAvgRating(0.0);
+                            }
                             return seerProfileResponse;
                         }
 
@@ -44,8 +52,19 @@ public class UserMapper extends BaseMapper {
                     mapper.map(User::getFullName, SimpleSeerCardResponse::setName);
                     mapper.map(User::getAvatarUrl, SimpleSeerCardResponse::setAvatarUrl);
                     mapper.map(User::getProfileDescription, SimpleSeerCardResponse::setProfileDescription);
-                    mapper.map(src -> src.getSeerProfile().getAvgRating(), SimpleSeerCardResponse::setRating);
-                    mapper.map(src -> src.getSeerProfile().getTotalRates(), SimpleSeerCardResponse::setTotalRates);
+
+                    // Handle null values with defaults
+                    mapper.using(ctx -> {
+                        User user = (User) ctx.getSource();
+                        Double avgRating = user.getSeerProfile().getAvgRating();
+                        return avgRating != null ? avgRating : 0.0;
+                    }).map(src -> src, SimpleSeerCardResponse::setRating);
+
+                    mapper.using(ctx -> {
+                        User user = (User) ctx.getSource();
+                        Integer totalRates = user.getSeerProfile().getTotalRates();
+                        return totalRates != null ? totalRates : 0;
+                    }).map(src -> src, SimpleSeerCardResponse::setTotalRates);
 
                     // Custom mapping for specialities
                     mapper.using(ctx -> {

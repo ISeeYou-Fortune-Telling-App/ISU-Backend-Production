@@ -36,7 +36,7 @@ async def o3_complete(
         if keyword_extraction:
             kwargs["response_format"] = GPTKeywordExtractionFormat
         return await openai_complete_if_cache(
-            "gpt-4o-mini", # Thay các model khác nếu cần, ví dụ: "gpt-4", "gpt-3.5-turbo"
+            "o3", # Thay các model khác nếu cần, ví dụ: "gpt-4", "gpt-3.5-turbo"
             prompt,
             system_prompt=system_prompt,
             history_messages=history_messages,

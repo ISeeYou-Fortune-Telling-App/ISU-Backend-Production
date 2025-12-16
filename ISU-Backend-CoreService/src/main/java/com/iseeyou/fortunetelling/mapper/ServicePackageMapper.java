@@ -43,8 +43,11 @@ public class ServicePackageMapper extends BaseMapper {
                     seerInfo.setId(user.getId());
                     seerInfo.setFullName(user.getFullName());
                     seerInfo.setAvatarUrl(user.getAvatarUrl());
-                    seerInfo.setAvgRating(user.getSeerProfile().getAvgRating());
-                    seerInfo.setTotalRates(user.getSeerProfile().getTotalRates());
+                    // Handle null values with defaults
+                    Double avgRating = user.getSeerProfile().getAvgRating();
+                    Integer totalRates = user.getSeerProfile().getTotalRates();
+                    seerInfo.setAvgRating(avgRating != null ? avgRating : 0.0);
+                    seerInfo.setTotalRates(totalRates != null ? totalRates : 0);
 
                     return seerInfo;
                 }).map(source.getSeer(), destination.getSeer());

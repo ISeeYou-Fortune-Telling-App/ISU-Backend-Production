@@ -201,6 +201,9 @@ public class CertificateServiceImpl implements CertificateService {
         Certificate existingCertificate = certificateRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Certificate not found with id: " + id));
 
+        // Track if any change occurred
+        boolean hasChanges = false;
+
         // Handle file upload if new file provided
         if (request.getCertificateFile() != null && !request.getCertificateFile().isEmpty()) {
             // Delete old file from Cloudinary if exists
@@ -210,30 +213,44 @@ public class CertificateServiceImpl implements CertificateService {
             // Upload new file
             String imageUrl = cloudinaryService.uploadFile(request.getCertificateFile(), "certificates");
             existingCertificate.setCertificateUrl(imageUrl);
+            hasChanges = true;
         }
 
         // Update allowed fields from request ONLY when value is present (non-blank for
         // strings)
         if (StringUtils.hasText(request.getCertificateName())) {
             existingCertificate.setCertificateName(request.getCertificateName());
+            hasChanges = true;
         }
         if (StringUtils.hasText(request.getCertificateDescription())) {
             existingCertificate.setCertificateDescription(request.getCertificateDescription());
+            hasChanges = true;
         }
         if (StringUtils.hasText(request.getIssuedBy())) {
             existingCertificate.setIssuedBy(request.getIssuedBy());
+            hasChanges = true;
         }
         if (request.getIssuedAt() != null) {
             existingCertificate.setIssuedAt(request.getIssuedAt());
+            hasChanges = true;
         }
         if (request.getExpirationDate() != null) {
             existingCertificate.setExpirationDate(request.getExpirationDate());
+            hasChanges = true;
         }
 
         // Update categories only if provided and non-empty (avoid wiping when form
         // sends empty value)
         if (request.getCategoryIds() != null && !request.getCategoryIds().isEmpty()) {
             updateCertificateCategories(existingCertificate, request.getCategoryIds());
+            hasChanges = true;
+        }
+
+        // If any changes occurred, reset status to PENDING and clear approval fields
+        if (hasChanges) {
+            existingCertificate.setStatus(Constants.CertificateStatusEnum.PENDING);
+            existingCertificate.setDecisionDate(null);
+            existingCertificate.setDecisionReason(null);
         }
 
         Certificate saved = certificateRepository.save(existingCertificate);

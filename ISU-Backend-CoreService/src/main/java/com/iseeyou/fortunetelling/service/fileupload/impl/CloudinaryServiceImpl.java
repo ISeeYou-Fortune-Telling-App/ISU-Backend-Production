@@ -39,6 +39,9 @@ public class CloudinaryServiceImpl implements CloudinaryService {
                 resourceType = "image";
             } else if (contentType.startsWith("audio/")) {
                 resourceType = "raw";
+            } else if (contentType.startsWith("application/")) {
+                // Handle documents: PDF, Word, Excel, etc.
+                resourceType = "raw";
             }
         }
 

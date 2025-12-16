@@ -312,6 +312,9 @@ public class UserServiceImpl implements UserService {
 
         SeerProfile seerProfile = new SeerProfile();
         seerProfile.setUser(user);
+        seerProfile.setTotalRates(0);
+        seerProfile.setAvgRating(0.0);
+        seerProfile.setSeerTier(Constants.SeerTier.APPRENTICE);
         user.setSeerProfile(seerProfile);
 
         userRepository.save(user);
@@ -590,6 +593,9 @@ public class UserServiceImpl implements UserService {
                     if (user.getSeerProfile() == null) {
                         SeerProfile seerProfile = new SeerProfile();
                         seerProfile.setUser(user);
+                        seerProfile.setTotalRates(0);
+                        seerProfile.setAvgRating(0.0);
+                        seerProfile.setSeerTier(Constants.SeerTier.APPRENTICE);
                         user.setSeerProfile(seerProfile);
                     }
                     // New seers start as UNVERIFIED
@@ -725,6 +731,9 @@ public class UserServiceImpl implements UserService {
             // Tạo seer profile nếu chưa có (trường hợp edge case)
             seerProfile = new SeerProfile();
             seerProfile.setUser(user);
+            seerProfile.setTotalRates(0);
+            seerProfile.setAvgRating(0.0);
+            seerProfile.setSeerTier(Constants.SeerTier.APPRENTICE);
             user.setSeerProfile(seerProfile);
         }
 
