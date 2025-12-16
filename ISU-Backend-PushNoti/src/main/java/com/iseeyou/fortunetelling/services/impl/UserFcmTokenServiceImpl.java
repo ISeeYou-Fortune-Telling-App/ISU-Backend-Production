@@ -14,33 +14,34 @@ import java.util.List;
 
 @Slf4j
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class UserFcmTokenServiceImpl implements UserFcmTokenService {
     private final UserRepository userRepository;
 
     @Override
-    @Async
     public void addFcmToken(String userId, String fcmToken) {
         log.info("Adding FCM token for user: {}", userId);
 
+        // TODO: QUESTION: Database may have duplicate userId records from previous bug.
+        // Current: Uses findFirstByUserId which returns first match.
+        // Consider: Run cleanup script to merge/remove duplicates.
         User user = userRepository.findFirstByUserId(userId)
                 .orElseGet(() -> {
                     User newUser = new User();
                     newUser.setUserId(userId);
+                    log.info("Creating new user record for userId: {}", userId);
                     return newUser;
                 });
 
         user.addFcmToken(fcmToken);
         User savedUser = userRepository.save(user);
 
-        log.info("FCM token added successfully. User {} now has {} token(s)",
-                userId, savedUser.getFcmTokens().size());
+        log.info("FCM token added successfully. User {} (dbId: {}) now has {} token(s): {}",
+                userId, savedUser.getId(), savedUser.getFcmTokens().size(), savedUser.getFcmTokens());
 
     }
 
     @Override
-    @Async
     public void removeFcmToken(String userId, String fcmToken) {
         log.info("Removing FCM token for user: {}", userId);
 
@@ -48,8 +49,8 @@ public class UserFcmTokenServiceImpl implements UserFcmTokenService {
                 .map(user -> {
                     user.removeFcmToken(fcmToken);
                     User savedUser = userRepository.save(user);
-                    log.info("FCM token removed successfully. User {} now has {} token(s)",
-                            userId, savedUser.getFcmTokens().size());
+                    log.info("FCM token removed successfully. User {} (dbId: {}) now has {} token(s): {}",
+                            userId, savedUser.getId(), savedUser.getFcmTokens().size(), savedUser.getFcmTokens());
                     return savedUser;
                 })
                 .orElseGet(() -> {
@@ -74,8 +75,18 @@ public class UserFcmTokenServiceImpl implements UserFcmTokenService {
 
     @Override
     public List<String> getFcmTokensByUserId(String userId) {
-        return userRepository.findFirstByUserId(userId)
-                .map(User::getFcmTokens)
-                .orElse(Collections.emptyList());
+        List<String> tokens = userRepository.findFirstByUserId(userId)
+                .map(user -> {
+                    log.info("Retrieved FCM tokens for user {} (dbId: {}): {} token(s): {}",
+                            userId, user.getId(), user.getFcmTokens().size(), user.getFcmTokens());
+                    return user.getFcmTokens();
+                })
+                .orElseGet(() -> {
+                    log.warn("No user record found for userId: {}, returning empty token list", userId);
+                    return Collections.emptyList();
+                });
+
+        log.info("getFcmTokensByUserId for {}: returning {} tokens", userId, tokens.size());
+        return tokens;
     }
 }

@@ -46,7 +46,7 @@ public class PushNotificationServiceImpl implements PushNotificationService {
         newNotification.setTargetId(notificationEvent.getTargetId());
         newNotification.setTargetType(notificationEvent.getTargetType());
         newNotification.setImageUrl(notificationEvent.getImageUrl());
-        
+
         // Gửi notification đến FCM token(s)
         sendNotificationToUser(notificationEvent);
 
@@ -76,10 +76,9 @@ public class PushNotificationServiceImpl implements PushNotificationService {
             Pageable pageable,
             String notificationTitle,
             Boolean isRead,
-            Constants.TargetType targetType
-    ) {
+            Constants.TargetType targetType) {
         String currentUserId = authService.getCurrentUserId().toString();
-        
+
         // Build dynamic query
         Query query = new Query();
         List<Criteria> criteriaList = new ArrayList<>();
@@ -107,15 +106,16 @@ public class PushNotificationServiceImpl implements PushNotificationService {
         query.addCriteria(criteria);
 
         query.with(pageable);
-        
+
         long total = mongoTemplate.count(query, Notification.class);
         List<Notification> notifications = mongoTemplate.find(query, Notification.class);
-        
+
         return new org.springframework.data.domain.PageImpl<>(notifications, pageable, total);
     }
 
     /**
-     * Gửi notification đến user. Nếu có recipientId, sẽ lấy tất cả FCM tokens của user đó.
+     * Gửi notification đến user. Nếu có recipientId, sẽ lấy tất cả FCM tokens của
+     * user đó.
      * Nếu không có recipientId nhưng có fcmToken, sẽ gửi trực tiếp đến token đó.
      */
     private void sendNotificationToUser(NotificationEvent event) {
@@ -140,6 +140,7 @@ public class PushNotificationServiceImpl implements PushNotificationService {
 
                 // Gửi đến tất cả tokens của user
                 for (String token : fcmTokens) {
+                    log.info("FCM token: " + token);
                     sendPushNotification(token, title, body, imageUrl);
                 }
             }
@@ -152,7 +153,8 @@ public class PushNotificationServiceImpl implements PushNotificationService {
 
     private void sendPushNotification(String fcmToken, String title, String body, String imageUrl) {
         try {
-            com.google.firebase.messaging.Notification firebaseNotification = com.google.firebase.messaging.Notification.builder()
+            com.google.firebase.messaging.Notification firebaseNotification = com.google.firebase.messaging.Notification
+                    .builder()
                     .setTitle(title)
                     .setBody(body)
                     .build();
