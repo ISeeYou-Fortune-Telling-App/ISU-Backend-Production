@@ -29,6 +29,16 @@ public class CloudinaryServiceImpl implements CloudinaryService {
         }
 
         // Determine resource type based on content type
+        String resourceType = getResourceType(file);
+
+        return cloudinary.uploader().upload(file.getBytes(),
+                ObjectUtils.asMap(
+                        "folder", folder,
+                        "resource_type", resourceType))
+                .get("secure_url").toString();
+    }
+
+    private static String getResourceType(MultipartFile file) {
         String contentType = file.getContentType();
         String resourceType = "auto"; // Default to auto-detect
 
@@ -44,12 +54,7 @@ public class CloudinaryServiceImpl implements CloudinaryService {
                 resourceType = "raw";
             }
         }
-
-        return cloudinary.uploader().upload(file.getBytes(),
-                ObjectUtils.asMap(
-                        "folder", folder,
-                        "resource_type", resourceType))
-                .get("secure_url").toString();
+        return resourceType;
     }
 
     @Override
@@ -97,6 +102,12 @@ public class CloudinaryServiceImpl implements CloudinaryService {
             throw new IllegalArgumentException("Invalid Cloudinary URL format");
         }
 
+        String publicId = getString(url, uploadIndex);
+
+        cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+    }
+
+    private static String getString(String url, int uploadIndex) {
         String afterUpload = url.substring(uploadIndex + 8);
 
         if (afterUpload.startsWith("v")) {
@@ -111,8 +122,6 @@ public class CloudinaryServiceImpl implements CloudinaryService {
             afterUpload = afterUpload.substring(0, extensionIndex);
         }
 
-        String publicId = afterUpload;
-
-        cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+        return afterUpload;
     }
 }
