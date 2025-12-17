@@ -1,6 +1,5 @@
 [
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440001",
     "seer_id": "550e8400-e29b-41d4-a716-446655440071",
     "full_name": "Thầy Bùi Văn Anh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer1_nzu7ep.avif",
@@ -18,10 +17,10 @@
     "total_revenue": 6682920.0,
     "bonus": 116629.0,
     "created_at": "2025-01-28T15:59:56.460+00:00",
-    "updated_at": "2025-01-10T12:09:55.578+00:00"
+    "updated_at": "2025-01-10T12:09:55.578+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440002",
     "seer_id": "550e8400-e29b-41d4-a716-446655440072",
     "full_name": "Cô Nguyễn Thị Hoa Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer2_j1inbg.jpg",
@@ -39,10 +38,10 @@
     "total_revenue": 6312630.0,
     "bonus": 297041.0,
     "created_at": "2025-01-14T17:49:13.654+00:00",
-    "updated_at": "2025-01-17T22:36:36.378+00:00"
+    "updated_at": "2025-01-17T22:36:36.378+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440003",
     "seer_id": "550e8400-e29b-41d4-a716-446655440073",
     "full_name": "Thầy Trần Ngọc Minh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer3_g6rtbb.jpg",
@@ -60,10 +59,10 @@
     "total_revenue": 7362120.0,
     "bonus": 927902.0,
     "created_at": "2025-01-14T06:15:24.668+00:00",
-    "updated_at": "2025-01-17T17:07:18.028+00:00"
+    "updated_at": "2025-01-17T17:07:18.028+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440009",
     "seer_id": "550e8400-e29b-41d4-a716-446655440079",
     "full_name": "Thầy Lý Hoàng Long",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer9_umx5hx.png",
@@ -81,10 +80,10 @@
     "total_revenue": 3784680.0,
     "bonus": 302396.0,
     "created_at": "2025-01-26T10:29:52.634+00:00",
-    "updated_at": "2025-01-21T06:50:35.033+00:00"
+    "updated_at": "2025-01-21T06:50:35.033+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440010",
     "seer_id": "550e8400-e29b-41d4-a716-446655440080",
     "full_name": "Cô Trịnh Kim Oanh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer10_tnlybn.jpg",
@@ -102,10 +101,10 @@
     "total_revenue": 6145360.0,
     "bonus": 213704.0,
     "created_at": "2025-01-04T22:18:56.983+00:00",
-    "updated_at": "2025-01-16T13:44:01.692+00:00"
+    "updated_at": "2025-01-16T13:44:01.692+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440004",
     "seer_id": "550e8400-e29b-41d4-a716-446655440074",
     "full_name": "Cô Lê Anh Hương",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer4_m2nusg.jpg",
@@ -123,10 +122,10 @@
     "total_revenue": 3222989.0,
     "bonus": 358933.0,
     "created_at": "2025-01-20T15:22:11.817+00:00",
-    "updated_at": "2025-01-08T21:08:36.387+00:00"
+    "updated_at": "2025-01-08T21:08:36.387+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover7_fvdzac.avif"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440006",
     "seer_id": "550e8400-e29b-41d4-a716-446655440076",
     "full_name": "Cô Phạm Mỹ Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer6_jnammi.jpg",
@@ -144,10 +143,10 @@
     "total_revenue": 1222000.0,
     "bonus": 75575.0,
     "created_at": "2025-01-23T06:14:06.150+00:00",
-    "updated_at": "2025-01-16T12:03:07.156+00:00"
+    "updated_at": "2025-01-16T12:03:07.156+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover9_o90vwl.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440007",
     "seer_id": "550e8400-e29b-41d4-a716-446655440077",
     "full_name": "Thầy Nguyễn Văn Hiếu",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer7_m9qfpv.avif",
@@ -165,10 +164,10 @@
     "total_revenue": 679441.0,
     "bonus": 56151.0,
     "created_at": "2025-01-18T06:50:13.904+00:00",
-    "updated_at": "2025-01-16T21:37:25.497+00:00"
+    "updated_at": "2025-01-16T21:37:25.497+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover10_ivho8b.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440011",
     "seer_id": "550e8400-e29b-41d4-a716-446655440081",
     "full_name": "Thầy Phan Thành Tùng",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer11_vnudpp.jpg",
@@ -186,10 +185,10 @@
     "total_revenue": 1124330.0,
     "bonus": 89584.0,
     "created_at": "2025-01-01T09:49:13.148+00:00",
-    "updated_at": "2025-01-28T16:36:10.793+00:00"
+    "updated_at": "2025-01-28T16:36:10.793+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440008",
     "seer_id": "550e8400-e29b-41d4-a716-446655440078",
     "full_name": "Cô Đỗ Thùy Trang",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer8_r5vjvm.avif",
@@ -207,10 +206,10 @@
     "total_revenue": 195057.0,
     "bonus": 11934.0,
     "created_at": "2025-01-06T09:00:07.089+00:00",
-    "updated_at": "2025-01-12T18:18:44.732+00:00"
+    "updated_at": "2025-01-12T18:18:44.732+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001284/cover11_t4ervg.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440005",
     "seer_id": "550e8400-e29b-41d4-a716-446655440075",
     "full_name": "Thầy Võ Phúc Thành",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer5_hqr5yg.jpg",
@@ -228,10 +227,10 @@
     "total_revenue": 227552.0,
     "bonus": 33408.0,
     "created_at": "2025-01-04T08:27:45.416+00:00",
-    "updated_at": "2025-01-05T10:02:33.826+00:00"
+    "updated_at": "2025-01-05T10:02:33.826+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover8_nrlaot.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440012",
     "seer_id": "550e8400-e29b-41d4-a716-446655440071",
     "full_name": "Thầy Bùi Văn Anh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer1_nzu7ep.avif",
@@ -249,10 +248,10 @@
     "total_revenue": 4792993.0,
     "bonus": 473546.0,
     "created_at": "2025-02-28T22:36:26.639+00:00",
-    "updated_at": "2025-02-28T08:07:57.830+00:00"
+    "updated_at": "2025-02-28T08:07:57.830+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440013",
     "seer_id": "550e8400-e29b-41d4-a716-446655440072",
     "full_name": "Cô Nguyễn Thị Hoa Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer2_j1inbg.jpg",
@@ -270,10 +269,10 @@
     "total_revenue": 5862263.0,
     "bonus": 292551.0,
     "created_at": "2025-02-22T09:35:56.896+00:00",
-    "updated_at": "2025-02-22T16:41:32.492+00:00"
+    "updated_at": "2025-02-22T16:41:32.492+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440014",
     "seer_id": "550e8400-e29b-41d4-a716-446655440073",
     "full_name": "Thầy Trần Ngọc Minh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer3_g6rtbb.jpg",
@@ -291,10 +290,10 @@
     "total_revenue": 5540493.0,
     "bonus": 549295.0,
     "created_at": "2025-02-22T15:46:27.030+00:00",
-    "updated_at": "2025-02-20T16:54:03.354+00:00"
+    "updated_at": "2025-02-20T16:54:03.354+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440015",
     "seer_id": "550e8400-e29b-41d4-a716-446655440074",
     "full_name": "Cô Lê Anh Hương",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer4_m2nusg.jpg",
@@ -312,10 +311,10 @@
     "total_revenue": 2949351.0,
     "bonus": 353904.0,
     "created_at": "2025-02-28T13:50:20.281+00:00",
-    "updated_at": "2025-02-20T22:29:36.682+00:00"
+    "updated_at": "2025-02-20T22:29:36.682+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover7_fvdzac.avif"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440017",
     "seer_id": "550e8400-e29b-41d4-a716-446655440076",
     "full_name": "Cô Phạm Mỹ Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer6_jnammi.jpg",
@@ -333,10 +332,10 @@
     "total_revenue": 1287605.0,
     "bonus": 183203.0,
     "created_at": "2025-02-17T15:55:37.203+00:00",
-    "updated_at": "2025-02-07T07:36:34.936+00:00"
+    "updated_at": "2025-02-07T07:36:34.936+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover9_o90vwl.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440018",
     "seer_id": "550e8400-e29b-41d4-a716-446655440077",
     "full_name": "Thầy Nguyễn Văn Hiếu",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer7_m9qfpv.avif",
@@ -354,10 +353,10 @@
     "total_revenue": 850850.0,
     "bonus": 4501.0,
     "created_at": "2025-02-06T06:46:39.858+00:00",
-    "updated_at": "2025-02-15T13:04:29.636+00:00"
+    "updated_at": "2025-02-15T13:04:29.636+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover10_ivho8b.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440020",
     "seer_id": "550e8400-e29b-41d4-a716-446655440079",
     "full_name": "Thầy Lý Hoàng Long",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer9_umx5hx.png",
@@ -375,10 +374,10 @@
     "total_revenue": 2112390.0,
     "bonus": 58141.0,
     "created_at": "2025-02-07T08:20:21.665+00:00",
-    "updated_at": "2025-02-05T17:09:19.842+00:00"
+    "updated_at": "2025-02-05T17:09:19.842+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440021",
     "seer_id": "550e8400-e29b-41d4-a716-446655440080",
     "full_name": "Cô Trịnh Kim Oanh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer10_tnlybn.jpg",
@@ -396,10 +395,10 @@
     "total_revenue": 7439136.0,
     "bonus": 554018.0,
     "created_at": "2025-02-01T14:44:53.904+00:00",
-    "updated_at": "2025-02-08T22:49:44.680+00:00"
+    "updated_at": "2025-02-08T22:49:44.680+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440022",
     "seer_id": "550e8400-e29b-41d4-a716-446655440081",
     "full_name": "Thầy Phan Thành Tùng",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer11_vnudpp.jpg",
@@ -417,10 +416,10 @@
     "total_revenue": 1386912.0,
     "bonus": 6300.0,
     "created_at": "2025-02-10T07:36:30.639+00:00",
-    "updated_at": "2025-02-18T13:02:55.627+00:00"
+    "updated_at": "2025-02-18T13:02:55.627+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440016",
     "seer_id": "550e8400-e29b-41d4-a716-446655440075",
     "full_name": "Thầy Võ Phúc Thành",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer5_hqr5yg.jpg",
@@ -438,10 +437,10 @@
     "total_revenue": 446904.0,
     "bonus": 15486.0,
     "created_at": "2025-02-15T19:10:48.767+00:00",
-    "updated_at": "2025-02-10T21:49:45.725+00:00"
+    "updated_at": "2025-02-10T21:49:45.725+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover8_nrlaot.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440019",
     "seer_id": "550e8400-e29b-41d4-a716-446655440078",
     "full_name": "Cô Đỗ Thùy Trang",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer8_r5vjvm.avif",
@@ -459,10 +458,10 @@
     "total_revenue": 447396.0,
     "bonus": 17038.0,
     "created_at": "2025-02-17T09:36:39.940+00:00",
-    "updated_at": "2025-02-23T09:38:20.203+00:00"
+    "updated_at": "2025-02-23T09:38:20.203+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001284/cover11_t4ervg.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440023",
     "seer_id": "550e8400-e29b-41d4-a716-446655440071",
     "full_name": "Thầy Bùi Văn Anh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer1_nzu7ep.avif",
@@ -480,10 +479,10 @@
     "total_revenue": 7415648.0,
     "bonus": 581206.0,
     "created_at": "2025-03-07T08:37:24.655+00:00",
-    "updated_at": "2025-03-12T18:12:18.452+00:00"
+    "updated_at": "2025-03-12T18:12:18.452+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440024",
     "seer_id": "550e8400-e29b-41d4-a716-446655440072",
     "full_name": "Cô Nguyễn Thị Hoa Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer2_j1inbg.jpg",
@@ -501,10 +500,10 @@
     "total_revenue": 5588296.0,
     "bonus": 589975.0,
     "created_at": "2025-03-06T08:22:39.841+00:00",
-    "updated_at": "2025-03-12T15:57:48.248+00:00"
+    "updated_at": "2025-03-12T15:57:48.248+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440025",
     "seer_id": "550e8400-e29b-41d4-a716-446655440073",
     "full_name": "Thầy Trần Ngọc Minh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer3_g6rtbb.jpg",
@@ -522,10 +521,10 @@
     "total_revenue": 5760750.0,
     "bonus": 805268.0,
     "created_at": "2025-03-17T08:15:55.191+00:00",
-    "updated_at": "2025-03-26T22:23:54.528+00:00"
+    "updated_at": "2025-03-26T22:23:54.528+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440026",
     "seer_id": "550e8400-e29b-41d4-a716-446655440074",
     "full_name": "Cô Lê Anh Hương",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer4_m2nusg.jpg",
@@ -543,10 +542,10 @@
     "total_revenue": 2150602.0,
     "bonus": 127119.0,
     "created_at": "2025-03-22T08:27:41.483+00:00",
-    "updated_at": "2025-03-08T09:59:43.407+00:00"
+    "updated_at": "2025-03-08T09:59:43.407+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover7_fvdzac.avif"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440028",
     "seer_id": "550e8400-e29b-41d4-a716-446655440076",
     "full_name": "Cô Phạm Mỹ Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer6_jnammi.jpg",
@@ -564,10 +563,10 @@
     "total_revenue": 696680.0,
     "bonus": 65858.0,
     "created_at": "2025-03-28T08:15:22.208+00:00",
-    "updated_at": "2025-03-06T08:54:17.422+00:00"
+    "updated_at": "2025-03-06T08:54:17.422+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover9_o90vwl.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440029",
     "seer_id": "550e8400-e29b-41d4-a716-446655440077",
     "full_name": "Thầy Nguyễn Văn Hiếu",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer7_m9qfpv.avif",
@@ -585,10 +584,10 @@
     "total_revenue": 948904.0,
     "bonus": 39517.0,
     "created_at": "2025-03-12T14:28:32.890+00:00",
-    "updated_at": "2025-03-22T09:38:22.732+00:00"
+    "updated_at": "2025-03-22T09:38:22.732+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover10_ivho8b.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440031",
     "seer_id": "550e8400-e29b-41d4-a716-446655440079",
     "full_name": "Thầy Lý Hoàng Long",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer9_umx5hx.png",
@@ -606,10 +605,10 @@
     "total_revenue": 2989024.0,
     "bonus": 438438.0,
     "created_at": "2025-03-26T07:53:48.289+00:00",
-    "updated_at": "2025-03-13T09:07:35.484+00:00"
+    "updated_at": "2025-03-13T09:07:35.484+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440032",
     "seer_id": "550e8400-e29b-41d4-a716-446655440080",
     "full_name": "Cô Trịnh Kim Oanh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer10_tnlybn.jpg",
@@ -627,10 +626,10 @@
     "total_revenue": 6288990.0,
     "bonus": 798591.0,
     "created_at": "2025-03-06T15:40:25.597+00:00",
-    "updated_at": "2025-03-09T07:00:28.963+00:00"
+    "updated_at": "2025-03-09T07:00:28.963+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440033",
     "seer_id": "550e8400-e29b-41d4-a716-446655440081",
     "full_name": "Thầy Phan Thành Tùng",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer11_vnudpp.jpg",
@@ -648,10 +647,10 @@
     "total_revenue": 726348.0,
     "bonus": 15047.0,
     "created_at": "2025-03-23T13:53:15.264+00:00",
-    "updated_at": "2025-03-06T19:24:05.117+00:00"
+    "updated_at": "2025-03-06T19:24:05.117+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440027",
     "seer_id": "550e8400-e29b-41d4-a716-446655440075",
     "full_name": "Thầy Võ Phúc Thành",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer5_hqr5yg.jpg",
@@ -669,10 +668,10 @@
     "total_revenue": 250864.0,
     "bonus": 8320.0,
     "created_at": "2025-03-05T17:11:38.493+00:00",
-    "updated_at": "2025-03-16T14:39:49.434+00:00"
+    "updated_at": "2025-03-16T14:39:49.434+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover8_nrlaot.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440030",
     "seer_id": "550e8400-e29b-41d4-a716-446655440078",
     "full_name": "Cô Đỗ Thùy Trang",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer8_r5vjvm.avif",
@@ -690,10 +689,10 @@
     "total_revenue": 144516.0,
     "bonus": 19060.0,
     "created_at": "2025-03-04T09:39:54.064+00:00",
-    "updated_at": "2025-03-17T15:25:03.508+00:00"
+    "updated_at": "2025-03-17T15:25:03.508+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001284/cover11_t4ervg.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440034",
     "seer_id": "550e8400-e29b-41d4-a716-446655440071",
     "full_name": "Thầy Bùi Văn Anh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer1_nzu7ep.avif",
@@ -711,10 +710,10 @@
     "total_revenue": 6450956.0,
     "bonus": 18414.0,
     "created_at": "2025-04-12T14:33:26.678+00:00",
-    "updated_at": "2025-04-16T08:46:35.657+00:00"
+    "updated_at": "2025-04-16T08:46:35.657+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440035",
     "seer_id": "550e8400-e29b-41d4-a716-446655440072",
     "full_name": "Cô Nguyễn Thị Hoa Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer2_j1inbg.jpg",
@@ -732,10 +731,10 @@
     "total_revenue": 5605451.0,
     "bonus": 384184.0,
     "created_at": "2025-04-13T16:34:44.311+00:00",
-    "updated_at": "2025-04-13T11:59:57.269+00:00"
+    "updated_at": "2025-04-13T11:59:57.269+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440036",
     "seer_id": "550e8400-e29b-41d4-a716-446655440073",
     "full_name": "Thầy Trần Ngọc Minh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer3_g6rtbb.jpg",
@@ -753,10 +752,10 @@
     "total_revenue": 6582238.0,
     "bonus": 582616.0,
     "created_at": "2025-04-14T21:35:01.663+00:00",
-    "updated_at": "2025-04-18T10:03:48.660+00:00"
+    "updated_at": "2025-04-18T10:03:48.660+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440037",
     "seer_id": "550e8400-e29b-41d4-a716-446655440074",
     "full_name": "Cô Lê Anh Hương",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer4_m2nusg.jpg",
@@ -774,10 +773,10 @@
     "total_revenue": 2196288.0,
     "bonus": 13738.0,
     "created_at": "2025-04-28T16:12:29.423+00:00",
-    "updated_at": "2025-04-25T13:06:27.053+00:00"
+    "updated_at": "2025-04-25T13:06:27.053+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover7_fvdzac.avif"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440039",
     "seer_id": "550e8400-e29b-41d4-a716-446655440076",
     "full_name": "Cô Phạm Mỹ Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer6_jnammi.jpg",
@@ -795,10 +794,10 @@
     "total_revenue": 1390560.0,
     "bonus": 148847.0,
     "created_at": "2025-04-06T17:30:06.296+00:00",
-    "updated_at": "2025-04-22T18:56:36.226+00:00"
+    "updated_at": "2025-04-22T18:56:36.226+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover9_o90vwl.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440040",
     "seer_id": "550e8400-e29b-41d4-a716-446655440077",
     "full_name": "Thầy Nguyễn Văn Hiếu",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer7_m9qfpv.avif",
@@ -816,10 +815,10 @@
     "total_revenue": 966861.0,
     "bonus": 79756.0,
     "created_at": "2025-04-12T09:53:13.592+00:00",
-    "updated_at": "2025-04-20T12:39:04.733+00:00"
+    "updated_at": "2025-04-20T12:39:04.733+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover10_ivho8b.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440042",
     "seer_id": "550e8400-e29b-41d4-a716-446655440079",
     "full_name": "Thầy Lý Hoàng Long",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer9_umx5hx.png",
@@ -837,10 +836,10 @@
     "total_revenue": 3317328.0,
     "bonus": 337283.0,
     "created_at": "2025-04-04T13:53:27.311+00:00",
-    "updated_at": "2025-04-07T09:04:03.876+00:00"
+    "updated_at": "2025-04-07T09:04:03.876+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440043",
     "seer_id": "550e8400-e29b-41d4-a716-446655440080",
     "full_name": "Cô Trịnh Kim Oanh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer10_tnlybn.jpg",
@@ -858,10 +857,10 @@
     "total_revenue": 5566808.0,
     "bonus": 39042.0,
     "created_at": "2025-04-01T18:56:24.254+00:00",
-    "updated_at": "2025-04-24T13:27:11.363+00:00"
+    "updated_at": "2025-04-24T13:27:11.363+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440044",
     "seer_id": "550e8400-e29b-41d4-a716-446655440081",
     "full_name": "Thầy Phan Thành Tùng",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer11_vnudpp.jpg",
@@ -879,10 +878,10 @@
     "total_revenue": 787864.0,
     "bonus": 66163.0,
     "created_at": "2025-04-18T13:33:57.220+00:00",
-    "updated_at": "2025-04-09T22:20:15.463+00:00"
+    "updated_at": "2025-04-09T22:20:15.463+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440041",
     "seer_id": "550e8400-e29b-41d4-a716-446655440078",
     "full_name": "Cô Đỗ Thùy Trang",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer8_r5vjvm.avif",
@@ -900,10 +899,10 @@
     "total_revenue": 129981.0,
     "bonus": 7003.0,
     "created_at": "2025-04-22T21:31:37.755+00:00",
-    "updated_at": "2025-04-02T13:20:04.322+00:00"
+    "updated_at": "2025-04-02T13:20:04.322+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001284/cover11_t4ervg.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440038",
     "seer_id": "550e8400-e29b-41d4-a716-446655440075",
     "full_name": "Thầy Võ Phúc Thành",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer5_hqr5yg.jpg",
@@ -921,10 +920,10 @@
     "total_revenue": 416946.0,
     "bonus": 10231.0,
     "created_at": "2025-04-28T13:05:00.021+00:00",
-    "updated_at": "2025-04-19T21:39:34.701+00:00"
+    "updated_at": "2025-04-19T21:39:34.701+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover8_nrlaot.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440045",
     "seer_id": "550e8400-e29b-41d4-a716-446655440071",
     "full_name": "Thầy Bùi Văn Anh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer1_nzu7ep.avif",
@@ -942,10 +941,10 @@
     "total_revenue": 7466282.0,
     "bonus": 580559.0,
     "created_at": "2025-05-22T16:48:49.909+00:00",
-    "updated_at": "2025-05-20T18:45:26.843+00:00"
+    "updated_at": "2025-05-20T18:45:26.843+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440046",
     "seer_id": "550e8400-e29b-41d4-a716-446655440072",
     "full_name": "Cô Nguyễn Thị Hoa Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer2_j1inbg.jpg",
@@ -963,10 +962,10 @@
     "total_revenue": 8062110.0,
     "bonus": 1081675.0,
     "created_at": "2025-05-11T20:00:29.888+00:00",
-    "updated_at": "2025-05-28T11:58:15.692+00:00"
+    "updated_at": "2025-05-28T11:58:15.692+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440047",
     "seer_id": "550e8400-e29b-41d4-a716-446655440073",
     "full_name": "Thầy Trần Ngọc Minh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer3_g6rtbb.jpg",
@@ -984,10 +983,10 @@
     "total_revenue": 5708094.0,
     "bonus": 45563.0,
     "created_at": "2025-05-13T18:48:03.103+00:00",
-    "updated_at": "2025-05-25T21:45:57.252+00:00"
+    "updated_at": "2025-05-25T21:45:57.252+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440048",
     "seer_id": "550e8400-e29b-41d4-a716-446655440074",
     "full_name": "Cô Lê Anh Hương",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer4_m2nusg.jpg",
@@ -1005,10 +1004,10 @@
     "total_revenue": 2529165.0,
     "bonus": 279663.0,
     "created_at": "2025-05-24T15:25:59.981+00:00",
-    "updated_at": "2025-05-22T16:41:11.164+00:00"
+    "updated_at": "2025-05-22T16:41:11.164+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover7_fvdzac.avif"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440050",
     "seer_id": "550e8400-e29b-41d4-a716-446655440076",
     "full_name": "Cô Phạm Mỹ Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer6_jnammi.jpg",
@@ -1026,10 +1025,10 @@
     "total_revenue": 687294.0,
     "bonus": 102001.0,
     "created_at": "2025-05-09T17:47:47.551+00:00",
-    "updated_at": "2025-05-11T07:21:03.870+00:00"
+    "updated_at": "2025-05-11T07:21:03.870+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover9_o90vwl.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440053",
     "seer_id": "550e8400-e29b-41d4-a716-446655440079",
     "full_name": "Thầy Lý Hoàng Long",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer9_umx5hx.png",
@@ -1047,10 +1046,10 @@
     "total_revenue": 2581297.0,
     "bonus": 132377.0,
     "created_at": "2025-05-01T21:14:03.509+00:00",
-    "updated_at": "2025-05-02T15:36:13.487+00:00"
+    "updated_at": "2025-05-02T15:36:13.487+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440054",
     "seer_id": "550e8400-e29b-41d4-a716-446655440080",
     "full_name": "Cô Trịnh Kim Oanh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer10_tnlybn.jpg",
@@ -1068,10 +1067,10 @@
     "total_revenue": 6728519.0,
     "bonus": 11118.0,
     "created_at": "2025-05-27T20:26:18.154+00:00",
-    "updated_at": "2025-05-04T08:06:58.508+00:00"
+    "updated_at": "2025-05-04T08:06:58.508+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440055",
     "seer_id": "550e8400-e29b-41d4-a716-446655440081",
     "full_name": "Thầy Phan Thành Tùng",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer11_vnudpp.jpg",
@@ -1089,10 +1088,10 @@
     "total_revenue": 602217.0,
     "bonus": 32232.0,
     "created_at": "2025-05-12T12:34:13.452+00:00",
-    "updated_at": "2025-05-27T19:09:53.941+00:00"
+    "updated_at": "2025-05-27T19:09:53.941+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440051",
     "seer_id": "550e8400-e29b-41d4-a716-446655440077",
     "full_name": "Thầy Nguyễn Văn Hiếu",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer7_m9qfpv.avif",
@@ -1110,10 +1109,10 @@
     "total_revenue": 924473.0,
     "bonus": 33423.0,
     "created_at": "2025-05-04T20:48:39.323+00:00",
-    "updated_at": "2025-05-02T09:28:01.086+00:00"
+    "updated_at": "2025-05-02T09:28:01.086+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover10_ivho8b.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440049",
     "seer_id": "550e8400-e29b-41d4-a716-446655440075",
     "full_name": "Thầy Võ Phúc Thành",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer5_hqr5yg.jpg",
@@ -1131,10 +1130,10 @@
     "total_revenue": 130143.0,
     "bonus": 13693.0,
     "created_at": "2025-05-17T07:40:04.260+00:00",
-    "updated_at": "2025-05-13T11:43:34.533+00:00"
+    "updated_at": "2025-05-13T11:43:34.533+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover8_nrlaot.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440052",
     "seer_id": "550e8400-e29b-41d4-a716-446655440078",
     "full_name": "Cô Đỗ Thùy Trang",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer8_r5vjvm.avif",
@@ -1152,10 +1151,10 @@
     "total_revenue": 254583.0,
     "bonus": 14887.0,
     "created_at": "2025-05-13T09:24:15.967+00:00",
-    "updated_at": "2025-05-05T22:11:01.128+00:00"
+    "updated_at": "2025-05-05T22:11:01.128+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001284/cover11_t4ervg.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440056",
     "seer_id": "550e8400-e29b-41d4-a716-446655440071",
     "full_name": "Thầy Bùi Văn Anh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer1_nzu7ep.avif",
@@ -1173,10 +1172,10 @@
     "total_revenue": 7703414.0,
     "bonus": 830727.0,
     "created_at": "2025-06-17T11:15:10.712+00:00",
-    "updated_at": "2025-06-06T21:30:36.885+00:00"
+    "updated_at": "2025-06-06T21:30:36.885+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440057",
     "seer_id": "550e8400-e29b-41d4-a716-446655440072",
     "full_name": "Cô Nguyễn Thị Hoa Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer2_j1inbg.jpg",
@@ -1194,10 +1193,10 @@
     "total_revenue": 7618968.0,
     "bonus": 843256.0,
     "created_at": "2025-06-11T15:46:32.821+00:00",
-    "updated_at": "2025-06-20T10:20:44.099+00:00"
+    "updated_at": "2025-06-20T10:20:44.099+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440058",
     "seer_id": "550e8400-e29b-41d4-a716-446655440073",
     "full_name": "Thầy Trần Ngọc Minh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer3_g6rtbb.jpg",
@@ -1215,10 +1214,10 @@
     "total_revenue": 5207878.0,
     "bonus": 310915.0,
     "created_at": "2025-06-15T08:41:04.859+00:00",
-    "updated_at": "2025-06-14T14:34:21.872+00:00"
+    "updated_at": "2025-06-14T14:34:21.872+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440059",
     "seer_id": "550e8400-e29b-41d4-a716-446655440074",
     "full_name": "Cô Lê Anh Hương",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer4_m2nusg.jpg",
@@ -1236,10 +1235,10 @@
     "total_revenue": 3753992.0,
     "bonus": 135589.0,
     "created_at": "2025-06-10T07:27:35.608+00:00",
-    "updated_at": "2025-06-11T17:27:39.435+00:00"
+    "updated_at": "2025-06-11T17:27:39.435+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover7_fvdzac.avif"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440061",
     "seer_id": "550e8400-e29b-41d4-a716-446655440076",
     "full_name": "Cô Phạm Mỹ Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer6_jnammi.jpg",
@@ -1257,10 +1256,10 @@
     "total_revenue": 623862.0,
     "bonus": 87766.0,
     "created_at": "2025-06-09T16:18:20.586+00:00",
-    "updated_at": "2025-06-07T15:06:13.332+00:00"
+    "updated_at": "2025-06-07T15:06:13.332+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover9_o90vwl.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440062",
     "seer_id": "550e8400-e29b-41d4-a716-446655440077",
     "full_name": "Thầy Nguyễn Văn Hiếu",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer7_m9qfpv.avif",
@@ -1278,10 +1277,10 @@
     "total_revenue": 590016.0,
     "bonus": 76882.0,
     "created_at": "2025-06-09T18:18:31.830+00:00",
-    "updated_at": "2025-06-01T19:51:17.244+00:00"
+    "updated_at": "2025-06-01T19:51:17.244+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover10_ivho8b.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440064",
     "seer_id": "550e8400-e29b-41d4-a716-446655440079",
     "full_name": "Thầy Lý Hoàng Long",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer9_umx5hx.png",
@@ -1299,10 +1298,10 @@
     "total_revenue": 3308690.0,
     "bonus": 400817.0,
     "created_at": "2025-06-04T09:55:11.738+00:00",
-    "updated_at": "2025-06-05T11:47:41.242+00:00"
+    "updated_at": "2025-06-05T11:47:41.242+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440065",
     "seer_id": "550e8400-e29b-41d4-a716-446655440080",
     "full_name": "Cô Trịnh Kim Oanh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer10_tnlybn.jpg",
@@ -1320,10 +1319,10 @@
     "total_revenue": 5343250.0,
     "bonus": 689284.0,
     "created_at": "2025-06-15T18:26:22.929+00:00",
-    "updated_at": "2025-06-25T20:03:24.707+00:00"
+    "updated_at": "2025-06-25T20:03:24.707+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440066",
     "seer_id": "550e8400-e29b-41d4-a716-446655440081",
     "full_name": "Thầy Phan Thành Tùng",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer11_vnudpp.jpg",
@@ -1341,10 +1340,10 @@
     "total_revenue": 531162.0,
     "bonus": 16939.0,
     "created_at": "2025-06-18T09:36:05.959+00:00",
-    "updated_at": "2025-06-09T08:09:17.720+00:00"
+    "updated_at": "2025-06-09T08:09:17.720+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440063",
     "seer_id": "550e8400-e29b-41d4-a716-446655440078",
     "full_name": "Cô Đỗ Thùy Trang",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer8_r5vjvm.avif",
@@ -1362,10 +1361,10 @@
     "total_revenue": 251739.0,
     "bonus": 11161.0,
     "created_at": "2025-06-23T21:20:39.998+00:00",
-    "updated_at": "2025-06-26T20:43:15.709+00:00"
+    "updated_at": "2025-06-26T20:43:15.709+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001284/cover11_t4ervg.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440060",
     "seer_id": "550e8400-e29b-41d4-a716-446655440075",
     "full_name": "Thầy Võ Phúc Thành",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer5_hqr5yg.jpg",
@@ -1383,10 +1382,10 @@
     "total_revenue": 494604.0,
     "bonus": 35019.0,
     "created_at": "2025-06-02T13:19:21.149+00:00",
-    "updated_at": "2025-06-04T06:39:43.016+00:00"
+    "updated_at": "2025-06-04T06:39:43.016+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover8_nrlaot.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440067",
     "seer_id": "550e8400-e29b-41d4-a716-446655440071",
     "full_name": "Thầy Bùi Văn Anh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer1_nzu7ep.avif",
@@ -1404,10 +1403,10 @@
     "total_revenue": 6473277.0,
     "bonus": 742523.0,
     "created_at": "2025-07-15T13:10:47.108+00:00",
-    "updated_at": "2025-07-17T19:14:31.185+00:00"
+    "updated_at": "2025-07-17T19:14:31.185+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440068",
     "seer_id": "550e8400-e29b-41d4-a716-446655440072",
     "full_name": "Cô Nguyễn Thị Hoa Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer2_j1inbg.jpg",
@@ -1425,10 +1424,10 @@
     "total_revenue": 4938726.0,
     "bonus": 351151.0,
     "created_at": "2025-07-06T18:31:12.011+00:00",
-    "updated_at": "2025-07-05T18:18:35.558+00:00"
+    "updated_at": "2025-07-05T18:18:35.558+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440069",
     "seer_id": "550e8400-e29b-41d4-a716-446655440073",
     "full_name": "Thầy Trần Ngọc Minh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer3_g6rtbb.jpg",
@@ -1446,10 +1445,10 @@
     "total_revenue": 4882008.0,
     "bonus": 509513.0,
     "created_at": "2025-07-20T09:41:19.745+00:00",
-    "updated_at": "2025-07-06T17:00:10.824+00:00"
+    "updated_at": "2025-07-06T17:00:10.824+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440070",
     "seer_id": "550e8400-e29b-41d4-a716-446655440074",
     "full_name": "Cô Lê Anh Hương",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer4_m2nusg.jpg",
@@ -1467,10 +1466,10 @@
     "total_revenue": 3789319.0,
     "bonus": 125976.0,
     "created_at": "2025-07-28T12:28:13.448+00:00",
-    "updated_at": "2025-07-02T13:28:37.435+00:00"
+    "updated_at": "2025-07-02T13:28:37.435+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover7_fvdzac.avif"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440072",
     "seer_id": "550e8400-e29b-41d4-a716-446655440076",
     "full_name": "Cô Phạm Mỹ Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer6_jnammi.jpg",
@@ -1488,10 +1487,10 @@
     "total_revenue": 996561.0,
     "bonus": 123243.0,
     "created_at": "2025-07-05T09:57:09.740+00:00",
-    "updated_at": "2025-07-16T18:10:41.090+00:00"
+    "updated_at": "2025-07-16T18:10:41.090+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover9_o90vwl.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440073",
     "seer_id": "550e8400-e29b-41d4-a716-446655440077",
     "full_name": "Thầy Nguyễn Văn Hiếu",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer7_m9qfpv.avif",
@@ -1509,10 +1508,10 @@
     "total_revenue": 1026344.0,
     "bonus": 80600.0,
     "created_at": "2025-07-26T11:51:13.481+00:00",
-    "updated_at": "2025-07-02T11:33:37.674+00:00"
+    "updated_at": "2025-07-02T11:33:37.674+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover10_ivho8b.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440075",
     "seer_id": "550e8400-e29b-41d4-a716-446655440079",
     "full_name": "Thầy Lý Hoàng Long",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer9_umx5hx.png",
@@ -1530,10 +1529,10 @@
     "total_revenue": 1825418.0,
     "bonus": 155358.0,
     "created_at": "2025-07-09T22:37:15.887+00:00",
-    "updated_at": "2025-07-16T18:47:24.617+00:00"
+    "updated_at": "2025-07-16T18:47:24.617+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440076",
     "seer_id": "550e8400-e29b-41d4-a716-446655440080",
     "full_name": "Cô Trịnh Kim Oanh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer10_tnlybn.jpg",
@@ -1551,10 +1550,10 @@
     "total_revenue": 5715935.0,
     "bonus": 332943.0,
     "created_at": "2025-07-25T08:36:36.360+00:00",
-    "updated_at": "2025-07-03T16:19:13.010+00:00"
+    "updated_at": "2025-07-03T16:19:13.010+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440077",
     "seer_id": "550e8400-e29b-41d4-a716-446655440081",
     "full_name": "Thầy Phan Thành Tùng",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer11_vnudpp.jpg",
@@ -1572,10 +1571,10 @@
     "total_revenue": 750816.0,
     "bonus": 109009.0,
     "created_at": "2025-07-23T09:14:16.358+00:00",
-    "updated_at": "2025-07-01T18:38:14.953+00:00"
+    "updated_at": "2025-07-01T18:38:14.953+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440074",
     "seer_id": "550e8400-e29b-41d4-a716-446655440078",
     "full_name": "Cô Đỗ Thùy Trang",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer8_r5vjvm.avif",
@@ -1593,10 +1592,10 @@
     "total_revenue": 223250.0,
     "bonus": 30984.0,
     "created_at": "2025-07-15T15:18:25.980+00:00",
-    "updated_at": "2025-07-06T07:33:41.204+00:00"
+    "updated_at": "2025-07-06T07:33:41.204+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001284/cover11_t4ervg.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440071",
     "seer_id": "550e8400-e29b-41d4-a716-446655440075",
     "full_name": "Thầy Võ Phúc Thành",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer5_hqr5yg.jpg",
@@ -1614,10 +1613,10 @@
     "total_revenue": 389560.0,
     "bonus": 57986.0,
     "created_at": "2025-07-15T22:42:13.861+00:00",
-    "updated_at": "2025-07-21T10:03:57.378+00:00"
+    "updated_at": "2025-07-21T10:03:57.378+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover8_nrlaot.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440078",
     "seer_id": "550e8400-e29b-41d4-a716-446655440071",
     "full_name": "Thầy Bùi Văn Anh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer1_nzu7ep.avif",
@@ -1635,10 +1634,10 @@
     "total_revenue": 5497744.0,
     "bonus": 312623.0,
     "created_at": "2025-08-07T15:58:50.382+00:00",
-    "updated_at": "2025-08-21T14:31:10.522+00:00"
+    "updated_at": "2025-08-21T14:31:10.522+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440079",
     "seer_id": "550e8400-e29b-41d4-a716-446655440072",
     "full_name": "Cô Nguyễn Thị Hoa Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer2_j1inbg.jpg",
@@ -1656,10 +1655,10 @@
     "total_revenue": 6739164.0,
     "bonus": 216127.0,
     "created_at": "2025-08-24T11:33:00.204+00:00",
-    "updated_at": "2025-08-09T21:22:51.175+00:00"
+    "updated_at": "2025-08-09T21:22:51.175+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440080",
     "seer_id": "550e8400-e29b-41d4-a716-446655440073",
     "full_name": "Thầy Trần Ngọc Minh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer3_g6rtbb.jpg",
@@ -1677,10 +1676,10 @@
     "total_revenue": 8043805.0,
     "bonus": 377076.0,
     "created_at": "2025-08-09T15:04:22.053+00:00",
-    "updated_at": "2025-08-22T21:51:28.477+00:00"
+    "updated_at": "2025-08-22T21:51:28.477+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440081",
     "seer_id": "550e8400-e29b-41d4-a716-446655440074",
     "full_name": "Cô Lê Anh Hương",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer4_m2nusg.jpg",
@@ -1698,10 +1697,10 @@
     "total_revenue": 2622288.0,
     "bonus": 384875.0,
     "created_at": "2025-08-17T13:34:03.574+00:00",
-    "updated_at": "2025-08-21T14:08:39.565+00:00"
+    "updated_at": "2025-08-21T14:08:39.565+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover7_fvdzac.avif"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440083",
     "seer_id": "550e8400-e29b-41d4-a716-446655440076",
     "full_name": "Cô Phạm Mỹ Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer6_jnammi.jpg",
@@ -1719,10 +1718,10 @@
     "total_revenue": 1371412.0,
     "bonus": 70450.0,
     "created_at": "2025-08-02T09:04:51.351+00:00",
-    "updated_at": "2025-08-06T15:50:50.871+00:00"
+    "updated_at": "2025-08-06T15:50:50.871+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover9_o90vwl.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440084",
     "seer_id": "550e8400-e29b-41d4-a716-446655440077",
     "full_name": "Thầy Nguyễn Văn Hiếu",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer7_m9qfpv.avif",
@@ -1740,10 +1739,10 @@
     "total_revenue": 1085184.0,
     "bonus": 51811.0,
     "created_at": "2025-08-09T21:35:42.783+00:00",
-    "updated_at": "2025-08-12T09:17:54.253+00:00"
+    "updated_at": "2025-08-12T09:17:54.253+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover10_ivho8b.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440086",
     "seer_id": "550e8400-e29b-41d4-a716-446655440079",
     "full_name": "Thầy Lý Hoàng Long",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer9_umx5hx.png",
@@ -1761,10 +1760,10 @@
     "total_revenue": 2998395.0,
     "bonus": 389026.0,
     "created_at": "2025-08-06T20:15:00.511+00:00",
-    "updated_at": "2025-08-24T11:53:16.226+00:00"
+    "updated_at": "2025-08-24T11:53:16.226+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440087",
     "seer_id": "550e8400-e29b-41d4-a716-446655440080",
     "full_name": "Cô Trịnh Kim Oanh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer10_tnlybn.jpg",
@@ -1782,10 +1781,10 @@
     "total_revenue": 6723000.0,
     "bonus": 914475.0,
     "created_at": "2025-08-09T07:14:10.640+00:00",
-    "updated_at": "2025-08-05T20:20:07.554+00:00"
+    "updated_at": "2025-08-05T20:20:07.554+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440088",
     "seer_id": "550e8400-e29b-41d4-a716-446655440081",
     "full_name": "Thầy Phan Thành Tùng",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer11_vnudpp.jpg",
@@ -1803,10 +1802,10 @@
     "total_revenue": 858980.0,
     "bonus": 68957.0,
     "created_at": "2025-08-28T14:08:54.627+00:00",
-    "updated_at": "2025-08-12T08:52:54.494+00:00"
+    "updated_at": "2025-08-12T08:52:54.494+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440085",
     "seer_id": "550e8400-e29b-41d4-a716-446655440078",
     "full_name": "Cô Đỗ Thùy Trang",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer8_r5vjvm.avif",
@@ -1824,10 +1823,10 @@
     "total_revenue": 417879.0,
     "bonus": 44500.0,
     "created_at": "2025-08-17T14:51:11.798+00:00",
-    "updated_at": "2025-08-08T12:21:43.382+00:00"
+    "updated_at": "2025-08-08T12:21:43.382+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001284/cover11_t4ervg.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440082",
     "seer_id": "550e8400-e29b-41d4-a716-446655440075",
     "full_name": "Thầy Võ Phúc Thành",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer5_hqr5yg.jpg",
@@ -1845,10 +1844,10 @@
     "total_revenue": 289030.0,
     "bonus": 31524.0,
     "created_at": "2025-08-23T13:31:10.684+00:00",
-    "updated_at": "2025-08-18T14:01:16.263+00:00"
+    "updated_at": "2025-08-18T14:01:16.263+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover8_nrlaot.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440089",
     "seer_id": "550e8400-e29b-41d4-a716-446655440071",
     "full_name": "Thầy Bùi Văn Anh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer1_nzu7ep.avif",
@@ -1866,10 +1865,10 @@
     "total_revenue": 4789368.0,
     "bonus": 152103.0,
     "created_at": "2025-09-12T09:45:45.543+00:00",
-    "updated_at": "2025-09-19T17:00:22.854+00:00"
+    "updated_at": "2025-09-19T17:00:22.854+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440090",
     "seer_id": "550e8400-e29b-41d4-a716-446655440072",
     "full_name": "Cô Nguyễn Thị Hoa Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer2_j1inbg.jpg",
@@ -1887,10 +1886,10 @@
     "total_revenue": 7504064.0,
     "bonus": 792230.0,
     "created_at": "2025-09-05T18:17:40.712+00:00",
-    "updated_at": "2025-09-12T14:46:17.128+00:00"
+    "updated_at": "2025-09-12T14:46:17.128+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440091",
     "seer_id": "550e8400-e29b-41d4-a716-446655440073",
     "full_name": "Thầy Trần Ngọc Minh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer3_g6rtbb.jpg",
@@ -1908,10 +1907,10 @@
     "total_revenue": 7280130.0,
     "bonus": 268979.0,
     "created_at": "2025-09-21T12:53:05.241+00:00",
-    "updated_at": "2025-09-16T15:31:42.360+00:00"
+    "updated_at": "2025-09-16T15:31:42.360+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440092",
     "seer_id": "550e8400-e29b-41d4-a716-446655440074",
     "full_name": "Cô Lê Anh Hương",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer4_m2nusg.jpg",
@@ -1929,10 +1928,10 @@
     "total_revenue": 3433857.0,
     "bonus": 161297.0,
     "created_at": "2025-09-04T15:07:24.141+00:00",
-    "updated_at": "2025-09-03T08:39:27.446+00:00"
+    "updated_at": "2025-09-03T08:39:27.446+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover7_fvdzac.avif"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440094",
     "seer_id": "550e8400-e29b-41d4-a716-446655440076",
     "full_name": "Cô Phạm Mỹ Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer6_jnammi.jpg",
@@ -1950,10 +1949,10 @@
     "total_revenue": 1438879.0,
     "bonus": 30220.0,
     "created_at": "2025-09-27T16:23:00.716+00:00",
-    "updated_at": "2025-09-08T19:15:22.988+00:00"
+    "updated_at": "2025-09-08T19:15:22.988+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover9_o90vwl.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440095",
     "seer_id": "550e8400-e29b-41d4-a716-446655440077",
     "full_name": "Thầy Nguyễn Văn Hiếu",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer7_m9qfpv.avif",
@@ -1971,10 +1970,10 @@
     "total_revenue": 836766.0,
     "bonus": 14165.0,
     "created_at": "2025-09-07T12:37:54.395+00:00",
-    "updated_at": "2025-09-05T20:00:05.852+00:00"
+    "updated_at": "2025-09-05T20:00:05.852+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover10_ivho8b.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440097",
     "seer_id": "550e8400-e29b-41d4-a716-446655440079",
     "full_name": "Thầy Lý Hoàng Long",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer9_umx5hx.png",
@@ -1992,10 +1991,10 @@
     "total_revenue": 2016928.0,
     "bonus": 12237.0,
     "created_at": "2025-09-22T14:31:29.185+00:00",
-    "updated_at": "2025-09-28T15:20:41.588+00:00"
+    "updated_at": "2025-09-28T15:20:41.588+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440098",
     "seer_id": "550e8400-e29b-41d4-a716-446655440080",
     "full_name": "Cô Trịnh Kim Oanh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer10_tnlybn.jpg",
@@ -2013,10 +2012,10 @@
     "total_revenue": 6171350.0,
     "bonus": 787489.0,
     "created_at": "2025-09-01T16:52:49.531+00:00",
-    "updated_at": "2025-09-15T13:50:30.142+00:00"
+    "updated_at": "2025-09-15T13:50:30.142+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440099",
     "seer_id": "550e8400-e29b-41d4-a716-446655440081",
     "full_name": "Thầy Phan Thành Tùng",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer11_vnudpp.jpg",
@@ -2034,10 +2033,10 @@
     "total_revenue": 1270020.0,
     "bonus": 47420.0,
     "created_at": "2025-09-24T16:59:35.964+00:00",
-    "updated_at": "2025-09-03T10:09:08.761+00:00"
+    "updated_at": "2025-09-03T10:09:08.761+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440096",
     "seer_id": "550e8400-e29b-41d4-a716-446655440078",
     "full_name": "Cô Đỗ Thùy Trang",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer8_r5vjvm.avif",
@@ -2055,10 +2054,10 @@
     "total_revenue": 332524.0,
     "bonus": 20451.0,
     "created_at": "2025-09-17T06:05:39.501+00:00",
-    "updated_at": "2025-09-05T10:42:12.608+00:00"
+    "updated_at": "2025-09-05T10:42:12.608+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001284/cover11_t4ervg.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440093",
     "seer_id": "550e8400-e29b-41d4-a716-446655440075",
     "full_name": "Thầy Võ Phúc Thành",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer5_hqr5yg.jpg",
@@ -2076,10 +2075,10 @@
     "total_revenue": 165330.0,
     "bonus": 14907.0,
     "created_at": "2025-09-27T21:14:29.431+00:00",
-    "updated_at": "2025-09-19T12:58:21.681+00:00"
+    "updated_at": "2025-09-19T12:58:21.681+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover8_nrlaot.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440100",
     "seer_id": "550e8400-e29b-41d4-a716-446655440071",
     "full_name": "Thầy Bùi Văn Anh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer1_nzu7ep.avif",
@@ -2097,10 +2096,10 @@
     "total_revenue": 6275736.0,
     "bonus": 128437.0,
     "created_at": "2025-10-01T21:23:22.228+00:00",
-    "updated_at": "2025-10-03T18:32:30.049+00:00"
+    "updated_at": "2025-10-03T18:32:30.049+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440101",
     "seer_id": "550e8400-e29b-41d4-a716-446655440072",
     "full_name": "Cô Nguyễn Thị Hoa Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer2_j1inbg.jpg",
@@ -2118,10 +2117,10 @@
     "total_revenue": 7142183.0,
     "bonus": 738049.0,
     "created_at": "2025-10-17T12:39:44.200+00:00",
-    "updated_at": "2025-10-27T14:00:10.599+00:00"
+    "updated_at": "2025-10-27T14:00:10.599+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440102",
     "seer_id": "550e8400-e29b-41d4-a716-446655440073",
     "full_name": "Thầy Trần Ngọc Minh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer3_g6rtbb.jpg",
@@ -2139,10 +2138,10 @@
     "total_revenue": 4889928.0,
     "bonus": 671480.0,
     "created_at": "2025-10-05T08:02:14.030+00:00",
-    "updated_at": "2025-10-28T22:27:53.811+00:00"
+    "updated_at": "2025-10-28T22:27:53.811+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440103",
     "seer_id": "550e8400-e29b-41d4-a716-446655440074",
     "full_name": "Cô Lê Anh Hương",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer4_m2nusg.jpg",
@@ -2160,10 +2159,10 @@
     "total_revenue": 2935960.0,
     "bonus": 202300.0,
     "created_at": "2025-10-19T14:18:53.022+00:00",
-    "updated_at": "2025-10-03T07:16:13.579+00:00"
+    "updated_at": "2025-10-03T07:16:13.579+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover7_fvdzac.avif"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440105",
     "seer_id": "550e8400-e29b-41d4-a716-446655440076",
     "full_name": "Cô Phạm Mỹ Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer6_jnammi.jpg",
@@ -2181,10 +2180,10 @@
     "total_revenue": 1062132.0,
     "bonus": 123146.0,
     "created_at": "2025-10-24T13:15:42.371+00:00",
-    "updated_at": "2025-10-22T20:43:46.316+00:00"
+    "updated_at": "2025-10-22T20:43:46.316+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover9_o90vwl.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440106",
     "seer_id": "550e8400-e29b-41d4-a716-446655440077",
     "full_name": "Thầy Nguyễn Văn Hiếu",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer7_m9qfpv.avif",
@@ -2202,10 +2201,10 @@
     "total_revenue": 752520.0,
     "bonus": 12526.0,
     "created_at": "2025-10-18T06:09:29.885+00:00",
-    "updated_at": "2025-10-22T21:19:18.578+00:00"
+    "updated_at": "2025-10-22T21:19:18.578+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover10_ivho8b.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440108",
     "seer_id": "550e8400-e29b-41d4-a716-446655440079",
     "full_name": "Thầy Lý Hoàng Long",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer9_umx5hx.png",
@@ -2223,10 +2222,10 @@
     "total_revenue": 3501586.0,
     "bonus": 472467.0,
     "created_at": "2025-10-19T15:33:53.619+00:00",
-    "updated_at": "2025-10-05T06:34:34.536+00:00"
+    "updated_at": "2025-10-05T06:34:34.536+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440109",
     "seer_id": "550e8400-e29b-41d4-a716-446655440080",
     "full_name": "Cô Trịnh Kim Oanh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer10_tnlybn.jpg",
@@ -2244,10 +2243,10 @@
     "total_revenue": 6922804.0,
     "bonus": 945143.0,
     "created_at": "2025-10-06T08:24:57.238+00:00",
-    "updated_at": "2025-10-08T20:59:07.697+00:00"
+    "updated_at": "2025-10-08T20:59:07.697+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440110",
     "seer_id": "550e8400-e29b-41d4-a716-446655440081",
     "full_name": "Thầy Phan Thành Tùng",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer11_vnudpp.jpg",
@@ -2265,10 +2264,10 @@
     "total_revenue": 960124.0,
     "bonus": 15429.0,
     "created_at": "2025-10-25T11:45:13.552+00:00",
-    "updated_at": "2025-10-11T12:16:04.631+00:00"
+    "updated_at": "2025-10-11T12:16:04.631+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440107",
     "seer_id": "550e8400-e29b-41d4-a716-446655440078",
     "full_name": "Cô Đỗ Thùy Trang",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer8_r5vjvm.avif",
@@ -2286,10 +2285,10 @@
     "total_revenue": 226626.0,
     "bonus": 27742.0,
     "created_at": "2025-10-03T18:12:18.948+00:00",
-    "updated_at": "2025-10-11T21:07:39.406+00:00"
+    "updated_at": "2025-10-11T21:07:39.406+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001284/cover11_t4ervg.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440104",
     "seer_id": "550e8400-e29b-41d4-a716-446655440075",
     "full_name": "Thầy Võ Phúc Thành",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer5_hqr5yg.jpg",
@@ -2307,10 +2306,10 @@
     "total_revenue": 253716.0,
     "bonus": 11368.0,
     "created_at": "2025-10-01T20:50:35.425+00:00",
-    "updated_at": "2025-10-10T17:30:54.521+00:00"
+    "updated_at": "2025-10-10T17:30:54.521+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover8_nrlaot.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440111",
     "seer_id": "550e8400-e29b-41d4-a716-446655440071",
     "full_name": "Thầy Bùi Văn Anh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer1_nzu7ep.avif",
@@ -2328,10 +2327,10 @@
     "total_revenue": 6342960.0,
     "bonus": 312219.0,
     "created_at": "2025-11-02T14:30:33.947+00:00",
-    "updated_at": "2025-11-10T12:09:56.202+00:00"
+    "updated_at": "2025-11-10T12:09:56.202+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440112",
     "seer_id": "550e8400-e29b-41d4-a716-446655440072",
     "full_name": "Cô Nguyễn Thị Hoa Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer2_j1inbg.jpg",
@@ -2349,10 +2348,10 @@
     "total_revenue": 6847775.0,
     "bonus": 460218.0,
     "created_at": "2025-11-17T12:25:31.010+00:00",
-    "updated_at": "2025-11-04T08:38:40.960+00:00"
+    "updated_at": "2025-11-04T08:38:40.960+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440113",
     "seer_id": "550e8400-e29b-41d4-a716-446655440073",
     "full_name": "Thầy Trần Ngọc Minh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer3_g6rtbb.jpg",
@@ -2370,10 +2369,10 @@
     "total_revenue": 4628700.0,
     "bonus": 232776.0,
     "created_at": "2025-11-04T20:14:52.484+00:00",
-    "updated_at": "2025-11-17T20:57:04.603+00:00"
+    "updated_at": "2025-11-17T20:57:04.603+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440114",
     "seer_id": "550e8400-e29b-41d4-a716-446655440074",
     "full_name": "Cô Lê Anh Hương",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer4_m2nusg.jpg",
@@ -2391,10 +2390,10 @@
     "total_revenue": 2114511.0,
     "bonus": 248829.0,
     "created_at": "2025-11-11T07:25:20.006+00:00",
-    "updated_at": "2025-11-13T18:30:23.050+00:00"
+    "updated_at": "2025-11-13T18:30:23.050+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover7_fvdzac.avif"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440116",
     "seer_id": "550e8400-e29b-41d4-a716-446655440076",
     "full_name": "Cô Phạm Mỹ Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer6_jnammi.jpg",
@@ -2412,10 +2411,10 @@
     "total_revenue": 1525200.0,
     "bonus": 146354.0,
     "created_at": "2025-11-26T19:46:33.206+00:00",
-    "updated_at": "2025-11-02T15:25:52.313+00:00"
+    "updated_at": "2025-11-02T15:25:52.313+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover9_o90vwl.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440117",
     "seer_id": "550e8400-e29b-41d4-a716-446655440077",
     "full_name": "Thầy Nguyễn Văn Hiếu",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer7_m9qfpv.avif",
@@ -2433,10 +2432,10 @@
     "total_revenue": 1181063.0,
     "bonus": 172832.0,
     "created_at": "2025-11-16T19:09:21.525+00:00",
-    "updated_at": "2025-11-17T21:01:42.551+00:00"
+    "updated_at": "2025-11-17T21:01:42.551+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover10_ivho8b.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440119",
     "seer_id": "550e8400-e29b-41d4-a716-446655440079",
     "full_name": "Thầy Lý Hoàng Long",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer9_umx5hx.png",
@@ -2454,10 +2453,10 @@
     "total_revenue": 2330280.0,
     "bonus": 269461.0,
     "created_at": "2025-11-09T19:31:35.589+00:00",
-    "updated_at": "2025-11-04T20:56:54.080+00:00"
+    "updated_at": "2025-11-04T20:56:54.080+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440120",
     "seer_id": "550e8400-e29b-41d4-a716-446655440080",
     "full_name": "Cô Trịnh Kim Oanh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer10_tnlybn.jpg",
@@ -2475,10 +2474,10 @@
     "total_revenue": 7907305.0,
     "bonus": 197446.0,
     "created_at": "2025-11-03T20:43:00.626+00:00",
-    "updated_at": "2025-11-06T15:18:51.817+00:00"
+    "updated_at": "2025-11-06T15:18:51.817+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440121",
     "seer_id": "550e8400-e29b-41d4-a716-446655440081",
     "full_name": "Thầy Phan Thành Tùng",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer11_vnudpp.jpg",
@@ -2496,10 +2495,10 @@
     "total_revenue": 932330.0,
     "bonus": 104932.0,
     "created_at": "2025-11-02T18:50:38.731+00:00",
-    "updated_at": "2025-11-07T09:02:02.645+00:00"
+    "updated_at": "2025-11-07T09:02:02.645+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440118",
     "seer_id": "550e8400-e29b-41d4-a716-446655440078",
     "full_name": "Cô Đỗ Thùy Trang",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer8_r5vjvm.avif",
@@ -2517,10 +2516,10 @@
     "total_revenue": 355956.0,
     "bonus": 41901.0,
     "created_at": "2025-11-11T10:47:16.969+00:00",
-    "updated_at": "2025-11-08T12:07:05.200+00:00"
+    "updated_at": "2025-11-08T12:07:05.200+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001284/cover11_t4ervg.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440115",
     "seer_id": "550e8400-e29b-41d4-a716-446655440075",
     "full_name": "Thầy Võ Phúc Thành",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer5_hqr5yg.jpg",
@@ -2538,10 +2537,10 @@
     "total_revenue": 245175.0,
     "bonus": 7360.0,
     "created_at": "2025-11-11T06:38:21.903+00:00",
-    "updated_at": "2025-11-22T12:05:31.474+00:00"
+    "updated_at": "2025-11-22T12:05:31.474+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover8_nrlaot.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440122",
     "seer_id": "550e8400-e29b-41d4-a716-446655440071",
     "full_name": "Thầy Bùi Văn Anh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer1_nzu7ep.avif",
@@ -2559,10 +2558,10 @@
     "total_revenue": 7471800.0,
     "bonus": 797849.0,
     "created_at": "2025-12-07T12:54:21.272+00:00",
-    "updated_at": "2025-12-20T10:59:03.674+00:00"
+    "updated_at": "2025-12-20T10:59:03.674+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440123",
     "seer_id": "550e8400-e29b-41d4-a716-446655440072",
     "full_name": "Cô Nguyễn Thị Hoa Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer2_j1inbg.jpg",
@@ -2580,10 +2579,10 @@
     "total_revenue": 6587196.0,
     "bonus": 746704.0,
     "created_at": "2025-12-02T21:18:28.108+00:00",
-    "updated_at": "2025-12-26T16:16:57.198+00:00"
+    "updated_at": "2025-12-26T16:16:57.198+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440124",
     "seer_id": "550e8400-e29b-41d4-a716-446655440073",
     "full_name": "Thầy Trần Ngọc Minh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer3_g6rtbb.jpg",
@@ -2601,10 +2600,10 @@
     "total_revenue": 4555538.0,
     "bonus": 368094.0,
     "created_at": "2025-12-05T20:16:16.843+00:00",
-    "updated_at": "2025-12-10T16:49:18.240+00:00"
+    "updated_at": "2025-12-10T16:49:18.240+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440125",
     "seer_id": "550e8400-e29b-41d4-a716-446655440074",
     "full_name": "Cô Lê Anh Hương",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer4_m2nusg.jpg",
@@ -2622,10 +2621,10 @@
     "total_revenue": 3216125.0,
     "bonus": 59809.0,
     "created_at": "2025-12-25T22:42:19.584+00:00",
-    "updated_at": "2025-12-08T10:47:58.361+00:00"
+    "updated_at": "2025-12-08T10:47:58.361+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover7_fvdzac.avif"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440127",
     "seer_id": "550e8400-e29b-41d4-a716-446655440076",
     "full_name": "Cô Phạm Mỹ Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer6_jnammi.jpg",
@@ -2643,10 +2642,10 @@
     "total_revenue": 1201004.0,
     "bonus": 156064.0,
     "created_at": "2025-12-14T09:46:31.261+00:00",
-    "updated_at": "2025-12-25T06:49:22.558+00:00"
+    "updated_at": "2025-12-25T06:49:22.558+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover9_o90vwl.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440128",
     "seer_id": "550e8400-e29b-41d4-a716-446655440077",
     "full_name": "Thầy Nguyễn Văn Hiếu",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer7_m9qfpv.avif",
@@ -2664,10 +2663,10 @@
     "total_revenue": 1125348.0,
     "bonus": 108371.0,
     "created_at": "2025-12-02T16:27:54.687+00:00",
-    "updated_at": "2025-12-18T20:10:11.268+00:00"
+    "updated_at": "2025-12-18T20:10:11.268+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover10_ivho8b.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440130",
     "seer_id": "550e8400-e29b-41d4-a716-446655440079",
     "full_name": "Thầy Lý Hoàng Long",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer9_umx5hx.png",
@@ -2685,10 +2684,10 @@
     "total_revenue": 2373180.0,
     "bonus": 84783.0,
     "created_at": "2025-12-26T16:54:18.196+00:00",
-    "updated_at": "2025-12-08T06:21:12.004+00:00"
+    "updated_at": "2025-12-08T06:21:12.004+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440131",
     "seer_id": "550e8400-e29b-41d4-a716-446655440080",
     "full_name": "Cô Trịnh Kim Oanh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer10_tnlybn.jpg",
@@ -2706,10 +2705,10 @@
     "total_revenue": 8485260.0,
     "bonus": 25660.0,
     "created_at": "2025-12-04T10:56:56.787+00:00",
-    "updated_at": "2025-12-03T16:24:44.483+00:00"
+    "updated_at": "2025-12-03T16:24:44.483+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440132",
     "seer_id": "550e8400-e29b-41d4-a716-446655440081",
     "full_name": "Thầy Phan Thành Tùng",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer11_vnudpp.jpg",
@@ -2727,10 +2726,10 @@
     "total_revenue": 1511524.0,
     "bonus": 94772.0,
     "created_at": "2025-12-13T18:02:52.780+00:00",
-    "updated_at": "2025-12-07T22:37:02.636+00:00"
+    "updated_at": "2025-12-07T22:37:02.636+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440129",
     "seer_id": "550e8400-e29b-41d4-a716-446655440078",
     "full_name": "Cô Đỗ Thùy Trang",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer8_r5vjvm.avif",
@@ -2748,10 +2747,10 @@
     "total_revenue": 200370.0,
     "bonus": 9930.0,
     "created_at": "2025-12-24T11:08:06.154+00:00",
-    "updated_at": "2025-12-22T14:09:02.598+00:00"
+    "updated_at": "2025-12-22T14:09:02.598+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001284/cover11_t4ervg.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440126",
     "seer_id": "550e8400-e29b-41d4-a716-446655440075",
     "full_name": "Thầy Võ Phúc Thành",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer5_hqr5yg.jpg",
@@ -2769,10 +2768,10 @@
     "total_revenue": 157707.0,
     "bonus": 10342.0,
     "created_at": "2025-12-01T19:37:57.123+00:00",
-    "updated_at": "2025-12-23T22:53:17.944+00:00"
+    "updated_at": "2025-12-23T22:53:17.944+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover8_nrlaot.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440133",
     "seer_id": "550e8400-e29b-41d4-a716-446655440071",
     "full_name": "Thầy Bùi Văn Anh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer1_nzu7ep.avif",
@@ -2790,10 +2789,10 @@
     "total_revenue": 5760326.0,
     "bonus": 178702.0,
     "created_at": "2026-01-12T11:59:16.274+00:00",
-    "updated_at": "2026-01-28T13:41:31.071+00:00"
+    "updated_at": "2026-01-28T13:41:31.071+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440134",
     "seer_id": "550e8400-e29b-41d4-a716-446655440072",
     "full_name": "Cô Nguyễn Thị Hoa Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer2_j1inbg.jpg",
@@ -2811,10 +2810,10 @@
     "total_revenue": 8792421.0,
     "bonus": 424186.0,
     "created_at": "2026-01-03T22:53:51.274+00:00",
-    "updated_at": "2026-01-24T09:55:03.542+00:00"
+    "updated_at": "2026-01-24T09:55:03.542+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440135",
     "seer_id": "550e8400-e29b-41d4-a716-446655440073",
     "full_name": "Thầy Trần Ngọc Minh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001303/seer3_g6rtbb.jpg",
@@ -2832,10 +2831,10 @@
     "total_revenue": 6801660.0,
     "bonus": 443127.0,
     "created_at": "2026-01-14T17:27:48.207+00:00",
-    "updated_at": "2026-01-12T18:49:58.492+00:00"
+    "updated_at": "2026-01-12T18:49:58.492+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440136",
     "seer_id": "550e8400-e29b-41d4-a716-446655440074",
     "full_name": "Cô Lê Anh Hương",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer4_m2nusg.jpg",
@@ -2853,10 +2852,10 @@
     "total_revenue": 2848605.0,
     "bonus": 321532.0,
     "created_at": "2026-01-03T18:24:19.759+00:00",
-    "updated_at": "2026-01-19T09:51:28.564+00:00"
+    "updated_at": "2026-01-19T09:51:28.564+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover7_fvdzac.avif"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440138",
     "seer_id": "550e8400-e29b-41d4-a716-446655440076",
     "full_name": "Cô Phạm Mỹ Linh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer6_jnammi.jpg",
@@ -2874,10 +2873,10 @@
     "total_revenue": 1468680.0,
     "bonus": 163625.0,
     "created_at": "2026-01-21T22:20:17.992+00:00",
-    "updated_at": "2026-01-14T11:29:14.965+00:00"
+    "updated_at": "2026-01-14T11:29:14.965+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover9_o90vwl.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440139",
     "seer_id": "550e8400-e29b-41d4-a716-446655440077",
     "full_name": "Thầy Nguyễn Văn Hiếu",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer7_m9qfpv.avif",
@@ -2895,10 +2894,10 @@
     "total_revenue": 1282694.0,
     "bonus": 73550.0,
     "created_at": "2026-01-04T15:49:14.698+00:00",
-    "updated_at": "2026-01-24T09:22:57.247+00:00"
+    "updated_at": "2026-01-24T09:22:57.247+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001285/cover10_ivho8b.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440141",
     "seer_id": "550e8400-e29b-41d4-a716-446655440079",
     "full_name": "Thầy Lý Hoàng Long",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001301/seer9_umx5hx.png",
@@ -2916,10 +2915,10 @@
     "total_revenue": 3492588.0,
     "bonus": 523842.0,
     "created_at": "2026-01-10T12:25:24.905+00:00",
-    "updated_at": "2026-01-05T10:54:31.496+00:00"
+    "updated_at": "2026-01-05T10:54:31.496+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover4_npswm7.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440142",
     "seer_id": "550e8400-e29b-41d4-a716-446655440080",
     "full_name": "Cô Trịnh Kim Oanh",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer10_tnlybn.jpg",
@@ -2937,10 +2936,10 @@
     "total_revenue": 7363680.0,
     "bonus": 863119.0,
     "created_at": "2026-01-25T22:23:32.212+00:00",
-    "updated_at": "2026-01-27T19:14:49.333+00:00"
+    "updated_at": "2026-01-27T19:14:49.333+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001288/cover5_ne1hgh.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440143",
     "seer_id": "550e8400-e29b-41d4-a716-446655440081",
     "full_name": "Thầy Phan Thành Tùng",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer11_vnudpp.jpg",
@@ -2958,10 +2957,10 @@
     "total_revenue": 1235179.0,
     "bonus": 72679.0,
     "created_at": "2026-01-03T18:34:38.598+00:00",
-    "updated_at": "2026-01-16T12:02:18.983+00:00"
+    "updated_at": "2026-01-16T12:02:18.983+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001287/cover6_smiiye.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440140",
     "seer_id": "550e8400-e29b-41d4-a716-446655440078",
     "full_name": "Cô Đỗ Thùy Trang",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001299/seer8_r5vjvm.avif",
@@ -2979,10 +2978,10 @@
     "total_revenue": 249351.0,
     "bonus": 5410.0,
     "created_at": "2026-01-27T06:01:03.622+00:00",
-    "updated_at": "2026-01-14T06:29:36.292+00:00"
+    "updated_at": "2026-01-14T06:29:36.292+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001284/cover11_t4ervg.jpg"
   },
   {
-    "_id": "sp0e8400-e29b-41d4-a716-446655440137",
     "seer_id": "550e8400-e29b-41d4-a716-446655440075",
     "full_name": "Thầy Võ Phúc Thành",
     "avatar_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001302/seer5_hqr5yg.jpg",
@@ -3000,6 +2999,7 @@
     "total_revenue": 560392.0,
     "bonus": 46448.0,
     "created_at": "2026-01-08T12:36:09.176+00:00",
-    "updated_at": "2026-01-26T09:16:16.777+00:00"
+    "updated_at": "2026-01-26T09:16:16.777+00:00",
+    "cover_url": "https://res.cloudinary.com/dzpv3mfjt/image/upload/v1765001286/cover8_nrlaot.jpg"
   }
 ]

@@ -146,3 +146,6 @@ HELP.md
 
 # Github instruction 
 .github/
+
+# Test scipts
+.scipts/

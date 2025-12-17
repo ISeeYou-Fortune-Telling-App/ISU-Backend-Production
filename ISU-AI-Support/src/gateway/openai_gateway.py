@@ -88,7 +88,7 @@ def create_openai_async_client(
     return AsyncOpenAI(**merged_configs)
 
 
-@wrap_embedding_func_with_attrs(embedding_dim=1536) # Nếu như model vectorize chưa tốt thì thay với 3072
+@wrap_embedding_func_with_attrs(embedding_dim=3072) # Nếu như model vectorize chưa tốt thì thay với 3072
 @retry(
     stop=stop_after_attempt(3),
     wait=wait_exponential(multiplier=1, min=4, max=60),
@@ -100,7 +100,7 @@ def create_openai_async_client(
 )
 async def openai_embed(
     texts: list[str],
-    model: str = "text-embedding-3-small", # Nếu như model vectorize chưa tốt thì thay với "text-embedding-3-large"
+    model: str = "text-embedding-3-large", # Nếu như model vectorize chưa tốt thì thay với "text-embedding-3-large"
     base_url: str = None,
     api_key: str = None,
     client_configs: dict[str, Any] = None,

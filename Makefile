@@ -63,6 +63,9 @@ help: ## Show this help message
 	@echo   make core-run              - Run core service locally (Maven)
 	@echo   make core-compile          - Compile core service
 	@echo   make core-package          - Package core service JAR
+	@echo   make core-maven-clean      - Clean Maven build artifacts
+	@echo   make core-clean            - Clean database (remove PostgreSQL volume)
+	@echo   make core-rebuild-clean    - Clean database + rebuild + start
 	@echo   make core-clean            - Clean core service Maven
 	@echo   make core-migration-up     - Apply Flyway migrations
 	@echo   make core-migration-info   - Show Flyway migration info
@@ -97,7 +100,8 @@ help: ## Show this help message
 	@echo   make ai-support-logs       - Show AI support logs
 	@echo   make ai-support-rebuild    - Rebuild AI support service
 	@echo   make ai-support-health     - Check AI support health
-	@echo   make ai-support-clean      - Clean AI support data
+	@echo   make ai-support-clean      - Clean AI support containers
+	@echo   make ai-support-clean-data - Clean LightRAG storage (force reindex)
 	@echo   make ai-support-clean-all  - Remove all AI support data
 	@echo ""
 	@echo [AI ANALYSIS SERVICE - Vanna]
@@ -213,6 +217,16 @@ core-logs: ## Show core service logs
 
 core-rebuild: core-down core-build core-up ## Rebuild core service
 
+core-clean: ## Clean core service (remove PostgreSQL volume)
+	@echo Cleaning Core Service data...
+	@echo Stopping Core Service and PostgreSQL...
+	$(DOCKER_COMPOSE) stop core-backend-service postgres-core
+	@echo Removing PostgreSQL volume...
+	$(DOCKER_COMPOSE) down -v --remove-orphans
+	@echo Core Service cleaned!
+
+core-rebuild-clean: core-clean core-build core-up ## Clean + rebuild core service
+
 # Core service local development (Maven)
 core-run: ## Run core service locally (Maven)
 	@echo Running Core Service locally...
@@ -228,7 +242,7 @@ core-compile: ## Compile core service
 core-package: ## Package core service JAR
 	cd ISU-Backend-CoreService && mvn package -DskipTests
 
-core-clean: ## Clean core service Maven
+core-maven-clean: ## Clean core service Maven build
 	cd ISU-Backend-CoreService && mvn clean
 
 core-migration-up: ## Apply Flyway migrations
@@ -276,6 +290,14 @@ pushnoti-logs-mongo: ## Show MongoDB logs
 pushnoti-rebuild: pushnoti-down pushnoti-build pushnoti-up ## Rebuild pushnoti (prod only)
 
 pushnoti-import-data: ## Import JSON data to MongoDB
+	@echo Dropping existing database...
+	$(DOCKER_COMPOSE) exec -T mongodb-pushnoti mongosh \
+		--authenticationDatabase admin \
+		--username admin \
+		--password secret \
+		--eval "use isu_pushnoti_mongo; db.dropDatabase()"
+	@echo Database dropped successfully!
+	@echo ""
 	@echo Importing data to MongoDB...
 	@echo Waiting for MongoDB to be ready...
 	@sleep 5 2>/dev/null || ping -n 6 127.0.0.1 > nul
@@ -362,6 +384,14 @@ report-logs-mongo: ## Show MongoDB logs
 report-rebuild: report-down report-build report-up ## Rebuild report service (prod only)
 
 report-import-data: ## Import JSON data to MongoDB
+	@echo Dropping existing database...
+	$(DOCKER_COMPOSE) exec -T mongodb-report mongosh \
+		--authenticationDatabase admin \
+		--username admin \
+		--password secret \
+		--eval "use isu_report_mongo; db.dropDatabase()"
+	@echo Database dropped successfully!
+	@echo ""
 	@echo Importing data to MongoDB...
 	@echo Waiting for MongoDB to be ready...
 	@sleep 5 2>/dev/null || ping -n 6 127.0.0.1 > nul
@@ -443,13 +473,21 @@ ai-support-clean: ## Clean AI support containers
 	$(DOCKER_COMPOSE) stop lightrag-api neo4j mongodb-ai
 	$(DOCKER_COMPOSE) rm -f lightrag-api neo4j mongodb-ai
 
+ai-support-clean-data: ## Clean AI LightRAG storage (force reindex)
+	@echo Cleaning AI LightRAG storage data...
+	$(DOCKER_COMPOSE) stop lightrag-api
+	@echo Removing lightrag_storage volume...
+	-docker volume rm isu-backend-production_lightrag_storage
+	@echo AI storage cleaned! Restart service to reindex data.
+
 ai-support-clean-all: ## Remove all AI support data including volumes
 	@echo WARNING: This will remove ALL AI Support data!
 	$(DOCKER_COMPOSE) stop lightrag-api neo4j mongodb-ai
 	$(DOCKER_COMPOSE) rm -f lightrag-api neo4j mongodb-ai
-	docker volume rm -f isu-backend-$(ENV)_neo4j_data isu-backend-$(ENV)_neo4j_logs \
-		isu-backend-$(ENV)_neo4j_import isu-backend-$(ENV)_neo4j_plugins \
-		isu-backend-$(ENV)_mongodb_ai_data isu-backend-$(ENV)_lightrag_storage 2>nul || true
+	-docker volume rm isu-backend-production_neo4j_data isu-backend-production_neo4j_logs
+	-docker volume rm isu-backend-production_neo4j_import isu-backend-production_neo4j_plugins
+	-docker volume rm isu-backend-production_mongodb_ai_data isu-backend-production_lightrag_storage
+	@echo All AI Support volumes removed!
 
 _ai-support-create-volumes:
 	@echo Creating AI Support directories...
@@ -579,10 +617,10 @@ _wait-for-services:
 
 .PHONY: help up down build rebuild logs status clean clean-all network-create \
 	gateway-build gateway-up gateway-down gateway-logs gateway-rebuild \
-	core-build core-up core-down core-logs core-rebuild core-run core-test core-compile core-package core-clean core-migration-up core-migration-info \
+	core-build core-up core-down core-logs core-rebuild core-clean core-rebuild-clean core-run core-test core-compile core-package core-maven-clean core-migration-up core-migration-info \
 	pushnoti-build pushnoti-up pushnoti-down pushnoti-logs pushnoti-logs-mongo pushnoti-rebuild pushnoti-import-data pushnoti-list-collections pushnoti-clean \
 	report-build report-up report-down report-logs report-logs-mongo report-rebuild report-import-data report-list-collections report-clean \
-	ai-support-build ai-support-up ai-support-down ai-support-logs ai-support-rebuild ai-support-health ai-support-clean ai-support-clean-all \
+	ai-support-build ai-support-up ai-support-down ai-support-logs ai-support-rebuild ai-support-health ai-support-clean ai-support-clean-data ai-support-clean-all \
 	ai-analysis-build ai-analysis-up ai-analysis-down ai-analysis-logs ai-analysis-rebuild ai-analysis-clean \
 	rabbitmq-up rabbitmq-down rabbitmq-logs \
 	infra-up infra-down infra-logs dev prod quick-start

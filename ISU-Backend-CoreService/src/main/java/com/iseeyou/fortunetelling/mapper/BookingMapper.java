@@ -56,13 +56,14 @@ public class BookingMapper extends BaseMapper {
                     }
 
                     if (source.getServicePackage() != null) {
-                        List<String> categoryNames = source.getServicePackage().getPackageCategories() != null ?
-                                source.getServicePackage().getPackageCategories().stream()
+                        List<String> categoryNames = source.getServicePackage().getPackageCategories() != null
+                                ? source.getServicePackage().getPackageCategories().stream()
                                         .map(pc -> pc.getKnowledgeCategory().getName())
-                                        .collect(Collectors.toList()) :
-                                List.of();
+                                        .collect(Collectors.toList())
+                                : List.of();
 
-                        BookingResponse.ServicePackageInfo servicePackageInfo = BookingResponse.ServicePackageInfo.builder()
+                        BookingResponse.ServicePackageInfo servicePackageInfo = BookingResponse.ServicePackageInfo
+                                .builder()
                                 .packageTitle(source.getServicePackage().getPackageTitle())
                                 .packageContent(source.getServicePackage().getPackageContent())
                                 .price(source.getServicePackage().getPrice())
@@ -72,17 +73,21 @@ public class BookingMapper extends BaseMapper {
                         destination.setServicePackage(servicePackageInfo);
                     }
 
-                    // Map booking payment information - only include payments with PaymentType == PAID_PACKAGE
+                    // Map booking payment information - only include payments with PaymentType ==
+                    // PAID_PACKAGE
                     BookingResponse.BookingPaymentInfo[] paymentInfos;
                     if (source.getBookingPayments() == null || source.getBookingPayments().isEmpty()) {
                         paymentInfos = new BookingResponse.BookingPaymentInfo[0];
                     } else {
-                        // collect to LinkedHashMap to deduplicate by id while preserving order, then map values
+                        // collect to LinkedHashMap to deduplicate by id while preserving order, then
+                        // map values
                         paymentInfos = source.getBookingPayments().stream()
                                 .filter(Objects::nonNull)
                                 // only include PAID_PACKAGE (payment_type == 0)
-                                .filter(p -> p.getPaymentType() != null && p.getPaymentType() == Constants.PaymentTypeEnum.PAID_PACKAGE)
-                                .collect(Collectors.toMap(BookingPayment::getId, p -> p, (a, b) -> a, LinkedHashMap::new))
+                                .filter(p -> p.getPaymentType() != null
+                                        && p.getPaymentType() == Constants.PaymentTypeEnum.PAID_PACKAGE)
+                                .collect(Collectors.toMap(BookingPayment::getId, p -> p, (a, b) -> a,
+                                        LinkedHashMap::new))
                                 .values().stream()
                                 .map(payment -> BookingResponse.BookingPaymentInfo.builder()
                                         .amount(payment.getAmount())
@@ -98,11 +103,13 @@ public class BookingMapper extends BaseMapper {
 
                     // Debug log to help trace mapping issues at runtime
                     try {
-                        log.debug("Booking {} - mapped paymentInfos count: {}", source.getId(), paymentInfos != null ? paymentInfos.length : 0);
+                        log.debug("Booking {} - mapped paymentInfos count: {}", source.getId(),
+                                paymentInfos != null ? paymentInfos.length : 0);
                     } catch (Exception ignored) {
                     }
 
-                    // Set top-level approvalUrl for BookingResponse (from first PAID_PACKAGE payment if present)
+                    // Set top-level approvalUrl for BookingResponse (from first PAID_PACKAGE
+                    // payment if present)
                     if (source.getBookingPayments() != null && !source.getBookingPayments().isEmpty()) {
                         Optional<BookingPayment> latestPayment = source.getBookingPayments().stream()
                                 .filter(p -> p.getPaymentType() == Constants.PaymentTypeEnum.PAID_PACKAGE)
@@ -134,6 +141,11 @@ public class BookingMapper extends BaseMapper {
                 });
 
         modelMapper.typeMap(BookingPayment.class, BookingPaymentResponse.class)
+                .addMappings(mapper -> {
+                    // Skip 'status' field - will be manually mapped to 'paymentStatus' in
+                    // PostConverter
+                    mapper.skip(BookingPaymentResponse::setPaymentStatus);
+                })
                 .setPostConverter(context -> {
                     BookingPayment source = context.getSource();
                     BookingPaymentResponse destination = context.getDestination();
@@ -143,12 +155,13 @@ public class BookingMapper extends BaseMapper {
                         destination.setBookingId(source.getBooking().getId());
                     }
 
-                    // Map payment status
+                    // Map payment status (status -> paymentStatus)
                     destination.setPaymentStatus(source.getStatus());
 
                     // Map customer information from booking
                     if (source.getBooking() != null && source.getBooking().getCustomer() != null) {
-                        BookingPaymentResponse.BookingUserInfo customerInfo = BookingPaymentResponse.BookingUserInfo.builder()
+                        BookingPaymentResponse.BookingUserInfo customerInfo = BookingPaymentResponse.BookingUserInfo
+                                .builder()
                                 .fullName(source.getBooking().getCustomer().getFullName())
                                 .avatarUrl(source.getBooking().getCustomer().getAvatarUrl())
                                 .build();
@@ -157,9 +170,10 @@ public class BookingMapper extends BaseMapper {
 
                     // Map seer information from service package
                     if (source.getBooking() != null &&
-                        source.getBooking().getServicePackage() != null &&
-                        source.getBooking().getServicePackage().getSeer() != null) {
-                        BookingPaymentResponse.BookingUserInfo seerInfo = BookingPaymentResponse.BookingUserInfo.builder()
+                            source.getBooking().getServicePackage() != null &&
+                            source.getBooking().getServicePackage().getSeer() != null) {
+                        BookingPaymentResponse.BookingUserInfo seerInfo = BookingPaymentResponse.BookingUserInfo
+                                .builder()
                                 .fullName(source.getBooking().getServicePackage().getSeer().getFullName())
                                 .avatarUrl(source.getBooking().getServicePackage().getSeer().getAvatarUrl())
                                 .build();
@@ -181,7 +195,8 @@ public class BookingMapper extends BaseMapper {
                     CreateBookingResponse destination = context.getDestination();
 
                     if (source.getCustomer() != null) {
-                        CreateBookingResponse.BookingCustomerInfo customerInfo = CreateBookingResponse.BookingCustomerInfo.builder()
+                        CreateBookingResponse.BookingCustomerInfo customerInfo = CreateBookingResponse.BookingCustomerInfo
+                                .builder()
                                 .id(source.getCustomer().getId())
                                 .fullName(source.getCustomer().getFullName())
                                 .avatarUrl(source.getCustomer().getAvatarUrl())
@@ -202,13 +217,14 @@ public class BookingMapper extends BaseMapper {
                     }
 
                     if (source.getServicePackage() != null) {
-                        List<String> categoryNames = source.getServicePackage().getPackageCategories() != null ?
-                                source.getServicePackage().getPackageCategories().stream()
+                        List<String> categoryNames = source.getServicePackage().getPackageCategories() != null
+                                ? source.getServicePackage().getPackageCategories().stream()
                                         .map(pc -> pc.getKnowledgeCategory().getName())
-                                        .collect(Collectors.toList()) :
-                                List.of();
+                                        .collect(Collectors.toList())
+                                : List.of();
 
-                        CreateBookingResponse.ServicePackageInfo servicePackageInfo = CreateBookingResponse.ServicePackageInfo.builder()
+                        CreateBookingResponse.ServicePackageInfo servicePackageInfo = CreateBookingResponse.ServicePackageInfo
+                                .builder()
                                 .packageTitle(source.getServicePackage().getPackageTitle())
                                 .packageContent(source.getServicePackage().getPackageContent())
                                 .price(source.getServicePackage().getPrice())
@@ -218,15 +234,18 @@ public class BookingMapper extends BaseMapper {
                         destination.setServicePackage(servicePackageInfo);
                     }
 
-                    // Map booking payment information - only include payments with PaymentType == PAID_PACKAGE
+                    // Map booking payment information - only include payments with PaymentType ==
+                    // PAID_PACKAGE
                     CreateBookingResponse.BookingPaymentInfo[] paymentInfos;
                     if (source.getBookingPayments() == null || source.getBookingPayments().isEmpty()) {
                         paymentInfos = new CreateBookingResponse.BookingPaymentInfo[0];
                     } else {
                         paymentInfos = source.getBookingPayments().stream()
                                 .filter(Objects::nonNull)
-                                .filter(p -> p.getPaymentType() != null && p.getPaymentType() == Constants.PaymentTypeEnum.PAID_PACKAGE)
-                                .collect(Collectors.toMap(BookingPayment::getId, p -> p, (a, b) -> a, LinkedHashMap::new))
+                                .filter(p -> p.getPaymentType() != null
+                                        && p.getPaymentType() == Constants.PaymentTypeEnum.PAID_PACKAGE)
+                                .collect(Collectors.toMap(BookingPayment::getId, p -> p, (a, b) -> a,
+                                        LinkedHashMap::new))
                                 .values().stream()
                                 .map(payment -> CreateBookingResponse.BookingPaymentInfo.builder()
                                         .amount(payment.getAmount())
@@ -242,7 +261,8 @@ public class BookingMapper extends BaseMapper {
 
                     // Map review information
                     if (source.getRating() != null || source.getComment() != null || source.getReviewedAt() != null) {
-                        CreateBookingResponse.BookingReviewInfo reviewInfo = CreateBookingResponse.BookingReviewInfo.builder()
+                        CreateBookingResponse.BookingReviewInfo reviewInfo = CreateBookingResponse.BookingReviewInfo
+                                .builder()
                                 .rating(source.getRating())
                                 .comment(source.getComment())
                                 .reviewedAt(source.getReviewedAt())
@@ -280,7 +300,7 @@ public class BookingMapper extends BaseMapper {
                     return destination;
                 });
     }
-    
+
     /**
      * Convert BookingPayment entity to BookingPaymentResponse DTO
      * Supports BONUS payment type where booking can be null
@@ -289,9 +309,9 @@ public class BookingMapper extends BaseMapper {
         if (bookingPayment == null) {
             return null;
         }
-        
+
         BookingPaymentResponse response = modelMapper.map(bookingPayment, BookingPaymentResponse.class);
-        
+
         // For BONUS payment type, get seer info directly from payment.seer
         if (bookingPayment.getPaymentType() == Constants.PaymentTypeEnum.BONUS && bookingPayment.getSeer() != null) {
             BookingPaymentResponse.BookingUserInfo seerInfo = BookingPaymentResponse.BookingUserInfo.builder()
@@ -302,7 +322,7 @@ public class BookingMapper extends BaseMapper {
             response.setBookingId(null); // No booking for BONUS type
             response.setPackageTitle("Bonus Payment"); // Custom title for bonus
         }
-        
+
         return response;
     }
 }
